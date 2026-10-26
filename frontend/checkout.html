@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagamento — Pulso Academia</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Montserrat', 'sans-serif'] },
+        colors: {
+          offwhite: '#FBFBFB', grafite: '#1F1F1F', petroleo: '#425B63',
+          oliva: '#7C8A5A', terracota: '#C47A52',
+        }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#425B63">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pulso">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+<!-- Guard: pagar exige login. Sem sessão, vai para o login e volta para cá depois. -->
+<script src="js/api.js"></script>
+<script>
+  if (!Auth.exigirLogin()) {
+    document.documentElement.style.display = 'none';
+  }
+</script>
+</head>
+
+<body class="bg-offwhite text-grafite antialiased font-sans min-h-screen">
+
+<header class="bg-offwhite border-b border-grafite/10 print:hidden">
+  <div class="max-w-5xl mx-auto px-6 h-[76px] flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <img src="img/logo-icon.png" alt="" class="h-7 w-auto">
+      <span class="text-lg font-bold tracking-wide">PULSO</span>
+    </a>
+    <a href="loja.html" class="text-sm font-medium text-grafite/70 hover:text-petroleo">← Continuar comprando</a>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-6 py-10">
+  <h1 class="text-2xl md:text-3xl font-extrabold mb-8">Finalizar compra</h1>
+  <div id="checkoutRoot">
+    <p class="text-grafite/40 text-sm">Carregando...</p>
+  </div>
+</main>
+
+<div id="toastContainer" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 items-end" aria-live="polite"></div>
+
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/checkout.js"></script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

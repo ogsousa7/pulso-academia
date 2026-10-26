@@ -1,0 +1,31 @@
+{
+  "name": "pulso-academia-backend",
+  "version": "1.0.0",
+  "description": "API REST da Pulso Academia — autenticação JWT, planos, produtos, agendamentos e avisos.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:reset": "node scripts/reset-db.js"
+  },
+  "keywords": [
+    "pulso-academia",
+    "fabrica-de-software",
+    "etec"
+  ],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "google-auth-library": "^11.3.1",
+    "jsonwebtoken": "^9.0.3",
+    "qrcode": "^1.5.4"
+  }
+}

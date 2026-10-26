@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="faixas">
+<rect width="400" height="400" fill="#F6E9E0"/>
+<ellipse cx="200" cy="344" rx="112" ry="13" fill="#1F1F1F" opacity="0.1"/>
+<ellipse cx="200" cy="232" rx="118" ry="70" fill="none" stroke="#C47A52" stroke-width="22"/>
+<ellipse cx="200" cy="232" rx="88" ry="48" fill="none" stroke="#7C8A5A" stroke-width="22"/>
+<ellipse cx="200" cy="232" rx="58" ry="28" fill="none" stroke="#425B63" stroke-width="22"/>
+<ellipse cx="200" cy="168" rx="26" ry="6" fill="#fff" opacity="0.2"/>
+</svg>

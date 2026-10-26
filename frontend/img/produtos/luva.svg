@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="luva">
+<rect width="400" height="400" fill="#F6E9E0"/>
+<ellipse cx="200" cy="344" rx="112" ry="13" fill="#1F1F1F" opacity="0.1"/>
+<rect x="136" y="116" width="30" height="104" rx="15" fill="#1F1F1F"/>
+<rect x="168" y="102" width="30" height="118" rx="15" fill="#1F1F1F"/>
+<rect x="200" y="106" width="30" height="114" rx="15" fill="#1F1F1F"/>
+<rect x="232" y="124" width="30" height="96" rx="15" fill="#1F1F1F"/>
+<rect x="128" y="188" width="142" height="134" rx="34" fill="#1F1F1F"/>
+<g transform="rotate(-34 136 262)"><rect x="82" y="240" width="76" height="34" rx="17" fill="#1F1F1F"/></g>
+<rect x="128" y="286" width="142" height="40" rx="12" fill="#C47A52"/>
+<g transform="translate(170 234) scale(0.56)"><path d="M8 52 L28 52 L36 40 L46 64 L56 30 L64 52 L92 52" stroke="#FBFBFB" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="corda">
+<rect width="400" height="400" fill="#F6E9E0"/>
+<ellipse cx="200" cy="344" rx="112" ry="13" fill="#1F1F1F" opacity="0.1"/>
+<path d="M122 250 C 110 70, 290 70, 278 250" fill="none" stroke="#7C8A5A" stroke-width="9" stroke-linecap="round"/>
+<rect x="96" y="244" width="48" height="98" rx="18" fill="#1F1F1F"/>
+<rect x="96" y="276" width="48" height="36" fill="#C47A52"/>
+<rect x="256" y="244" width="48" height="98" rx="18" fill="#1F1F1F"/>
+<rect x="256" y="276" width="48" height="36" fill="#C47A52"/>
+</svg>

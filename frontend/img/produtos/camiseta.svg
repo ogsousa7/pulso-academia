@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="camiseta">
+<rect width="400" height="400" fill="#ECEFE3"/>
+<ellipse cx="200" cy="344" rx="112" ry="13" fill="#1F1F1F" opacity="0.1"/>
+<path d="M140 100 L96 120 L56 168 L92 202 L124 180 L124 326 L276 326 L276 180 L308 202 L344 168 L304 120 L260 100 Q200 140 140 100 Z" fill="#425B63"/>
+<path d="M140 100 Q200 140 260 100 Q200 118 140 100 Z" fill="#1F1F1F" opacity="0.55"/>
+<g transform="translate(168 196) scale(0.64)"><path d="M8 52 L28 52 L36 40 L46 64 L56 30 L64 52 L92 52" stroke="#FBFBFB" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+<path d="M124 296 L276 296" stroke="#fff" stroke-opacity="0.14" stroke-width="3"/>
+</svg>

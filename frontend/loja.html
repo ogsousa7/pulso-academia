@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loja — Pulso Academia</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Montserrat', 'sans-serif'] },
+        colors: {
+          offwhite: '#FBFBFB', grafite: '#1F1F1F', petroleo: '#425B63',
+          oliva: '#7C8A5A', terracota: '#C47A52',
+        }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#425B63">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pulso">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+</head>
+
+<body class="bg-offwhite text-grafite antialiased font-sans">
+
+<!-- HEADER -->
+<header class="fixed top-0 left-0 w-full z-40 bg-offwhite/90 backdrop-blur-sm border-b border-grafite/10">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 h-[76px] flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <img src="img/logo-icon.png" alt="" class="h-7 w-auto">
+      <span class="text-lg font-bold tracking-wide">PULSO</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-9 text-sm font-medium text-grafite/80">
+      <a href="index.html" class="hover:text-petroleo transition-colors">Início</a>
+      <a href="index.html#sobre" class="hover:text-petroleo transition-colors">Sobre</a>
+      <a href="loja.html" class="text-petroleo">Loja</a>
+      <a href="index.html#contato" class="hover:text-petroleo transition-colors">Contato</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <button id="btnEntrar" class="px-5 py-2.5 rounded-full bg-grafite text-white text-sm font-semibold hover:opacity-90 transition">Entrar</button>
+      <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-9 h-9 flex items-center justify-center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="hidden md:hidden flex-col px-6 pb-5 gap-4 text-sm font-medium bg-offwhite border-t border-grafite/10">
+    <a href="index.html" class="py-1">Início</a>
+    <a href="index.html#sobre" class="py-1">Sobre</a>
+    <a href="loja.html" class="py-1">Loja</a>
+    <a href="index.html#contato" class="py-1">Contato</a>
+  </div>
+</header>
+
+<main class="pt-[76px]">
+  <section class="py-16 px-6 md:px-10">
+    <div class="max-w-7xl mx-auto">
+      <p class="text-petroleo font-semibold tracking-wide text-sm mb-3">LOJA</p>
+      <h1 class="text-3xl md:text-4xl font-extrabold mb-2">Planos e produtos</h1>
+      <p class="text-grafite/60 mb-12 max-w-xl">
+        Escolha seu plano, adicione produtos ao carrinho e finalize o pagamento.
+      </p>
+
+      <h2 id="planos" class="text-lg font-bold mb-5 scroll-mt-24">Planos</h2>
+      <div id="planosGrid" class="grid sm:grid-cols-3 gap-6 mb-16">
+        <div class="bg-white border border-grafite/10 rounded-2xl p-7 h-48 animate-pulse"></div>
+        <div class="bg-white border border-grafite/10 rounded-2xl p-7 h-48 animate-pulse"></div>
+        <div class="bg-white border border-grafite/10 rounded-2xl p-7 h-48 animate-pulse"></div>
+      </div>
+
+      <h2 class="text-lg font-bold mb-1">Produtos</h2>
+      <p class="text-sm text-grafite/55 mb-4">Retirada na recepção da academia, sem frete. <a href="#retirada" class="font-semibold text-petroleo underline">Ver localização no mapa</a></p>
+      <div id="filtrosProdutos" class="flex flex-wrap gap-2 mb-6" role="group" aria-label="Filtrar por categoria"></div>
+      <div id="produtosGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white border border-grafite/10 rounded-2xl p-6 h-56 animate-pulse"></div>
+        <div class="bg-white border border-grafite/10 rounded-2xl p-6 h-56 animate-pulse"></div>
+        <div class="bg-white border border-grafite/10 rounded-2xl p-6 h-56 animate-pulse"></div>
+        <div class="bg-white border border-grafite/10 rounded-2xl p-6 h-56 animate-pulse"></div>
+      </div>
+
+      <!-- RETIRADA NA ACADEMIA (mapa do Google; dados vêm de GET /api/academia, via js/academia.js) -->
+      <section id="retirada" class="scroll-mt-[92px] mt-20">
+        <h2 class="text-lg font-bold mb-1">Retire na academia</h2>
+        <p class="text-sm text-grafite/55 mb-6">Seus produtos ficam esperando na recepção. Veja como chegar:</p>
+
+        <div class="grid lg:grid-cols-3 gap-6 items-stretch">
+          <div class="lg:col-span-2 relative rounded-[28px] overflow-hidden border border-grafite/10 bg-grafite/5 min-h-[300px] md:min-h-[380px]">
+            <div id="mapaAcademia" class="absolute inset-0 flex items-center justify-center text-grafite/40 text-sm">Carregando mapa…</div>
+          </div>
+
+          <div class="bg-white border border-grafite/10 rounded-2xl p-7 flex flex-col gap-5">
+            <div>
+              <p class="text-xs font-semibold tracking-wide text-grafite/40 mb-1">ENDEREÇO</p>
+              <p class="font-semibold leading-snug" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold tracking-wide text-grafite/40 mb-1">RETIRADA</p>
+              <p class="text-sm" data-academia="horario_semana">Segunda a sexta: 6h – 22h</p>
+              <p class="text-sm" data-academia="horario_sabado">Sábado: 8h – 14h</p>
+            </div>
+            <div class="flex flex-col gap-3 mt-auto">
+              <a id="linkComoChegar" href="https://www.google.com/maps/dir/?api=1&destination=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer"
+                class="text-center py-3 rounded-full bg-petroleo text-white text-sm font-semibold hover:opacity-90 transition">Como chegar</a>
+              <a id="linkAbrirMapa" href="https://www.google.com/maps/search/?api=1&query=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer"
+                class="text-center py-3 rounded-full border border-grafite/20 text-sm font-semibold hover:bg-grafite/5 transition">Abrir no Google Maps</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-grafite text-white py-10 px-6 md:px-10 mt-10">
+  <div class="max-w-7xl mx-auto text-white/40 text-xs">
+    © 2026 Pulso Academia — projeto escolar, Etec Heliópolis.
+  </div>
+</footer>
+
+<div id="toastContainer" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 items-end" aria-live="polite"></div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/loja.js"></script>
+<script src="js/academia.js"></script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="bolsa">
+<rect width="400" height="400" fill="#F6E9E0"/>
+<ellipse cx="200" cy="344" rx="112" ry="13" fill="#1F1F1F" opacity="0.1"/>
+<path d="M138 190 C 138 112, 262 112, 262 190" fill="none" stroke="#1F1F1F" stroke-width="13" stroke-linecap="round"/>
+<rect x="68" y="176" width="264" height="148" rx="44" fill="#425B63"/>
+<rect x="118" y="238" width="164" height="62" rx="16" fill="#34494F"/>
+<path d="M118 238 H282" stroke="#FBFBFB" stroke-opacity="0.4" stroke-width="3" stroke-dasharray="6 6"/>
+<g transform="translate(168 246) scale(0.64)"><path d="M8 52 L28 52 L36 40 L46 64 L56 30 L64 52 L92 52" stroke="#FBFBFB" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+<rect x="92" y="190" width="216" height="10" rx="5" fill="#fff" opacity="0.14"/>
+</svg>

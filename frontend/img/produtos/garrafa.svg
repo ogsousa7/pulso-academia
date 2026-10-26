@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="garrafa">
+<rect width="400" height="400" fill="#F6E9E0"/>
+<ellipse cx="200" cy="344" rx="112" ry="13" fill="#1F1F1F" opacity="0.1"/>
+<rect x="154" y="122" width="92" height="214" rx="28" fill="#425B63"/>
+<rect x="166" y="84" width="68" height="44" rx="11" fill="#1F1F1F"/>
+<rect x="154" y="206" width="92" height="64" fill="#FBFBFB"/>
+<g transform="translate(166 208) scale(0.68)"><path d="M8 52 L28 52 L36 40 L46 64 L56 30 L64 52 L92 52" stroke="#425B63" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+<rect x="164" y="140" width="12" height="52" rx="6" fill="#fff" opacity="0.14"/>
+</svg>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha agenda — Pulso Academia</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Montserrat', 'sans-serif'] },
+        colors: {
+          offwhite: '#FBFBFB', grafite: '#1F1F1F', petroleo: '#425B63',
+          oliva: '#7C8A5A', terracota: '#C47A52',
+        }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#425B63">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pulso">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+
+<!-- Guard de acesso (UX): só PROFESSOR entra aqui. Quem protege os dados é a API. -->
+<script src="js/api.js"></script>
+<script>
+  if (!Auth.exigirLogin({ role: 'PROFESSOR' })) document.documentElement.style.display = 'none';
+</script>
+</head>
+
+<body data-instalar class="bg-offwhite text-grafite antialiased font-sans min-h-screen">
+
+<header class="bg-grafite text-white">
+  <div class="max-w-4xl mx-auto px-4 md:px-8 h-[68px] flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2">
+      <img src="img/logo-icon-branco.png" alt="" class="h-6 w-auto">
+      <span class="text-base font-bold tracking-wide">PULSO</span>
+    </a>
+    <div class="flex items-center gap-2 md:gap-4 text-sm">
+      <a href="index.html" class="hidden sm:inline text-white/70 hover:text-white">Site</a>
+      <button id="btnSair" class="px-4 py-2 rounded-full border border-white/25 hover:bg-white/10 transition font-semibold">Sair</button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8">
+  <div class="mb-6">
+    <h1 id="saudacao" class="text-xl md:text-2xl font-extrabold">Olá!</h1>
+    <p class="text-grafite/50 text-sm" id="subtitulo"></p>
+  </div>
+
+  <nav class="flex gap-2 mb-6" role="tablist" aria-label="Seções">
+    <button role="tab" data-aba="agenda" class="aba px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap">Minha agenda</button>
+    <button role="tab" data-aba="disponibilidade" class="aba px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap">Meus horários</button>
+  </nav>
+
+  <section id="painel-agenda" class="painel">
+    <div id="listaAgenda" class="flex flex-col gap-5"></div>
+  </section>
+
+  <section id="painel-disponibilidade" class="painel hidden bg-white border border-grafite/10 rounded-2xl p-5 md:p-8">
+    <h2 class="font-bold mb-1">Horários em que você atende</h2>
+    <p class="text-grafite/50 text-xs mb-4">Marque os horários de início (aulas de 1 hora). Toque no nome do dia para marcar ou desmarcar a coluna toda. Horários que já têm aluno marcado não podem ser removidos.</p>
+    <div class="overflow-x-auto">
+      <table class="text-sm" id="gradeHorarios"></table>
+    </div>
+    <button id="btnSalvarDisp" class="mt-5 px-6 py-3 rounded-full bg-petroleo text-white text-sm font-semibold hover:opacity-90 transition">Salvar horários</button>
+  </section>
+</main>
+
+<div id="toastContainer" class="fixed bottom-6 right-4 left-4 sm:left-auto sm:right-6 z-[100] flex flex-col gap-3 items-end" aria-live="polite"></div>
+
+<script src="js/ui.js"></script>
+<script src="js/professor.js"></script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

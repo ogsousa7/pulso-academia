@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulso Academia</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Montserrat', 'sans-serif'] },
+        colors: {
+          offwhite: '#FBFBFB', grafite: '#1F1F1F', petroleo: '#425B63',
+          oliva: '#7C8A5A', terracota: '#C47A52',
+        }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#425B63">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pulso">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+</head>
+
+<body class="bg-offwhite text-grafite antialiased font-sans">
+
+<!-- HEADER -->
+<header class="fixed top-0 left-0 w-full z-40 bg-offwhite/90 backdrop-blur-sm border-b border-grafite/10">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 h-[76px] flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <img src="img/logo-icon.png" alt="" class="h-7 w-auto">
+      <span class="text-lg font-bold tracking-wide">PULSO</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-9 text-sm font-medium text-grafite/80">
+      <a href="index.html" class="text-petroleo">Início</a>
+      <a href="index.html#sobre" class="hover:text-petroleo transition-colors">Sobre</a>
+      <a href="loja.html" class="hover:text-petroleo transition-colors">Loja</a>
+      <a href="index.html#onde-estamos" class="hover:text-petroleo transition-colors">Onde estamos</a>
+      <a href="index.html#contato" class="hover:text-petroleo transition-colors">Contato</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <button id="btnEntrar" class="px-5 py-2.5 rounded-full bg-grafite text-white text-sm font-semibold hover:opacity-90 transition">Entrar</button>
+      <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-9 h-9 flex items-center justify-center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h16" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="hidden md:hidden flex-col px-6 pb-5 gap-4 text-sm font-medium bg-offwhite border-t border-grafite/10">
+    <a href="index.html" class="py-1">Início</a>
+    <a href="index.html#sobre" class="py-1">Sobre</a>
+    <a href="loja.html" class="py-1">Loja</a>
+    <a href="index.html#onde-estamos" class="py-1">Onde estamos</a>
+    <a href="index.html#contato" class="py-1">Contato</a>
+  </div>
+</header>
+
+<!-- HERO / CARROSSEL -->
+<section class="pt-[76px] scroll-mt-[92px]">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 pt-14 pb-8">
+    <p class="text-petroleo font-semibold tracking-wide text-sm mb-3">ACADEMIA DE BAIRRO · TREINO ACOLHEDOR</p>
+    <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.05] max-w-3xl">
+      Seu ritmo, <span class="text-petroleo">nosso</span> bairro.
+    </h1>
+    <p class="mt-5 text-grafite/70 max-w-xl text-base md:text-lg">
+      Uma academia pensada para quem mora perto, treina no seu tempo e quer fazer parte de uma comunidade de verdade.
+    </p>
+    <a href="loja.html" class="inline-block mt-6 px-6 py-3 rounded-full bg-petroleo text-white text-sm font-semibold hover:opacity-90 transition">
+      Ver planos
+    </a>
+  </div>
+
+  <div class="relative">
+    <div id="carouselTrack" class="flex gap-6 overflow-x-auto no-scrollbar px-6 md:px-10 pb-4 snap-x snap-mandatory scroll-smooth">
+
+      <div class="snap-center shrink-0 w-[85%] sm:w-[68%] lg:w-[46%] h-[420px] md:h-[480px] relative rounded-[28px] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=80" alt="Pessoa treinando musculação" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80'">
+        <div class="absolute inset-0 bg-gradient-to-t from-grafite/70 via-grafite/10 to-transparent"></div>
+        <div class="absolute bottom-7 left-7 right-7 text-white">
+          <p class="text-xs font-semibold tracking-wide uppercase text-white/80 mb-1">Bem-vindo(a)</p>
+          <p class="text-2xl font-bold leading-snug">Treine perto de casa, sem enrolação.</p>
+        </div>
+      </div>
+
+      <div class="snap-center shrink-0 w-[85%] sm:w-[68%] lg:w-[46%] h-[420px] md:h-[480px] relative rounded-[28px] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1200&q=80" alt="Aula de yoga" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1200&q=80'">
+        <div class="absolute inset-0 bg-gradient-to-t from-grafite/70 via-grafite/10 to-transparent"></div>
+        <div class="absolute bottom-7 left-7 right-7 text-white">
+          <p class="text-xs font-semibold tracking-wide uppercase text-white/80 mb-1">Para todo corpo</p>
+          <p class="text-2xl font-bold leading-snug">Modalidades pra todas as idades e ritmos.</p>
+        </div>
+      </div>
+
+      <div class="snap-center shrink-0 w-[85%] sm:w-[68%] lg:w-[46%] h-[420px] md:h-[480px] relative rounded-[28px] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1594737625785-a6cbdabd333c?auto=format&fit=crop&w=1200&q=80" alt="Grupo treinando junto" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1200&q=80'">
+        <div class="absolute inset-0 bg-gradient-to-t from-grafite/70 via-grafite/10 to-transparent"></div>
+        <div class="absolute bottom-7 left-7 right-7 text-white">
+          <p class="text-xs font-semibold tracking-wide uppercase text-white/80 mb-1">Comunidade</p>
+          <p class="text-2xl font-bold leading-snug">Gente do seu bairro te motivando todo dia.</p>
+        </div>
+      </div>
+
+      <div class="snap-center shrink-0 w-[85%] sm:w-[68%] lg:w-[46%] h-[420px] md:h-[480px] relative rounded-[28px] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1571731956672-f2b94d7dd0cb?auto=format&fit=crop&w=1200&q=80" alt="Ambiente acolhedor da academia" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1200&q=80'">
+        <div class="absolute inset-0 bg-gradient-to-t from-grafite/70 via-grafite/10 to-transparent"></div>
+        <div class="absolute bottom-7 left-7 right-7 text-white">
+          <p class="text-xs font-semibold tracking-wide uppercase text-white/80 mb-1">Acessível</p>
+          <p class="text-2xl font-bold leading-snug">Preço justo, sem letra miúda.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="flex justify-center gap-3 mt-2">
+      <button onclick="scrollCarousel(-1)" aria-label="Slide anterior" class="w-11 h-11 rounded-full border border-grafite/20 flex items-center justify-center hover:bg-grafite hover:text-white transition">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button onclick="scrollCarousel(1)" aria-label="Próximo slide" class="w-11 h-11 rounded-full border border-grafite/20 flex items-center justify-center hover:bg-grafite hover:text-white transition">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="scroll-mt-[92px] py-24 px-6 md:px-10">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-14 items-center">
+    <div>
+      <p class="text-petroleo font-semibold tracking-wide text-sm mb-3">SOBRE A PULSO</p>
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-6 leading-tight">Academia é bem-estar, não intimidação.</h2>
+      <p class="text-grafite/70 leading-relaxed mb-4">
+        Nascemos no bairro pra servir o bairro. A Pulso emprega professores da própria região, com carga horária
+        organizada e condições de trabalho decentes — porque um bom atendimento começa por quem ensina.
+      </p>
+      <p class="text-grafite/70 leading-relaxed">
+        Mantemos os planos acessíveis e a comunicação clara: você sempre sabe quando seu plano vence, se algo mudou
+        na academia, e consegue agendar direto com o professor que quiser.
+      </p>
+      <div class="flex gap-8 mt-8">
+        <div><p class="text-3xl font-extrabold text-petroleo">+350</p><p class="text-sm text-grafite/60">alunos ativos</p></div>
+        <div><p class="text-3xl font-extrabold text-petroleo">12</p><p class="text-sm text-grafite/60">professores locais</p></div>
+        <div><p class="text-3xl font-extrabold text-petroleo">4.8</p><p class="text-sm text-grafite/60">avaliação média</p></div>
+      </div>
+    </div>
+    <div class="rounded-[28px] overflow-hidden h-[420px]">
+      <img src="https://images.unsplash.com/photo-1540496905036-5937c10647cc?auto=format&fit=crop&w=1000&q=80" alt="Recepção acolhedora da academia" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=80'">
+    </div>
+  </div>
+</section>
+
+<!-- AVISOS (dados reais vindos da API) -->
+<section class="py-20 px-6 md:px-10 bg-grafite/[0.03]">
+  <div class="max-w-7xl mx-auto">
+    <p class="text-petroleo font-semibold tracking-wide text-sm mb-3">COMUNICAÇÃO</p>
+    <h2 class="text-3xl md:text-4xl font-extrabold mb-8">Avisos da academia</h2>
+    <div id="listaAvisos" class="grid md:grid-cols-2 gap-4 max-w-4xl">
+      <p class="text-grafite/40 text-sm">Carregando avisos...</p>
+    </div>
+  </div>
+</section>
+
+<!-- ONDE ESTAMOS (mapa do Google; dados vêm de GET /api/academia) -->
+<section id="onde-estamos" class="scroll-mt-[92px] py-20 px-6 md:px-10">
+  <div class="max-w-7xl mx-auto">
+    <p class="text-petroleo font-semibold tracking-wide text-sm mb-3">COMO CHEGAR</p>
+    <h2 class="text-3xl md:text-4xl font-extrabold mb-8">Onde estamos</h2>
+
+    <div class="grid lg:grid-cols-3 gap-8 items-stretch">
+      <div class="lg:col-span-2 relative rounded-[28px] overflow-hidden border border-grafite/10 bg-grafite/5 min-h-[340px] md:min-h-[420px]">
+        <div id="mapaAcademia" class="absolute inset-0 flex items-center justify-center text-grafite/40 text-sm">Carregando mapa…</div>
+      </div>
+
+      <div class="bg-white border border-grafite/10 rounded-2xl p-7 flex flex-col gap-5">
+        <div>
+          <p class="text-xs font-semibold tracking-wide text-grafite/40 mb-1">ENDEREÇO</p>
+          <p class="font-semibold leading-snug" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold tracking-wide text-grafite/40 mb-1">HORÁRIO</p>
+          <p class="text-sm" data-academia="horario_semana">Segunda a sexta: 6h – 22h</p>
+          <p class="text-sm" data-academia="horario_sabado">Sábado: 8h – 14h</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold tracking-wide text-grafite/40 mb-1">TELEFONE</p>
+          <p class="text-sm" data-academia="telefone">(11) 4002-8922</p>
+        </div>
+        <div class="flex flex-col gap-3 mt-auto">
+          <a id="linkComoChegar" href="https://www.google.com/maps/dir/?api=1&destination=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer"
+            class="text-center py-3 rounded-full bg-petroleo text-white text-sm font-semibold hover:opacity-90 transition">Como chegar</a>
+          <a id="linkAbrirMapa" href="https://www.google.com/maps/search/?api=1&query=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer"
+            class="text-center py-3 rounded-full border border-grafite/20 text-sm font-semibold hover:bg-grafite/5 transition">Abrir no Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO / FOOTER -->
+<footer id="contato" class="scroll-mt-[92px] bg-grafite text-white py-16 px-6 md:px-10">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <img src="img/logo-icon-branco.png" alt="" class="h-6 w-auto">
+        <span class="text-lg font-bold tracking-wide">PULSO</span>
+      </div>
+      <p class="text-white/60 text-sm leading-relaxed max-w-xs" data-academia="descricao">
+        Academia de bairro, acolhedora e acessível. Projeto acadêmico de Fábrica de Software, inspirado no ODS 8 da ONU (trabalho decente e crescimento econômico).
+      </p>
+    </div>
+    <div>
+      <p class="font-semibold mb-4 text-sm tracking-wide uppercase text-white/80">Contato</p>
+      <p class="text-white/60 text-sm mb-2" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p>
+      <p class="text-white/60 text-sm mb-2" data-academia="email">contato@pulsoacademia.com.br</p>
+      <p class="text-white/60 text-sm" data-academia="telefone">(11) 4002-8922</p>
+    </div>
+    <div>
+      <p class="font-semibold mb-4 text-sm tracking-wide uppercase text-white/80">Horário</p>
+      <p class="text-white/60 text-sm mb-2" data-academia="horario_semana">Segunda a sexta: 6h – 22h</p>
+      <p class="text-white/60 text-sm" data-academia="horario_sabado">Sábado: 8h – 14h</p>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto border-t border-white/10 mt-10 pt-6 text-white/40 text-xs">
+    © 2026 Pulso Academia — projeto escolar, Etec Heliópolis.
+  </div>
+</footer>
+
+<div id="toastContainer" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 items-end" aria-live="polite"></div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/academia.js"></script>
+<script>
+  function scrollCarousel(direcao) {
+    const track = document.getElementById('carouselTrack');
+    const slide = track.querySelector(':scope > div');
+    const largura = slide ? slide.getBoundingClientRect().width + 24 : 400;
+    track.scrollBy({ left: direcao * largura, behavior: 'smooth' });
+  }
+
+  async function carregarAvisos() {
+    const container = document.getElementById('listaAvisos');
+    try {
+      const { avisos } = await Api.listarAvisos();
+      if (avisos.length === 0) {
+        container.innerHTML = `<p class="text-grafite/40 text-sm">Nenhum aviso no momento.</p>`;
+        return;
+      }
+      container.innerHTML = avisos
+        .map(
+          (a) => `
+          <div class="bg-white border border-grafite/10 rounded-xl p-5">
+            <p class="text-xs text-grafite/40 mb-2">${formatarDataHora(a.criado_em)}</p>
+            <p class="text-sm">${escapeHtml(a.texto)}</p>
+          </div>`
+        )
+        .join('');
+    } catch (erro) {
+      container.innerHTML = `<p class="text-terracota text-sm">Não foi possível carregar os avisos (${escapeHtml(erro.message)}).</p>`;
+    }
+  }
+
+  carregarAvisos();
+</script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

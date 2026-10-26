@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="toalha">
+<rect width="400" height="400" fill="#F6E9E0"/>
+<ellipse cx="200" cy="344" rx="112" ry="13" fill="#1F1F1F" opacity="0.1"/>
+<rect x="98" y="156" width="204" height="44" rx="12" fill="#D9946F"/>
+<rect x="88" y="186" width="224" height="140" rx="14" fill="#C47A52"/>
+<rect x="88" y="226" width="224" height="24" fill="#FBFBFB" opacity="0.85"/>
+<path d="M88 276 L312 276" stroke="#fff" stroke-opacity="0.2" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/>
+<g transform="translate(164 280) scale(0.7)"><path d="M8 52 L28 52 L36 40 L46 64 L56 30 L64 52 L92 52" stroke="#FBFBFB" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+</svg>

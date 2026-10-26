@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="whey">
+<rect width="400" height="400" fill="#E4EBED"/>
+<ellipse cx="200" cy="344" rx="112" ry="13" fill="#1F1F1F" opacity="0.1"/>
+<rect x="118" y="108" width="164" height="226" rx="16" fill="#425B63"/>
+<rect x="110" y="84" width="180" height="44" rx="12" fill="#1F1F1F"/>
+<rect x="118" y="186" width="164" height="104" fill="#FBFBFB"/>
+<g transform="translate(150 196) scale(1.0)"><path d="M8 52 L28 52 L36 40 L46 64 L56 30 L64 52 L92 52" stroke="#425B63" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></g>
+<rect x="146" y="268" width="108" height="8" rx="4" fill="#1F1F1F" opacity="0.25"/><rect x="166" y="282" width="68" height="8" rx="4" fill="#1F1F1F" opacity="0.15"/>
+<rect x="130" y="140" width="12" height="40" rx="6" fill="#fff" opacity="0.14"/><rect x="130" y="300" width="12" height="24" rx="6" fill="#fff" opacity="0.14"/>
+</svg>
