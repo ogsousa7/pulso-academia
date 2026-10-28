@@ -5,27 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entrar — Pulso Academia</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: { sans: ['Montserrat', 'sans-serif'] },
-        colors: {
-          offwhite: '#FBFBFB', grafite: '#1F1F1F', petroleo: '#425B63',
-          oliva: '#7C8A5A', terracota: '#C47A52',
-        }
-      }
-    }
-  }
-</script>
+<script src="js/tw-config.js"></script>
 <link rel="stylesheet" href="css/style.css">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#425B63">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16.png">
@@ -37,81 +22,87 @@
 
 </head>
 
-<body class="bg-offwhite text-grafite antialiased font-sans min-h-screen flex items-center justify-center px-6">
+<body class="bg-offwhite text-grafite antialiased font-sans min-h-screen flex items-center justify-center px-5 py-10">
 
-<div class="w-full max-w-sm">
-  <a href="index.html" class="flex items-center gap-2 justify-center mb-8">
-    <img src="img/logo-icon.png" alt="" class="h-7 w-auto">
-    <span class="text-lg font-bold tracking-wide">PULSO</span>
+<div data-a11y-slot class="fixed top-4 right-4"></div>
+
+<main class="w-full max-w-sm">
+  <a href="index.html" class="flex flex-col items-center gap-4 mb-8" aria-label="Pulso Academia, voltar para o início">
+    <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-tema h-12 w-auto">
+    <span class="text-[28px] font-bold tracking-tight leading-none text-center">Entre na sua conta</span>
   </a>
 
-  <div class="bg-white border border-grafite/10 rounded-3xl p-8">
+  <div class="bg-superficie rounded-3xl p-6 sm:p-8">
 
     <!-- Abas Login / Cadastro -->
-    <div class="flex border border-grafite/15 rounded-full p-1 mb-6 text-sm font-semibold">
-      <button id="tabLogin" class="flex-1 py-2 rounded-full bg-grafite text-white transition">Entrar</button>
-      <button id="tabRegister" class="flex-1 py-2 rounded-full text-grafite/60 transition">Criar conta</button>
+    <div class="segmentado w-full mb-6" role="tablist">
+      <button id="tabLogin" role="tab" aria-selected="true" class="aba flex-1">Entrar</button>
+      <button id="tabRegister" role="tab" aria-selected="false" class="aba flex-1">Criar conta</button>
     </div>
 
     <!-- FORM: LOGIN -->
     <form id="loginForm" class="flex flex-col gap-4">
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="loginEmail">E-mail</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="loginEmail">E-mail</label>
         <input id="loginEmail" type="email" required placeholder="voce@email.com"
-          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
+          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-[17px] focus:outline-none focus:border-petroleo">
       </div>
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="loginSenha">Senha</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="loginSenha">Senha</label>
         <input id="loginSenha" type="password" required placeholder="••••••••"
-          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
+          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-[17px] focus:outline-none focus:border-petroleo">
       </div>
-      <button type="submit" id="loginSubmitBtn" class="mt-2 w-full py-3.5 rounded-full bg-petroleo text-white font-semibold hover:opacity-90 transition flex items-center justify-center gap-2">
+      <button type="submit" id="loginSubmitBtn" class="mt-2 w-full py-3.5 rounded-xl bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition flex items-center justify-center gap-2">
         <span>Entrar</span>
       </button>
-      <div class="bg-grafite/5 rounded-xl p-4 text-xs text-grafite/60 leading-relaxed">
-        <p class="font-semibold text-grafite mb-1">Contas de demonstração:</p>
-        <p>Recepção: <span class="font-mono">admin@pulso.com</span> / <span class="font-mono">admin123</span></p>
-        <p>Aluna: <span class="font-mono">camila@aluno.com</span> / <span class="font-mono">aluno123</span></p>
+      <div class="bg-offwhite rounded-2xl p-4 text-[13px] text-grafite/65 leading-relaxed">
+        <p class="font-semibold text-grafite mb-2">Contas de demonstração (toque para preencher)</p>
+        <div class="flex flex-col gap-1.5">
+          <button type="button" data-demo="admin@pulso.com|admin123" class="text-left hover:text-petroleo"><span class="text-grafite font-medium">Recepção</span> · <span class="font-mono">admin@pulso.com</span></button>
+          <button type="button" data-demo="marcos@pulso.com|prof123" class="text-left hover:text-petroleo"><span class="text-grafite font-medium">Professor</span> · <span class="font-mono">marcos@pulso.com</span></button>
+          <button type="button" data-demo="camila@aluno.com|aluno123" class="text-left hover:text-petroleo"><span class="text-grafite font-medium">Aluna</span> · <span class="font-mono">camila@aluno.com</span></button>
+        </div>
+        <p class="mt-2 text-[12px] text-grafite/65">Senhas: admin123, prof123 e aluno123.</p>
       </div>
     </form>
 
     <!-- FORM: CADASTRO -->
     <form id="registerForm" class="hidden flex-col gap-4">
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="regNome">Nome completo</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="regNome">Nome completo</label>
         <input id="regNome" type="text" required placeholder="Seu nome"
-          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
+          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-[17px] focus:outline-none focus:border-petroleo">
       </div>
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="regEmail">E-mail</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="regEmail">E-mail</label>
         <input id="regEmail" type="email" required placeholder="voce@email.com"
-          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
+          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-[17px] focus:outline-none focus:border-petroleo">
       </div>
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="regSenha">Senha</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="regSenha">Senha</label>
         <input id="regSenha" type="password" required minlength="6" placeholder="mínimo 6 caracteres"
-          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
+          class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-[17px] focus:outline-none focus:border-petroleo">
       </div>
-      <button type="submit" id="registerSubmitBtn" class="mt-2 w-full py-3.5 rounded-full bg-oliva text-white font-semibold hover:opacity-90 transition">
+      <button type="submit" id="registerSubmitBtn" class="mt-2 w-full py-3.5 rounded-xl bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition">
         Criar conta de aluno(a)
       </button>
     </form>
 
     <!-- Login com Google: só aparece se o servidor tiver GOOGLE_CLIENT_ID configurado -->
     <div id="googleArea" class="hidden mt-6">
-      <div class="flex items-center gap-3 mb-4 text-xs text-grafite/40">
+      <div class="flex items-center gap-3 mb-4 text-xs text-grafite/65">
         <span class="flex-1 h-px bg-grafite/10"></span>ou<span class="flex-1 h-px bg-grafite/10"></span>
       </div>
       <div id="googleBtn" class="flex justify-center min-h-[44px]"></div>
-      <p class="text-[11px] text-grafite/40 text-center mt-3">Contas da recepção e dos professores entram com e-mail e senha.</p>
+      <p class="text-[11px] text-grafite/65 text-center mt-3">Contas da recepção e dos professores entram com e-mail e senha.</p>
     </div>
 
   </div>
 
-  <p class="text-center text-xs text-grafite/40 mt-6">
-    <a href="index.html" class="hover:text-petroleo">← Voltar para o site</a>
+  <p class="text-center text-[13px] mt-6">
+    <a href="index.html" class="text-petroleo hover:underline">Voltar para o site</a>
   </p>
-</div>
+</main>
 
 <div id="toastContainer" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 items-end" aria-live="polite"></div>
 

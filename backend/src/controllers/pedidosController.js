@@ -22,6 +22,7 @@ import QRCode from 'qrcode';
 import { db, transacao } from '../db/index.js';
 import { ativarMatricula, mesesDoPeriodo } from '../services/matriculas.js';
 import { idValido } from '../utils.js';
+import { calcularCupom } from '../services/cupons.js';
 
 const METODOS_VALIDOS = ['PIX', 'CARTAO', 'BOLETO'];
 const BANDEIRAS_VALIDAS = ['VISA', 'MASTERCARD', 'ELO', 'AMEX', 'HIPERCARD', 'OUTRA'];
@@ -125,6 +126,9 @@ async function montarResposta(pedidoId) {
   const resposta = {
     id: p.id,
     total: p.total,
+    subtotal: p.subtotal ?? p.total,
+    desconto: p.desconto ?? 0,
+    cupom: p.cupom,
     metodo: p.metodo,
     status: p.status,
     parcelas: p.parcelas,
@@ -170,7 +174,7 @@ function efetivarPagamento(pedidoId, usuarioId) {
 
 /**
  * POST /api/pedidos  (logado)
- * body: { itens: [{tipo,id,quantidade}], metodo, parcelas?, bandeira?, cartaoFinal? }
+ * body: { itens: [{tipo,id,quantidade}], metodo, parcelas?, bandeira?, cartaoFinal?, cupom? }
  */
 export async function criar(req, res) {
   const corpo = req.body ?? {};
@@ -182,7 +186,16 @@ export async function criar(req, res) {
   const { itens, erro } = montarItens(corpo);
   if (erro) return res.status(400).json({ erro });
 
-  const total = centavos(itens.reduce((soma, i) => soma + i.preco_unit * i.quantidade, 0));
+  const subtotal = centavos(itens.reduce((soma, i) => soma + i.preco_unit * i.quantidade, 0));
+
+  // Cupom (opcional): o desconto é sempre recalculado aqui, nunca aceito do navegador.
+  let cupom = null;
+  if (corpo.cupom) {
+    cupom = calcularCupom(corpo.cupom, subtotal);
+    if (cupom.erro) return res.status(400).json({ erro: cupom.erro });
+  }
+  const desconto = cupom ? cupom.desconto : 0;
+  const total = centavos(subtotal - desconto);
 
   let cartao = { parcelas: 1, bandeira: null, cartaoFinal: null };
   if (corpo.metodo === 'CARTAO') {
@@ -201,10 +214,10 @@ export async function criar(req, res) {
 
       const { lastInsertRowid } = db
         .prepare(
-          `INSERT INTO pedidos (usuario_id, total, metodo, status, parcelas, bandeira, cartao_final, expira_em)
-           VALUES (?, ?, ?, 'PENDENTE', ?, ?, ?, ?)`
+          `INSERT INTO pedidos (usuario_id, total, subtotal, desconto, cupom, metodo, status, parcelas, bandeira, cartao_final, expira_em)
+           VALUES (?, ?, ?, ?, ?, ?, 'PENDENTE', ?, ?, ?, ?)`
         )
-        .run(usuarioId, total, corpo.metodo, cartao.parcelas, cartao.bandeira, cartao.cartaoFinal, aVista ? null : utc(validadeMs));
+        .run(usuarioId, total, subtotal, desconto, cupom?.codigo ?? null, corpo.metodo, cartao.parcelas, cartao.bandeira, cartao.cartaoFinal, aVista ? null : utc(validadeMs));
       const id = Number(lastInsertRowid);
 
       const inserirItem = db.prepare(
@@ -315,4 +328,13 @@ export function listarParaAdmin(req, res) {
     .all(...params, limite);
 
   res.json({ pedidos });
+}
+
+/** GET /api/cupons/:codigo?subtotal=123.45 (público) — prévia do desconto para a tela de pagamento. */
+export function verificarCupom(req, res) {
+  const subtotal = Number(req.query.subtotal);
+  if (!Number.isFinite(subtotal) || subtotal <= 0) return res.status(400).json({ erro: 'Subtotal inválido.' });
+  const r = calcularCupom(req.params.codigo, subtotal);
+  if (r.erro) return res.status(404).json({ erro: r.erro });
+  res.json({ cupom: r });
 }

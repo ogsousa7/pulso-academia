@@ -5,27 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Painel da Recepção — Pulso Academia</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: { sans: ['Montserrat', 'sans-serif'] },
-        colors: {
-          offwhite: '#FBFBFB', grafite: '#1F1F1F', petroleo: '#425B63',
-          oliva: '#7C8A5A', terracota: '#C47A52',
-        }
-      }
-    }
-  }
-</script>
+<script src="js/tw-config.js"></script>
 <link rel="stylesheet" href="css/style.css">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#425B63">
+<meta name="theme-color" content="#F5F5F7">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16.png">
@@ -48,72 +33,87 @@
 
 <body class="bg-offwhite text-grafite antialiased font-sans min-h-screen">
 
-<!-- HEADER DO PAINEL -->
-<header class="bg-grafite text-white">
-  <div class="max-w-6xl mx-auto px-4 md:px-8 h-[76px] flex items-center justify-between gap-4">
+<!-- HEADER: barra translúcida, só a logo (o menu da conta aparece no lugar do "Entrar" quando há login) -->
+<header class="nav-vidro sticky top-0 z-40">
+  <div class="max-w-[1180px] mx-auto px-5 md:px-8 h-[60px] flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-3 shrink-0" aria-label="Pulso Academia, início">
+      <img src="img/logo-icon.png" alt="Pulso Academia" class="logo-tema h-8 w-auto">
+      <span class="text-[15px] text-grafite/65 font-medium">Recepção</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-9 text-[14px]">
+      <a href="admin.html" class="text-grafite font-medium transition-colors" aria-current="page">Painel</a>
+      <a href="loja.html" class="text-grafite/70 hover:text-grafite transition-colors">Loja</a>
+      <a href="index.html" class="text-grafite/70 hover:text-grafite transition-colors">Ver site</a>
+    </nav>
+
     <div class="flex items-center gap-2">
-      <img src="img/logo-icon-branco.png" alt="" class="h-6 w-auto">
-      <span class="text-base font-bold tracking-wide">PULSO <span class="text-white/50 font-medium">ADMIN</span></span>
+      <button id="btnEntrar" class="px-4 py-2 rounded-full bg-grafite text-superficie text-[14px] font-medium hover:bg-grafite/85 transition">Entrar</button>
+      <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-tinta/5">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
     </div>
-    <div class="flex items-center gap-2 md:gap-4 text-sm">
-      <a href="index.html" class="hidden sm:inline text-white/70 hover:text-white">Ver site</a>
-      <button id="btnSair" class="px-4 py-2 rounded-full border border-white/25 hover:bg-white/10 transition font-semibold">Sair</button>
-    </div>
+  </div>
+
+  <div id="mobileMenu" class="hidden md:hidden flex-col px-5 pb-3 text-[17px] font-semibold">
+    <a href="admin.html" class="py-3 border-b border-tinta/5 last:border-0">Painel</a>
+    <a href="loja.html" class="py-3 border-b border-tinta/5 last:border-0">Loja</a>
+    <a href="index.html" class="py-3 border-b border-tinta/5 last:border-0">Ver site</a>
   </div>
 </header>
 
-<main class="max-w-6xl mx-auto px-4 md:px-8 py-8">
+<main class="max-w-[1180px] mx-auto px-5 md:px-8 pt-8 md:pt-10 pb-12">
 
   <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
     <div>
-      <h1 id="saudacao" class="text-xl md:text-2xl font-extrabold">Olá, Recepção!</h1>
-      <p class="text-grafite/50 text-sm" id="dataHoje"></p>
+      <h1 id="saudacao" class="text-[34px] md:text-[40px] font-bold tracking-tight leading-tight">Olá, Recepção!</h1>
+      <p class="text-grafite/65 text-[15px] mt-1 first-letter:uppercase" id="dataHoje"></p>
     </div>
-    <button id="btnNovoAgendamento" class="px-5 py-2.5 rounded-full bg-petroleo text-white text-sm font-semibold hover:opacity-90 transition">
-      + NOVO AGENDAMENTO
+    <button id="btnNovoAgendamento" class="px-5 py-2.5 rounded-full bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">
+      Novo agendamento
     </button>
   </div>
 
   <!-- Abas do painel -->
-  <nav class="flex gap-2 overflow-x-auto no-scrollbar mb-8" role="tablist" aria-label="Seções do painel">
-    <button data-aba="geral" class="aba">Visão geral</button>
-    <button data-aba="agendamentos" class="aba">Agendamentos</button>
-    <button data-aba="planos" class="aba">Planos</button>
-    <button data-aba="alunos" class="aba">Alunos</button>
-    <button data-aba="professores" class="aba">Professores</button>
-    <button data-aba="solicitacoes" class="aba">Solicitações <span id="badgeSolicitacoes" class="hidden ml-1 px-2 py-0.5 rounded-full bg-terracota text-white text-[11px]"></span></button>
-    <button data-aba="pagamentos" class="aba">Pagamentos</button>
-    <button data-aba="academia" class="aba">Academia</button>
+  <nav class="segmentado mb-8" role="tablist" aria-label="Seções do painel">
+    <button role="tab" data-aba="geral" class="aba">Visão geral</button>
+    <button role="tab" data-aba="agendamentos" class="aba">Agendamentos</button>
+    <button role="tab" data-aba="planos" class="aba">Planos</button>
+    <button role="tab" data-aba="alunos" class="aba">Alunos</button>
+    <button role="tab" data-aba="professores" class="aba">Professores</button>
+    <button role="tab" data-aba="solicitacoes" class="aba">Solicitações <span id="badgeSolicitacoes" class="hidden ml-1 min-w-[18px] px-1.5 py-px rounded-full bg-terracota text-white text-[11px] tabular-nums"></span></button>
+    <button role="tab" data-aba="pagamentos" class="aba">Pagamentos</button>
+    <button role="tab" data-aba="academia" class="aba">Academia</button>
   </nav>
 
   <div id="painel-geral" class="painel">
   <!-- KPIs -->
-  <section class="grid sm:grid-cols-3 gap-4 md:gap-6 mb-8" aria-label="Indicadores do dia">
-    <div class="bg-white border border-grafite/10 rounded-2xl p-6">
-      <p class="text-grafite/50 text-sm mb-2">Agendamentos hoje</p>
-      <p class="text-4xl font-extrabold" id="kpiAgendamentos">–</p>
+  <section class="grid grid-cols-3 gap-3 md:gap-6 mb-8" aria-label="Indicadores do dia">
+    <div class="bg-superficie rounded-3xl p-4 md:p-6">
+      <p class="text-grafite/65 text-[13px] md:text-[15px] leading-tight mb-2 min-h-[2.4em] md:min-h-0">Agendamentos hoje</p>
+      <p class="text-[32px] md:text-[44px] leading-none font-semibold tracking-tight tabular-nums" id="kpiAgendamentos">–</p>
     </div>
-    <div class="bg-white border border-grafite/10 rounded-2xl p-6">
-      <p class="text-grafite/50 text-sm mb-2">Alunos ativos</p>
-      <p class="text-4xl font-extrabold" id="kpiAlunos">–</p>
+    <div class="bg-superficie rounded-3xl p-4 md:p-6">
+      <p class="text-grafite/65 text-[13px] md:text-[15px] leading-tight mb-2 min-h-[2.4em] md:min-h-0">Alunos ativos</p>
+      <p class="text-[32px] md:text-[44px] leading-none font-semibold tracking-tight tabular-nums" id="kpiAlunos">–</p>
     </div>
-    <div class="bg-terracota text-white rounded-2xl p-6">
-      <p class="text-white/80 text-sm mb-2">Vencimentos hoje</p>
-      <p class="text-4xl font-extrabold" id="kpiVencimentos">–</p>
+    <div class="bg-superficie rounded-3xl p-4 md:p-6">
+      <p class="text-grafite/65 text-[13px] md:text-[15px] leading-tight mb-2 min-h-[2.4em] md:min-h-0">Vencimentos hoje</p>
+      <p class="text-[32px] md:text-[44px] leading-none font-semibold tracking-tight text-terracota tabular-nums" id="kpiVencimentos">–</p>
     </div>
   </section>
 
   <div class="grid lg:grid-cols-3 gap-6">
 
     <!-- Atendimentos de hoje -->
-    <section class="lg:col-span-2 bg-white border border-grafite/10 rounded-2xl overflow-hidden">
-      <div class="px-6 py-4 border-b border-grafite/10">
-        <h2 class="font-bold">Atendimentos de hoje</h2>
+    <section class="lg:col-span-2 bg-superficie rounded-3xl overflow-hidden">
+      <div class="px-6 pt-5 pb-3">
+        <h2 class="text-[19px] font-semibold tracking-tight">Atendimentos de hoje</h2>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm min-w-[480px]">
           <thead>
-            <tr class="text-left text-grafite/50 border-b border-grafite/10">
+            <tr class="text-left text-[13px] text-grafite/65 border-b border-tinta/[0.08]">
               <th class="px-6 py-3 font-medium">Hora</th>
               <th class="px-6 py-3 font-medium">Aluno</th>
               <th class="px-6 py-3 font-medium">Professor</th>
@@ -121,22 +121,22 @@
             </tr>
           </thead>
           <tbody id="tabelaAtendimentos">
-            <tr><td colspan="4" class="px-6 py-6 text-grafite/40">Carregando...</td></tr>
+            <tr><td colspan="4" class="px-6 py-6 text-grafite/65">Carregando...</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
     <!-- Avisos -->
-    <section class="bg-white border border-grafite/10 rounded-2xl p-6">
-      <h2 class="font-bold mb-1">Avisos para os alunos</h2>
-      <p class="text-grafite/50 text-xs mb-4">Aparecem na página inicial do site.</p>
+    <section class="bg-superficie rounded-3xl p-6">
+      <h2 class="text-[19px] font-semibold tracking-tight mb-1">Avisos para os alunos</h2>
+      <p class="text-grafite/65 text-xs mb-4">Aparecem na página inicial do site.</p>
       <form id="avisoForm" class="mb-5">
         <label for="avisoTexto" class="sr-only">Texto do aviso</label>
         <textarea id="avisoTexto" rows="3" maxlength="500" required
           placeholder="Ex: Amanhã a academia abre 1h mais tarde por manutenção."
           class="w-full border border-grafite/15 rounded-xl p-3 text-sm focus:outline-none focus:border-petroleo resize-none"></textarea>
-        <button type="submit" class="mt-2 w-full py-2.5 rounded-full bg-oliva text-white text-sm font-semibold hover:opacity-90 transition">
+        <button type="submit" class="mt-2 w-full py-2.5 rounded-xl bg-petroleo text-white text-[15px] font-semibold hover:brightness-110 transition">
           Publicar aviso
         </button>
       </form>
@@ -149,14 +149,14 @@
 
   <!-- Pagamentos (UC: Consultar Pagamentos) -->
   <div id="painel-pagamentos" class="painel hidden">
-  <section class="bg-white border border-grafite/10 rounded-2xl overflow-hidden">
-    <div class="px-6 py-4 border-b border-grafite/10 flex flex-wrap items-center justify-between gap-3">
-      <h2 class="font-bold">Pedidos e pagamentos da loja</h2>
+  <section class="bg-superficie rounded-3xl overflow-hidden">
+    <div class="px-6 pt-5 pb-3 flex flex-wrap items-center justify-between gap-3">
+      <h2 class="text-[19px] font-semibold tracking-tight">Pedidos e pagamentos da loja</h2>
       <div class="flex gap-2">
-        <select id="filtroPedStatus" aria-label="Filtrar por status" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-white">
+        <select id="filtroPedStatus" aria-label="Filtrar por status" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie">
           <option value="">Todos os status</option><option value="PAGO">Pago</option><option value="PENDENTE">Pendente</option><option value="EXPIRADO">Expirado</option>
         </select>
-        <select id="filtroPedMetodo" aria-label="Filtrar por forma de pagamento" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-white">
+        <select id="filtroPedMetodo" aria-label="Filtrar por forma de pagamento" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie">
           <option value="">Todas as formas</option><option value="CARTAO">Cartão</option><option value="PIX">Pix</option><option value="BOLETO">Boleto</option>
         </select>
       </div>
@@ -164,7 +164,7 @@
     <div class="overflow-x-auto">
       <table class="w-full text-sm min-w-[520px]">
         <thead>
-          <tr class="text-left text-grafite/50 border-b border-grafite/10">
+          <tr class="text-left text-[13px] text-grafite/65 border-b border-tinta/[0.08]">
             <th class="px-6 py-3 font-medium">Pedido</th>
             <th class="px-6 py-3 font-medium">Aluno</th>
             <th class="px-6 py-3 font-medium">Itens</th>
@@ -174,7 +174,7 @@
           </tr>
         </thead>
         <tbody id="tabelaPedidos">
-          <tr><td colspan="6" class="px-6 py-6 text-grafite/40">Carregando...</td></tr>
+          <tr><td colspan="6" class="px-6 py-6 text-grafite/65">Carregando...</td></tr>
         </tbody>
       </table>
     </div>
@@ -184,17 +184,17 @@
 
   <!-- Agendamentos gerais -->
   <div id="painel-agendamentos" class="painel hidden">
-    <section class="bg-white border border-grafite/10 rounded-2xl overflow-hidden">
-      <div class="px-6 py-4 border-b border-grafite/10 flex flex-wrap items-center gap-3">
+    <section class="bg-superficie rounded-3xl overflow-hidden">
+      <div class="px-6 pt-5 pb-3 flex flex-wrap items-center gap-3">
         <h2 class="font-bold mr-auto">Todos os agendamentos</h2>
-        <input id="fData" type="date" aria-label="Data" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-white">
+        <input id="fData" type="date" aria-label="Data" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie">
         <label class="text-xs flex items-center gap-1"><input id="fTodas" type="checkbox"> todas as datas</label>
-        <select id="fStatus" aria-label="Status" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-white"></select>
-        <select id="fProfessor" aria-label="Professor" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-white"></select>
+        <select id="fStatus" aria-label="Status" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie"></select>
+        <select id="fProfessor" aria-label="Professor" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie"></select>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm min-w-[640px]">
-          <thead><tr class="text-left text-grafite/50 border-b border-grafite/10">
+          <thead><tr class="text-left text-[13px] text-grafite/65 border-b border-tinta/[0.08]">
             <th class="px-6 py-3 font-medium">Data</th><th class="px-6 py-3 font-medium">Hora</th><th class="px-6 py-3 font-medium">Aluno</th>
             <th class="px-6 py-3 font-medium">Professor</th><th class="px-6 py-3 font-medium">Treino</th><th class="px-6 py-3 font-medium">Status</th>
           </tr></thead>
@@ -217,41 +217,41 @@
 
   <div id="painel-academia" class="painel hidden">
   <!-- UC07 — Manter Academia -->
-  <section class="bg-white border border-grafite/10 rounded-2xl p-6">
-    <h2 class="font-bold mb-1">Informações da academia</h2>
-    <p class="text-grafite/50 text-xs mb-5">Aparecem no rodapé e na seção “Onde estamos” do site (com o mapa do Google).</p>
+  <section class="bg-superficie rounded-3xl p-6">
+    <h2 class="text-[19px] font-semibold tracking-tight mb-1">Informações da academia</h2>
+    <p class="text-grafite/65 text-xs mb-5">Aparecem no rodapé e na seção “Onde estamos” do site (com o mapa do Google).</p>
     <form id="academiaForm" class="grid md:grid-cols-2 gap-4">
       <div class="md:col-span-2">
-        <label class="text-xs font-semibold text-grafite/60" for="acEndereco">Endereço (como aparece no site)</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="acEndereco">Endereço (como aparece no site)</label>
         <input id="acEndereco" name="endereco" maxlength="200" required class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
       </div>
       <div class="md:col-span-2">
-        <label class="text-xs font-semibold text-grafite/60" for="acMapa">Localização no mapa</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="acMapa">Localização no mapa</label>
         <input id="acMapa" name="mapa_consulta" maxlength="200" required class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
-        <p class="text-[11px] text-grafite/40 mt-1">O que o Google Maps pesquisa: o endereço completo (rua, número, cidade) ou coordenadas, ex.: <span class="font-mono">-23.5958,-46.6061</span>.</p>
+        <p class="text-[11px] text-grafite/65 mt-1">O que o Google Maps pesquisa: o endereço completo (rua, número, cidade) ou coordenadas, ex.: <span class="font-mono">-23.5958,-46.6061</span>.</p>
       </div>
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="acEmail">E-mail</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="acEmail">E-mail</label>
         <input id="acEmail" name="email" type="email" maxlength="150" required class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
       </div>
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="acTelefone">Telefone</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="acTelefone">Telefone</label>
         <input id="acTelefone" name="telefone" maxlength="30" required class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
       </div>
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="acSemana">Horário (segunda a sexta)</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="acSemana">Horário (segunda a sexta)</label>
         <input id="acSemana" name="horario_semana" maxlength="100" required class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
       </div>
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="acSabado">Horário (sábado)</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="acSabado">Horário (sábado)</label>
         <input id="acSabado" name="horario_sabado" maxlength="100" required class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
       </div>
       <div class="md:col-span-2">
-        <label class="text-xs font-semibold text-grafite/60" for="acDescricao">Descrição (rodapé)</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="acDescricao">Descrição (rodapé)</label>
         <textarea id="acDescricao" name="descricao" rows="3" maxlength="500" required class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo resize-none"></textarea>
       </div>
       <div class="md:col-span-2">
-        <button type="submit" id="acSalvar" class="px-6 py-3 rounded-full bg-petroleo text-white text-sm font-semibold hover:opacity-90 transition">Salvar informações</button>
+        <button type="submit" id="acSalvar" class="px-6 py-3 rounded-full bg-petroleo text-white text-sm font-semibold hover:brightness-110 transition">Salvar informações</button>
       </div>
     </form>
   </section>
@@ -259,41 +259,41 @@
 </main>
 
 <!-- MODAL: CADASTRO GENÉRICO (planos, alunos, professores) -->
-<div id="cadModal" class="fixed inset-0 bg-grafite/50 z-[60] hidden items-center justify-center px-4">
-  <div class="bg-white rounded-3xl w-full max-w-md p-6 md:p-8 relative max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="cadTitulo">
-    <button id="cadFechar" aria-label="Fechar" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full hover:bg-grafite/5">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round"/></svg>
+<div id="cadModal" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-[60] hidden items-center justify-center px-4">
+  <div class="bg-superficie rounded-3xl w-full max-w-md p-6 md:p-8 relative max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="cadTitulo">
+    <button id="cadFechar" aria-label="Fechar" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
     </button>
-    <p id="cadTitulo" class="text-xl font-extrabold mb-5"></p>
+    <p id="cadTitulo" class="text-xl font-bold mb-5"></p>
     <form id="cadForm" class="flex flex-col gap-4"></form>
   </div>
 </div>
 
 <!-- MODAL: NOVO AGENDAMENTO -->
-<div id="agendamentoModal" class="fixed inset-0 bg-grafite/50 z-[60] hidden items-center justify-center px-6">
-  <div class="bg-white rounded-3xl w-full max-w-sm p-8 relative" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
-    <button id="modalFechar" aria-label="Fechar" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full hover:bg-grafite/5">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round"/></svg>
+<div id="agendamentoModal" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-[60] hidden items-center justify-center px-6">
+  <div class="bg-superficie rounded-3xl w-full max-w-sm p-8 relative" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+    <button id="modalFechar" aria-label="Fechar" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
     </button>
-    <p id="modalTitulo" class="text-xl font-extrabold mb-1">Novo agendamento</p>
-    <p class="text-grafite/50 text-sm mb-6">Atendimento de hoje.</p>
+    <p id="modalTitulo" class="text-[24px] font-bold tracking-tight mb-1">Novo agendamento</p>
+    <p class="text-grafite/65 text-sm mb-6">Atendimento de hoje.</p>
 
     <form id="agendamentoForm" class="flex flex-col gap-4">
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="agAluno">Nome do aluno</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="agAluno">Nome do aluno</label>
         <input id="agAluno" type="text" required maxlength="100" placeholder="Ex: Camila Souza"
           class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
       </div>
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="agProfessor">Professor</label>
-        <select id="agProfessor" class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:border-petroleo"></select>
+        <label class="text-[13px] font-medium text-grafite/65" for="agProfessor">Professor</label>
+        <select id="agProfessor" class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm bg-superficie focus:outline-none focus:border-petroleo"></select>
       </div>
       <div>
-        <label class="text-xs font-semibold text-grafite/60" for="agHora">Horário</label>
+        <label class="text-[13px] font-medium text-grafite/65" for="agHora">Horário</label>
         <input id="agHora" type="time" required
           class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo">
       </div>
-      <button type="submit" id="agSubmit" class="mt-2 w-full py-3.5 rounded-full bg-petroleo text-white font-semibold hover:opacity-90 transition">
+      <button type="submit" id="agSubmit" class="mt-2 w-full py-3.5 rounded-xl bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition">
         Confirmar agendamento
       </button>
     </form>

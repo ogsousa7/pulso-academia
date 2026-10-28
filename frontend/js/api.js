@@ -146,6 +146,7 @@ const Api = {
   listarProdutos: () => apiFetch('/produtos'),
   listarAvisos: () => apiFetch('/avisos'),
   obterAcademia: () => apiFetch('/academia'),
+  verificarCupom: (codigo, subtotal) => apiFetch(`/cupons/${encodeURIComponent(codigo)}?subtotal=${subtotal}`),
 
   // Pedidos (logado). O servidor recalcula preços: enviamos só tipo, id e quantidade.
   // `pagamento` = { metodo: 'PIX'|'CARTAO'|'BOLETO', parcelas?, bandeira?, cartaoFinal? }.
@@ -174,6 +175,7 @@ const Api = {
   // Professor (role PROFESSOR)
   profAgenda: (de, ate) => apiFetch(`/professor/agenda${de ? `?de=${de}&ate=${ate}` : ''}`),
   profDisponibilidade: () => apiFetch('/professor/disponibilidade'),
+  profStatusAula: (id, status) => apiFetch(`/professor/agendamentos/${id}`, { method: 'PATCH', body: JSON.stringify({ status }) }),
   profSalvarDisponibilidade: (dias) => apiFetch('/professor/disponibilidade', { method: 'PUT', body: JSON.stringify({ dias }) }),
 
   // Admin (protegidas) — cadastros genéricos: recurso = planos | alunos | professores

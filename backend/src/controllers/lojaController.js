@@ -13,10 +13,21 @@ export function listarPlanos(req, res) {
   res.json({ planos });
 }
 
+/** "detalhes" é guardado como texto JSON; devolve sempre uma lista (nunca quebra a vitrine). */
+function lerLista(texto) {
+  try {
+    const lista = JSON.parse(texto);
+    return Array.isArray(lista) ? lista : [];
+  } catch {
+    return [];
+  }
+}
+
 /** GET /api/produtos */
 export function listarProdutos(req, res) {
   const produtos = db
-    .prepare('SELECT id, nome, preco, categoria, descricao, imagem FROM produtos ORDER BY categoria, nome ASC')
-    .all();
+    .prepare('SELECT id, nome, preco, categoria, descricao, imagem, detalhes FROM produtos ORDER BY categoria, nome ASC')
+    .all()
+    .map((p) => ({ ...p, detalhes: lerLista(p.detalhes) }));
   res.json({ produtos });
 }

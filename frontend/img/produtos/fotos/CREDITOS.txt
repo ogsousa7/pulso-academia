@@ -1,0 +1,19 @@
+Fotos dos produtos: Unsplash (https://unsplash.com), uso livre pela Licença Unsplash (https://unsplash.com/license).
+Fundo removido e padronizado (recorte transparente com sombra), para todas as fotos terem o mesmo visual.
+Arquivo -> foto original:
+whey.webp -> https://images.unsplash.com/photo-1693996045899-7cf0ac0229c7
+creatina.webp -> https://images.unsplash.com/photo-1693996046514-0406d0773a7d
+bcaa.webp -> https://images.unsplash.com/photo-1664956618021-73c47736845e
+barra.webp -> https://images.unsplash.com/photo-1633360821154-1935fb5671e6
+camiseta.webp -> https://images.unsplash.com/photo-1610502778270-c5c6f4c7d575
+regata.webp -> https://images.unsplash.com/photo-1601838165307-6a5a08616f97
+shorts.webp -> https://images.unsplash.com/photo-1640943136566-3edeb13e3d3b
+garrafa.webp -> https://images.unsplash.com/photo-1602143407151-7111542de6e8
+toalha.webp -> https://images.unsplash.com/photo-1662386392771-07d5109da175
+luva.webp -> https://images.unsplash.com/photo-1557127972-1c446ea89ea5
+corda.webp -> https://images.unsplash.com/photo-1516876345887-6dd74f80787a
+faixas.webp -> https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2
+shaker.webp -> https://images.unsplash.com/photo-1775199603078-e1d964929e10
+bolsa.webp -> https://images.unsplash.com/photo-1448582649076-3981753123b5
+
+Se uma foto faltar, o site mostra a ilustração SVG do produto (img/produtos/<nome>.svg).

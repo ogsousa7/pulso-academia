@@ -37,19 +37,19 @@ function renderAgendamentos(agendamentos) {
   const tbody = document.getElementById('tabelaAtendimentos');
 
   if (agendamentos.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-6 text-grafite/40">Nenhum atendimento agendado para hoje.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-6 text-grafite/65">Nenhum atendimento agendado para hoje.</td></tr>`;
     return;
   }
 
   tbody.innerHTML = agendamentos
     .map(
       (a) => `
-      <tr class="border-b border-grafite/5 last:border-0">
+      <tr class="border-b border-tinta/[0.06] last:border-0">
         <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(a.hora)}</td>
         <td class="px-6 py-3.5 font-medium">${escapeHtml(a.aluno_nome)}</td>
         <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(a.professor)}</td>
         <td class="px-6 py-3.5">
-          <span class="px-3 py-1 rounded-full text-xs font-semibold ${STATUS_ESTILOS[a.status] || ''}">${escapeHtml(a.status)}</span>
+          <span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${STATUS_ESTILOS[a.status] || ''}">${escapeHtml(a.status)}</span>
         </td>
       </tr>`
     )
@@ -60,15 +60,15 @@ function renderAvisos(avisos) {
   const lista = document.getElementById('listaAvisos');
 
   if (avisos.length === 0) {
-    lista.innerHTML = `<p class="text-grafite/40 text-sm">Nenhum aviso publicado ainda.</p>`;
+    lista.innerHTML = `<p class="text-grafite/65 text-sm">Nenhum aviso publicado ainda.</p>`;
     return;
   }
 
   lista.innerHTML = avisos
     .map(
       (a) => `
-      <div class="border border-grafite/10 rounded-xl p-3">
-        <p class="text-[11px] text-grafite/40 mb-1">${formatarDataHora(a.criado_em)}</p>
+      <div class="bg-offwhite rounded-2xl p-3.5">
+        <p class="text-[11px] text-grafite/65 mb-1">${formatarDataHora(a.criado_em)}</p>
         <p class="text-sm">${escapeHtml(a.texto)}</p>
       </div>`
     )
@@ -86,19 +86,19 @@ function renderPedidos(pedidos) {
   const tbody = document.getElementById('tabelaPedidos');
 
   if (pedidos.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-6 text-grafite/40">Nenhum pedido feito na loja ainda.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-6 text-grafite/65">Nenhum pedido feito na loja ainda.</td></tr>`;
     return;
   }
 
   tbody.innerHTML = pedidos
     .map(
       (p) => `
-      <tr class="border-b border-grafite/5 last:border-0">
-        <td class="px-6 py-3.5 text-grafite/70">#${p.id} <span class="text-grafite/40 text-xs">${formatarDataHora(p.criado_em)}</span></td>
+      <tr class="border-b border-tinta/[0.06] last:border-0">
+        <td class="px-6 py-3.5 text-grafite/70">#${p.id} <span class="text-grafite/65 text-xs">${formatarDataHora(p.criado_em)}</span></td>
         <td class="px-6 py-3.5 font-medium">${escapeHtml(p.aluno_nome)}</td>
         <td class="px-6 py-3.5 text-grafite/70">${p.qtd_itens}</td>
         <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(NOME_METODO[p.metodo] || p.metodo)}${p.parcelas > 1 ? ` · ${p.parcelas}x` : ''}</td>
-        <td class="px-6 py-3.5"><span class="px-3 py-1 rounded-full text-xs font-semibold ${(ESTILO_PEDIDO[p.status] || ['', ''])[1]}">${escapeHtml((ESTILO_PEDIDO[p.status] || [p.status])[0])}</span></td>
+        <td class="px-6 py-3.5"><span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${(ESTILO_PEDIDO[p.status] || ['', ''])[1]}">${escapeHtml((ESTILO_PEDIDO[p.status] || [p.status])[0])}</span></td>
         <td class="px-6 py-3.5 text-right font-semibold">${formatarPreco(p.total)}</td>
       </tr>`
     )
@@ -214,7 +214,7 @@ formAcademia.addEventListener('submit', async (evento) => {
 
 /* ---------- Inicialização ---------- */
 
-document.getElementById('btnSair').addEventListener('click', () => Auth.logout());
+// O botão Sair fica no menu da conta (avatar no topo), montado pelo ui.js.
 
 const usuario = Auth.getUsuario();
 if (usuario) {

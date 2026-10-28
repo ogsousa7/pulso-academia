@@ -90,3 +90,24 @@ export function salvarDisponibilidade(req, res) {
   });
   res.json({ ok: true, total: novos.size });
 }
+
+/**
+ * PATCH /api/professor/agendamentos/:id  body: { status: 'Em andamento' | 'Confirmado' }
+ * O professor marca o início da aula (ou desfaz). Só aulas DELE e só no dia da aula.
+ * Cancelar continua sendo com o aluno ou com a recepção.
+ */
+export function mudarStatusAula(req, res) {
+  const id = Number(req.params.id);
+  const { status } = req.body ?? {};
+  if (!['Em andamento', 'Confirmado'].includes(status)) {
+    return res.status(400).json({ erro: 'Status inválido. Use "Em andamento" ou "Confirmado".' });
+  }
+  const aula = Number.isInteger(id) && id > 0
+    ? db.prepare('SELECT id, data, status FROM agendamentos WHERE id = ? AND professor_id = ?').get(id, req.professor.id)
+    : null;
+  if (!aula) return res.status(404).json({ erro: 'Aula não encontrada na sua agenda.' });
+  if (aula.status === 'Cancelado') return res.status(409).json({ erro: 'Esta aula foi cancelada.' });
+  if (aula.data !== hojeISO()) return res.status(409).json({ erro: 'Só dá para iniciar aulas de hoje.' });
+  db.prepare('UPDATE agendamentos SET status = ? WHERE id = ?').run(status, id);
+  res.json({ ok: true, status });
+}

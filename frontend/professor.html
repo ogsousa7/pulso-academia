@@ -5,27 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Minha agenda — Pulso Academia</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: { sans: ['Montserrat', 'sans-serif'] },
-        colors: {
-          offwhite: '#FBFBFB', grafite: '#1F1F1F', petroleo: '#425B63',
-          oliva: '#7C8A5A', terracota: '#C47A52',
-        }
-      }
-    }
-  }
-</script>
+<script src="js/tw-config.js"></script>
 <link rel="stylesheet" href="css/style.css">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#425B63">
+<meta name="theme-color" content="#F5F5F7">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16.png">
@@ -43,47 +28,68 @@
 </script>
 </head>
 
-<body data-instalar class="bg-offwhite text-grafite antialiased font-sans min-h-screen">
+<body data-instalar class="bg-offwhite text-grafite antialiased font-sans min-h-screen com-tabbar">
 
-<header class="bg-grafite text-white">
-  <div class="max-w-4xl mx-auto px-4 md:px-8 h-[68px] flex items-center justify-between gap-4">
-    <a href="index.html" class="flex items-center gap-2">
-      <img src="img/logo-icon-branco.png" alt="" class="h-6 w-auto">
-      <span class="text-base font-bold tracking-wide">PULSO</span>
+<!-- HEADER: barra translúcida, só a logo (o menu da conta aparece no lugar do "Entrar" quando há login) -->
+<header class="nav-vidro sticky top-0 z-40">
+  <div class="max-w-[1180px] mx-auto px-5 md:px-8 h-[60px] flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-3 shrink-0" aria-label="Pulso Academia, início">
+      <img src="img/logo-icon.png" alt="Pulso Academia" class="logo-tema h-8 w-auto">
     </a>
-    <div class="flex items-center gap-2 md:gap-4 text-sm">
-      <a href="index.html" class="hidden sm:inline text-white/70 hover:text-white">Site</a>
-      <button id="btnSair" class="px-4 py-2 rounded-full border border-white/25 hover:bg-white/10 transition font-semibold">Sair</button>
+
+    <nav class="hidden md:flex items-center gap-9 text-[14px]">
+      <a href="professor.html" class="text-grafite font-medium transition-colors" aria-current="page">Minha agenda</a>
+      <a href="index.html" class="text-grafite/70 hover:text-grafite transition-colors">Início do site</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <button id="btnEntrar" class="px-4 py-2 rounded-full bg-grafite text-superficie text-[14px] font-medium hover:bg-grafite/85 transition">Entrar</button>
+      <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-tinta/5">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
     </div>
+  </div>
+
+  <div id="mobileMenu" class="hidden md:hidden flex-col px-5 pb-3 text-[17px] font-semibold">
+    <a href="professor.html" class="py-3 border-b border-tinta/5 last:border-0">Minha agenda</a>
+    <a href="index.html" class="py-3 border-b border-tinta/5 last:border-0">Início do site</a>
   </div>
 </header>
 
-<main class="max-w-5xl mx-auto px-4 md:px-8 py-6 md:py-8">
+<main class="max-w-[1180px] mx-auto px-5 md:px-8 pt-6 md:pt-10 pb-10 [&>section]:max-w-[880px]">
   <div class="mb-6">
-    <h1 id="saudacao" class="text-xl md:text-2xl font-extrabold">Olá!</h1>
-    <p class="text-grafite/50 text-sm" id="subtitulo"></p>
+    <h1 id="saudacao" class="text-[34px] md:text-[40px] font-bold tracking-tight leading-tight">Olá!</h1>
+    <p class="text-grafite/65 text-[15px] mt-1" id="subtitulo"></p>
   </div>
 
-  <nav class="flex gap-2 mb-6" role="tablist" aria-label="Seções">
-    <button role="tab" data-aba="agenda" class="aba px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap">Minha agenda</button>
-    <button role="tab" data-aba="disponibilidade" class="aba px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap">Meus horários</button>
+  <nav class="segmentado hidden md:inline-flex mb-6" role="tablist" aria-label="Seções">
+    <button role="tab" data-aba="agenda" class="aba">Minha agenda</button>
+    <button role="tab" data-aba="disponibilidade" class="aba">Meus horários</button>
   </nav>
 
   <section id="painel-agenda" class="painel">
-    <div id="listaAgenda" class="flex flex-col gap-5"></div>
+    <div id="resumoProfessor" class="grid grid-cols-3 gap-3 mb-7"></div>
+    <div id="listaAgenda" class="flex flex-col gap-7"></div>
   </section>
 
-  <section id="painel-disponibilidade" class="painel hidden bg-white border border-grafite/10 rounded-2xl p-5 md:p-8">
-    <h2 class="font-bold mb-1">Horários em que você atende</h2>
-    <p class="text-grafite/50 text-xs mb-4">Marque os horários de início (aulas de 1 hora). Toque no nome do dia para marcar ou desmarcar a coluna toda. Horários que já têm aluno marcado não podem ser removidos.</p>
+  <section id="painel-disponibilidade" class="painel hidden bg-superficie rounded-3xl p-5 md:p-8">
+    <h2 class="text-[21px] font-semibold tracking-tight mb-1">Horários em que você atende</h2>
+    <p class="text-grafite/65 text-[14px] leading-snug mb-5 max-w-xl">Marque os horários de início (aulas de 1 hora). Toque no nome do dia para marcar ou desmarcar a coluna toda. Horários que já têm aluno marcado não podem ser removidos.</p>
     <div class="overflow-x-auto">
       <table class="text-sm" id="gradeHorarios"></table>
     </div>
-    <button id="btnSalvarDisp" class="mt-5 px-6 py-3 rounded-full bg-petroleo text-white text-sm font-semibold hover:opacity-90 transition">Salvar horários</button>
+    <button id="btnSalvarDisp" class="mt-5 w-full md:w-auto px-6 py-3 rounded-xl bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition">Salvar horários</button>
   </section>
 </main>
 
-<div id="toastContainer" class="fixed bottom-6 right-4 left-4 sm:left-auto sm:right-6 z-[100] flex flex-col gap-3 items-end" aria-live="polite"></div>
+
+<!-- Barra de abas do app: aparece só no celular (no computador as abas ficam no topo) -->
+<nav class="tabbar" role="tablist" aria-label="Seções">
+  <button role="tab" data-aba="agenda" class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 9.5h17M8 3v4M16 3v4M7.5 13h2M11 13h2M14.5 13h2M7.5 16.5h2M11 16.5h2"/></svg><span>Agenda</span></button>
+  <button role="tab" data-aba="disponibilidade" class="aba"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><span>Horários</span></button>
+</nav>
+
+<div id="toastContainer" class="fixed bottom-[calc(96px+env(safe-area-inset-bottom))] md:bottom-6 right-4 left-4 sm:left-auto sm:right-6 z-[100] flex flex-col gap-3 items-end" aria-live="polite"></div>
 
 <script src="js/ui.js"></script>
 <script src="js/professor.js"></script>

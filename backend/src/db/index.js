@@ -242,6 +242,7 @@ garantirColuna('planos', 'ativo', 'INTEGER NOT NULL DEFAULT 1');
 
 garantirColuna('produtos', 'descricao', "TEXT NOT NULL DEFAULT ''");
 garantirColuna('produtos', 'imagem', "TEXT NOT NULL DEFAULT ''");
+garantirColuna('produtos', 'detalhes', "TEXT NOT NULL DEFAULT '[]'"); // lista em JSON (tela do produto)
 
 garantirColuna('pedidos', 'parcelas', 'INTEGER NOT NULL DEFAULT 1');
 garantirColuna('pedidos', 'bandeira', 'TEXT');
@@ -250,6 +251,9 @@ garantirColuna('pedidos', 'codigo_pagamento', 'TEXT');
 garantirColuna('pedidos', 'expira_em', 'TEXT');
 garantirColuna('pedidos', 'pago_em', 'TEXT');
 garantirColuna('pedidos', 'vencimento', 'TEXT');
+garantirColuna('pedidos', 'subtotal', 'REAL');           // antes do desconto
+garantirColuna('pedidos', 'desconto', 'REAL NOT NULL DEFAULT 0');
+garantirColuna('pedidos', 'cupom', 'TEXT');
 
 // Texto que o Google Maps pesquisa para mostrar o mapa (endereço completo ou "lat,lng").
 garantirColuna('academia', 'mapa_consulta', "TEXT NOT NULL DEFAULT 'Heliópolis, São Paulo - SP, Brasil'");
@@ -266,36 +270,53 @@ garantirColuna('agendamentos', 'nivel', "TEXT NOT NULL DEFAULT 'Iniciante'");
 ------------------------------------------------------------------------ */
 
 const CATALOGO = [
-  ['Whey Protein Pulso 900g', 149.9, 'suplemento', 'Proteína do soro do leite, 25 g por dose. Sabor chocolate.', 'whey'],
-  ['Creatina Monohidratada 300g', 89.9, 'suplemento', 'Creatina pura em pó, sem sabor. 100 doses de 3 g.', 'creatina'],
-  ['BCAA 120 cápsulas', 69.9, 'suplemento', 'Aminoácidos de cadeia ramificada para a recuperação pós-treino.', 'bcaa'],
-  ['Barra de Proteína (caixa com 12)', 59.9, 'suplemento', 'Barra com 15 g de proteína. Prática para levar na mochila.', 'barra'],
-  ['Camiseta Dry-Fit Pulso', 79.9, 'vestuario', 'Tecido leve que seca rápido. Corte confortável para o treino.', 'camiseta'],
-  ['Regata Treino Pulso', 69.9, 'vestuario', 'Regata cavada, ideal para musculação e dias quentes.', 'regata'],
-  ['Shorts de Treino Pulso', 89.9, 'vestuario', 'Elástico firme e bolso lateral. Liberdade para agachar à vontade.', 'shorts'],
-  ['Garrafa Térmica Pulso', 59.9, 'acessorio', 'Aço inox, 600 ml. Mantém a água gelada por até 12 horas.', 'garrafa'],
-  ['Toalha de Treino Pulso', 39.9, 'acessorio', 'Microfibra de secagem rápida, 80 × 40 cm.', 'toalha'],
-  ['Luva de Treino Pulso', 54.9, 'acessorio', 'Palma acolchoada e fecho em velcro. Mais pegada, menos calos.', 'luva'],
-  ['Corda de Pular Pulso', 34.9, 'acessorio', 'Cabo de aço revestido com rolamento. Altura ajustável.', 'corda'],
-  ['Kit 3 Faixas Elásticas', 44.9, 'acessorio', 'Três níveis de resistência para alongar e fortalecer.', 'faixas'],
-  ['Shaker Pulso 600ml', 29.9, 'acessorio', 'Tampa rosqueável e mola misturadora. Livre de BPA.', 'shaker'],
-  ['Bolsa Esportiva Pulso', 119.9, 'acessorio', 'Compartimento para tênis e bolso com zíper. Cabe tudo do dia.', 'bolsa'],
+  // nome, preço, categoria, descrição curta, arquivo (foto e ilustração), detalhes (aparecem na tela do produto)
+  ['Whey Protein Pulso 900g', 149.9, 'suplemento', 'Proteína do soro do leite, 25 g por dose. Sabor chocolate.', 'whey',
+    ['25 g de proteína por dose de 30 g', '30 doses por pote', 'Misture com 200 ml de água ou leite, depois do treino', 'Contém leite. Não contém glúten']],
+  ['Creatina Monohidratada 300g', 89.9, 'suplemento', 'Creatina pura em pó, sem sabor. 100 doses de 3 g.', 'creatina',
+    ['100% creatina monohidratada', '3 g por dia, em qualquer horário', 'Sem sabor: dissolve em água, suco ou no shake', 'Mais força e explosão em treinos curtos e intensos']],
+  ['BCAA 120 cápsulas', 69.9, 'suplemento', 'Aminoácidos de cadeia ramificada para a recuperação pós-treino.', 'bcaa',
+    ['Leucina, isoleucina e valina na proporção 2:1:1', '4 cápsulas por dia', '30 dias de uso por frasco', 'Cápsulas vegetais']],
+  ['Barra de Proteína (caixa com 12)', 59.9, 'suplemento', 'Barra com 15 g de proteína. Prática para levar na mochila.', 'barra',
+    ['15 g de proteína por barra', '12 barras de 45 g', 'Sabor castanhas com cacau', 'Boa para o lanche antes ou depois do treino']],
+  ['Camiseta Dry-Fit Pulso', 79.9, 'vestuario', 'Tecido leve que seca rápido. Corte confortável para o treino.', 'camiseta',
+    ['Tecido dry-fit 100% poliéster', 'Tamanhos P, M, G e GG (escolha na retirada)', 'Seca rápido e não marca o suor', 'Lavar à mão ou na máquina, sem amaciante']],
+  ['Regata Treino Pulso', 69.9, 'vestuario', 'Regata cavada, ideal para musculação e dias quentes.', 'regata',
+    ['Cavada, com mais liberdade para os braços', 'Malha leve e respirável', 'Tamanhos P, M, G e GG (escolha na retirada)', 'Ideal para musculação e treino funcional']],
+  ['Shorts de Treino Pulso', 89.9, 'vestuario', 'Elástico firme e bolso lateral. Liberdade para agachar à vontade.', 'shorts',
+    ['Cós elástico com cordão de ajuste', 'Bolso lateral para chave ou cartão', 'Tecido com elastano: agacha sem apertar', 'Tamanhos P, M, G e GG (escolha na retirada)']],
+  ['Garrafa Térmica Pulso', 59.9, 'acessorio', 'Aço inox, 600 ml. Mantém a água gelada por até 12 horas.', 'garrafa',
+    ['Aço inox com parede dupla', 'Capacidade de 600 ml', 'Gelada por até 12 h, quente por até 6 h', 'Tampa rosqueável que não vaza']],
+  ['Toalha de Treino Pulso', 39.9, 'acessorio', 'Microfibra de secagem rápida, 80 × 40 cm.', 'toalha',
+    ['Microfibra macia e absorvente', '80 × 40 cm, cabe dobrada na mochila', 'Seca muito mais rápido que algodão', 'Use no banco para treinar com higiene']],
+  ['Luva de Treino Pulso', 54.9, 'acessorio', 'Palma acolchoada e fecho em velcro. Mais pegada, menos calos.', 'luva',
+    ['Palma acolchoada antiderrapante', 'Dedos abertos e fecho em velcro', 'Protege as mãos de calos na barra', 'Tamanhos P, M e G (escolha na retirada)']],
+  ['Corda de Pular Pulso', 34.9, 'acessorio', 'Cabo de aço revestido com rolamento. Altura ajustável.', 'corda',
+    ['Cabo de aço revestido de 3 m', 'Rolamentos nas manoplas: gira sem enroscar', 'Comprimento ajustável para a sua altura', 'Ótima para aquecer e para o cardio']],
+  ['Kit 3 Faixas Elásticas', 44.9, 'acessorio', 'Três níveis de resistência para alongar e fortalecer.', 'faixas',
+    ['3 faixas: leve, média e forte', 'Látex resistente que não enrola', 'Bolsinha para guardar e levar', 'Serve para alongar, aquecer e treinar em casa']],
+  ['Shaker Pulso 600ml', 29.9, 'acessorio', 'Tampa rosqueável e mola misturadora. Livre de BPA.', 'shaker',
+    ['600 ml com marcação de medidas', 'Mola de aço que dissolve sem empelotar', 'Tampa com trava que não vaza', 'Livre de BPA']],
+  ['Bolsa Esportiva Pulso', 119.9, 'acessorio', 'Compartimento para tênis e bolso com zíper. Cabe tudo do dia.', 'bolsa',
+    ['Compartimento separado para o tênis', 'Bolso interno com zíper para objetos pequenos', 'Alça de ombro ajustável', 'Capacidade de 30 litros']],
 ];
 
 function sincronizarCatalogo() {
   const existe = db.prepare('SELECT id FROM produtos WHERE nome = ?');
   const inserir = db.prepare(
-    'INSERT INTO produtos (nome, preco, categoria, descricao, imagem) VALUES (?, ?, ?, ?, ?)'
+    'INSERT INTO produtos (nome, preco, categoria, descricao, imagem, detalhes) VALUES (?, ?, ?, ?, ?, ?)'
   );
   const atualizar = db.prepare(
-    'UPDATE produtos SET preco = ?, categoria = ?, descricao = ?, imagem = ? WHERE id = ?'
+    'UPDATE produtos SET preco = ?, categoria = ?, descricao = ?, imagem = ?, detalhes = ? WHERE id = ?'
   );
 
-  for (const [nome, preco, categoria, descricao, slug] of CATALOGO) {
-    const imagem = `img/produtos/${slug}.svg`;
+  for (const [nome, preco, categoria, descricao, slug, detalhes] of CATALOGO) {
+    // Foto real (Unsplash, recortada com fundo transparente, em img/produtos/fotos). Se faltar, o site usa a ilustração .svg.
+    const imagem = `img/produtos/fotos/${slug}.webp`;
+    const lista = JSON.stringify(detalhes ?? []);
     const atual = existe.get(nome);
-    if (atual) atualizar.run(preco, categoria, descricao, imagem, atual.id);
-    else inserir.run(nome, preco, categoria, descricao, imagem);
+    if (atual) atualizar.run(preco, categoria, descricao, imagem, lista, atual.id);
+    else inserir.run(nome, preco, categoria, descricao, imagem, lista);
   }
 }
 

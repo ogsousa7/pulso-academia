@@ -7,16 +7,58 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#FBFBFB",
-  "theme_color": "#425B63",
+  "background_color": "#F5F5F7",
+  "theme_color": "#F5F5F7",
   "icons": [
-    { "src": "img/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "img/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "img/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "img/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ],
   "shortcuts": [
-    { "name": "Agendar aula", "url": "aluno.html#agendar", "icons": [{ "src": "img/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Minhas aulas", "url": "aluno.html#aulas", "icons": [{ "src": "img/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Loja", "url": "loja.html", "icons": [{ "src": "img/icons/icon-192.png", "sizes": "192x192" }] }
+    {
+      "name": "Agendar aula",
+      "url": "aluno.html#agendar",
+      "icons": [
+        {
+          "src": "img/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Minhas aulas",
+      "url": "aluno.html#aulas",
+      "icons": [
+        {
+          "src": "img/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Loja",
+      "url": "loja.html",
+      "icons": [
+        {
+          "src": "img/icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }

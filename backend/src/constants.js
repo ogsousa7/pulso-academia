@@ -21,3 +21,14 @@ export const ANTECEDENCIA_CANCELAMENTO_HORAS = 2;
 
 /** Até quantos dias à frente é possível agendar. */
 export const MAX_DIAS_AGENDAMENTO = 30;
+
+/**
+ * Cupons de desconto (demonstração). O servidor recalcula o desconto em cada
+ * pedido: o navegador só manda o código. Para criar um cupom, adicione aqui.
+ *   tipo 'percentual' -> valor em %  ·  tipo 'valor' -> valor em R$
+ *   minimo -> subtotal mínimo do pedido para o cupom valer
+ */
+export const CUPONS = {
+  PULSO10: { tipo: 'percentual', valor: 10, minimo: 0, descricao: '10% de desconto' },
+  BEMVINDO20: { tipo: 'valor', valor: 20, minimo: 100, descricao: 'R$ 20 de desconto em compras a partir de R$ 100' },
+};

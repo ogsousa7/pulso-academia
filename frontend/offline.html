@@ -8,11 +8,17 @@
 <link rel="icon" href="favicon.ico" sizes="any">
 <style>
   body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;
-         font-family: Montserrat, system-ui, -apple-system, 'Segoe UI', sans-serif; background: #FBFBFB; color: #1F1F1F; text-align: center; }
+         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F5F5F7; color: #1D1D1F; text-align: center; }
   img { height: 56px; margin-bottom: 24px; }
-  h1 { font-size: 22px; margin: 0 0 8px; }
+  h1 { font-size: 28px; letter-spacing: -0.02em; margin: 0 0 8px; }
   p { color: rgba(31,31,31,.6); margin: 0 0 24px; max-width: 320px; line-height: 1.5; }
   button { background: #425B63; color: #fff; border: 0; border-radius: 999px; padding: 14px 28px; font: inherit; font-weight: 600; cursor: pointer; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #000; color: #F5F5F7; }
+    p { color: rgba(245,245,247,.7); }
+    img { filter: brightness(0) invert(.93); }
+    button { background: #4F7480; }
+  }
 </style>
 </head>
 <body>

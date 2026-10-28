@@ -16,8 +16,7 @@ function abrirAba(nome) {
   document.querySelectorAll('.painel').forEach((p) => p.classList.toggle('hidden', p.id !== `painel-${nome}`));
   document.querySelectorAll('.aba').forEach((b) => {
     const ativa = b.dataset.aba === nome;
-    b.className = `aba px-5 py-2.5 rounded-full text-sm font-semibold whitespace-nowrap transition ${
-      ativa ? 'bg-grafite text-white' : 'bg-white border border-grafite/15 text-grafite/70 hover:bg-grafite/5'}`;
+    b.setAttribute('aria-selected', ativa); // o visual da aba ativa vem do CSS (.segmentado / .tabbar)
   });
   const carregar = {
     geral: () => carregarTudo(), agendamentos: carregarAgendamentos, planos: () => CADASTROS.planos.carregar(),
@@ -30,8 +29,8 @@ function abrirAba(nome) {
 document.querySelectorAll('.aba').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
 
 const SIM_NAO = (v) => (v
-  ? '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-oliva/10 text-oliva">Ativo</span>'
-  : '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-terracota/10 text-terracota">Inativo</span>');
+  ? '<span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold bg-oliva/10 text-oliva">Ativo</span>'
+  : '<span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold bg-terracota/10 text-terracota">Inativo</span>');
 
 /* ---------- Cadastros genéricos (planos, alunos, professores) ---------- */
 
@@ -44,7 +43,7 @@ const CADASTROS = {
     recurso: 'planos', singular: 'plano', plural: 'Planos', chave: 'planos',
     colunas: [
       ['Nome', (p) => `<span class="font-medium">${escapeHtml(p.nome)}</span>`],
-      ['Preço', (p) => `${formatarPreco(p.preco)} <span class="text-grafite/40 text-xs">${escapeHtml(p.periodo)}</span>`],
+      ['Preço', (p) => `${formatarPreco(p.preco)} <span class="text-grafite/65 text-xs">${escapeHtml(p.periodo)}</span>`],
       ['Alunos ativos', (p) => p.alunos_ativos],
       ['Situação', (p) => SIM_NAO(p.ativo)],
     ],
@@ -60,8 +59,8 @@ const CADASTROS = {
   alunos: {
     recurso: 'alunos', singular: 'aluno', plural: 'Alunos', chave: 'alunos', busca: true,
     colunas: [
-      ['Nome', (a) => `<span class="font-medium">${escapeHtml(a.nome)}</span><br><span class="text-xs text-grafite/40">${escapeHtml(a.email)}</span>`],
-      ['Plano', (a) => (a.plano ? `${escapeHtml(a.plano)} <span class="text-xs text-grafite/40">até ${formatarDataISO(a.vencimento)}</span>` : '<span class="text-grafite/40">Sem plano</span>')],
+      ['Nome', (a) => `<span class="font-medium">${escapeHtml(a.nome)}</span><br><span class="text-xs text-grafite/65">${escapeHtml(a.email)}</span>`],
+      ['Plano', (a) => (a.plano ? `${escapeHtml(a.plano)} <span class="text-xs text-grafite/65">até ${formatarDataISO(a.vencimento)}</span>` : '<span class="text-grafite/65">Sem plano</span>')],
       ['Situação', (a) => SIM_NAO(a.ativo)],
     ],
     campos: () => [
@@ -75,7 +74,7 @@ const CADASTROS = {
   professores: {
     recurso: 'professores', singular: 'professor', plural: 'Professores', chave: 'professores',
     colunas: [
-      ['Nome', (p) => `<span class="font-medium">${escapeHtml(p.nome)}</span><br><span class="text-xs text-grafite/40">${escapeHtml(p.email)}</span>`],
+      ['Nome', (p) => `<span class="font-medium">${escapeHtml(p.nome)}</span><br><span class="text-xs text-grafite/65">${escapeHtml(p.email)}</span>`],
       ['Especialidade', (p) => escapeHtml(p.especialidade)],
       ['Horários/semana', (p) => p.horarios_semana],
       ['Situação', (p) => SIM_NAO(p.ativo)],
@@ -97,24 +96,24 @@ for (const cfg of Object.values(CADASTROS)) {
 
   cfg.desenhar = () => {
     cfg.raiz.innerHTML = `
-      <section class="bg-white border border-grafite/10 rounded-2xl overflow-hidden">
-        <div class="px-6 py-4 border-b border-grafite/10 flex flex-wrap items-center gap-3 justify-between">
-          <h2 class="font-bold">${cfg.plural}</h2>
+      <section class="bg-superficie rounded-3xl overflow-hidden">
+        <div class="px-6 pt-5 pb-3 flex flex-wrap items-center gap-3 justify-between">
+          <h2 class="text-[19px] font-semibold tracking-tight">${cfg.plural}</h2>
           <div class="flex items-center gap-2">
             ${cfg.busca ? `<input type="search" data-busca placeholder="Buscar por nome ou e-mail" aria-label="Buscar"
               class="border border-grafite/15 rounded-full px-4 py-2 text-xs focus:outline-none focus:border-petroleo">` : ''}
-            <button data-novo class="px-5 py-2.5 rounded-full bg-petroleo text-white text-sm font-semibold hover:opacity-90 transition">+ Novo ${cfg.singular}</button>
+            <button data-novo class="px-4 py-2 rounded-full bg-petroleo text-white text-[14px] font-medium hover:brightness-110 transition">Novo ${cfg.singular}</button>
           </div>
         </div>
         <div class="overflow-x-auto"><table class="w-full text-sm min-w-[520px]">
-          <thead><tr class="text-left text-grafite/50 border-b border-grafite/10">
+          <thead><tr class="text-left text-[13px] text-grafite/65 border-b border-tinta/[0.08]">
             ${cfg.colunas.map(([t]) => `<th class="px-6 py-3 font-medium">${t}</th>`).join('')}<th class="px-6 py-3"></th>
           </tr></thead>
           <tbody>${cfg.itens.length ? cfg.itens.map((it, i) => `
-            <tr class="border-b border-grafite/5 last:border-0">
+            <tr class="border-b border-tinta/[0.06] last:border-0">
               ${cfg.colunas.map(([, f]) => `<td class="px-6 py-3.5 text-grafite/80">${f(it)}</td>`).join('')}
               <td class="px-6 py-3.5 text-right"><button data-editar="${i}" class="text-petroleo font-semibold hover:underline">Editar</button></td>
-            </tr>`).join('') : `<tr><td colspan="${cfg.colunas.length + 1}" class="px-6 py-6 text-grafite/40">Nada cadastrado.</td></tr>`}
+            </tr>`).join('') : `<tr><td colspan="${cfg.colunas.length + 1}" class="px-6 py-6 text-grafite/65">Nada cadastrado.</td></tr>`}
           </tbody></table></div>
       </section>`;
   };
@@ -161,7 +160,7 @@ function abrirCadastro(cfg, item) {
     .filter((c) => !(c.soEdicao && !item))
     .map((c) => {
       const id = `cad_${c.nome}`;
-      const base = 'w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm bg-white focus:outline-none focus:border-petroleo';
+      const base = 'w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm bg-superficie focus:outline-none focus:border-petroleo';
       const v = valores[c.nome] ?? '';
       if (c.tipo === 'check') {
         return `<label class="flex items-center gap-2 text-sm font-medium"><input id="${id}" name="${c.nome}" type="checkbox" ${v ? 'checked' : ''}> ${c.rotulo}</label>`;
@@ -177,9 +176,9 @@ function abrirCadastro(cfg, item) {
           ${c.tipo === 'number' && c.min ? `min="${c.min}"` : ''} ${c.senha ? `minlength="6" autocomplete="new-password" placeholder="${item ? 'Deixe em branco para manter a atual' : 'Mínimo de 6 caracteres'}"` : ''}
           ${obrigatorio ? 'required' : ''} value="${c.senha ? '' : escapeHtml(v)}" class="${base}">`;
       }
-      return `<div><label class="text-xs font-semibold text-grafite/60" for="${id}">${c.rotulo}</label>${campo}</div>`;
+      return `<div><label class="text-[13px] font-medium text-grafite/65" for="${id}">${c.rotulo}</label>${campo}</div>`;
     }).join('') +
-    `<button type="submit" id="cadSalvar" class="mt-2 w-full py-3.5 rounded-full bg-petroleo text-white font-semibold hover:opacity-90 transition">Salvar</button>`;
+    `<button type="submit" id="cadSalvar" class="mt-2 w-full py-3.5 rounded-xl bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition">Salvar</button>`;
   cadModal.classList.remove('hidden');
   cadModal.classList.add('flex');
   cadForm.querySelector('input,select,textarea')?.focus();
@@ -237,19 +236,19 @@ async function carregarAgendamentos() {
     const { agendamentos } = await Api.admListar('agendamentos', `?${q}`);
     $('tabelaTodosAgendamentos').innerHTML = agendamentos.length
       ? agendamentos.map((a) => `
-        <tr class="border-b border-grafite/5 last:border-0">
+        <tr class="border-b border-tinta/[0.06] last:border-0">
           <td class="px-6 py-3.5 text-grafite/70">${formatarDataISO(a.data)}</td>
           <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(a.hora)}</td>
           <td class="px-6 py-3.5 font-medium">${escapeHtml(a.aluno_nome)}</td>
           <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(a.professor)}</td>
-          <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(a.tipo_treino)} · ${escapeHtml(a.nivel)}</td>
+          <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(a.tipo_treino)}, ${escapeHtml(a.nivel.toLowerCase())}</td>
           <td class="px-6 py-3.5">
-            <select data-aula="${a.id}" aria-label="Status da aula" class="border border-grafite/15 rounded-full px-3 py-1.5 text-xs font-semibold bg-white">
+            <select data-aula="${a.id}" aria-label="Status da aula" class="border border-grafite/15 rounded-full px-3 py-1.5 text-xs font-semibold bg-superficie">
               ${opcoesAdmin.statusAgendamento.map((s) => `<option ${s === a.status ? 'selected' : ''}>${s}</option>`).join('')}
             </select>
           </td>
         </tr>`).join('')
-      : '<tr><td colspan="6" class="px-6 py-6 text-grafite/40">Nenhum agendamento encontrado.</td></tr>';
+      : '<tr><td colspan="6" class="px-6 py-6 text-grafite/65">Nenhum agendamento encontrado.</td></tr>';
   } catch (erro) { tratarErro(erro); }
 }
 
@@ -289,20 +288,20 @@ async function carregarSolicitacoes() {
     atualizarBadge(solicitacoes);
     $('listaSolicitacoes').innerHTML = solicitacoes.length
       ? solicitacoes.map((s) => `
-        <div class="bg-white border border-grafite/10 rounded-2xl p-5">
+        <div class="bg-superficie rounded-3xl p-5 md:p-6">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <p class="font-bold">${escapeHtml(s.aluno_nome)} <span class="text-grafite/40 text-xs font-normal">· ${escapeHtml(s.plano_nome)} · ${formatarDataHora(s.criado_em)}</span></p>
-            <span class="px-3 py-1 rounded-full text-xs font-semibold ${ROTULO_SOL[s.status][1]}">${ROTULO_SOL[s.status][0]}</span>
+            <div><p class="text-[17px] font-semibold">${escapeHtml(s.aluno_nome)}</p><p class="text-grafite/65 text-[13px]">${escapeHtml(s.plano_nome)}, pedido em ${formatarDataHora(s.criado_em)}</p></div>
+            <span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${ROTULO_SOL[s.status][1]}">${ROTULO_SOL[s.status][0]}</span>
           </div>
           <p class="text-sm text-grafite/70">“${escapeHtml(s.motivo)}”</p>
           ${s.status === 'PENDENTE' ? `
             <div class="mt-4 flex flex-wrap gap-2" data-sol="${s.id}">
               <input data-resposta placeholder="Resposta ao aluno (opcional)" maxlength="300" class="flex-1 min-w-[200px] border border-grafite/15 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-petroleo">
-              <button data-decisao="APROVADA" class="px-5 py-2 rounded-full bg-oliva text-white text-sm font-semibold">Aprovar</button>
-              <button data-decisao="RECUSADA" class="px-5 py-2 rounded-full border border-terracota text-terracota text-sm font-semibold">Recusar</button>
+              <button data-decisao="APROVADA" class="px-5 py-2 rounded-full bg-petroleo text-white text-sm font-semibold hover:brightness-110">Aprovar</button>
+              <button data-decisao="RECUSADA" class="px-5 py-2 rounded-full bg-terracota/10 text-terracota text-sm font-semibold hover:bg-terracota/15">Recusar</button>
             </div>` : (s.resposta ? `<p class="text-sm mt-2">Resposta: ${escapeHtml(s.resposta)}</p>` : '')}
         </div>`).join('')
-      : '<div class="bg-white border border-grafite/10 rounded-2xl p-6 text-grafite/50 text-sm">Nenhum pedido de cancelamento.</div>';
+      : '<div class="bg-superficie rounded-3xl p-8 text-center text-grafite/65 text-[15px]">Nenhum pedido de cancelamento.</div>';
   } catch (erro) { tratarErro(erro); }
 }
 

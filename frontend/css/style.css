@@ -1,8 +1,248 @@
 /* =========================================================
-   Pulso Academia — estilos personalizados globais
-   (o restante do visual vem das classes utilitárias do Tailwind
-   diretamente no HTML)
+   Pulso Academia — estilos globais (visual "estilo Apple")
+   O grosso do visual vem das classes do Tailwind no HTML; aqui ficam
+   a fonte, a base tipográfica e os poucos componentes repetidos:
+   barra de navegação translúcida, campos de formulário, controle
+   segmentado (abas), barra de abas do app (celular) e listas agrupadas.
    ========================================================= */
+
+/* Inter local (reserva da fonte do sistema). Licença: fonts/LICENSE-Inter.txt */
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/inter.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Cores (modo claro) ----------
+   Formato "R G B" para o Tailwind aplicar transparência (ex.: text-grafite/65).
+   Todas as combinações de texto passam no contraste mínimo WCAG AA (4,5:1). */
+:root {
+  color-scheme: light;
+  --grafite: 29 29 31;      /* #1D1D1F texto */
+  --offwhite: 245 245 247;  /* #F5F5F7 fundo */
+  --superficie: 255 255 255;
+  --tinta: 0 0 0;
+  --linha: 210 210 215;
+  --petroleo: 66 91 99;     /* #425B63 marca */
+  --oliva: 92 107 59;       /* #5C6B3B confirmação (5,8:1 no branco) */
+  --terracota: 164 83 47;   /* #A4532F destaque (5,4:1 no branco) */
+
+  --vidro: rgba(251, 251, 253, 0.8);
+  --campo: #F2F2F7;
+  --campo-foco: #FFFFFF;
+  --placeholder: #737378;
+  --foco: rgba(66, 91, 99, 0.35);
+  --sombra-aba: 0 3px 8px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.04);
+  --topo-seguro: env(safe-area-inset-top, 0px);
+  --base-segura: env(safe-area-inset-bottom, 0px);
+}
+
+/* ---------- Cores (modo escuro) ----------
+   Vale quando a pessoa escolhe "Escuro" no painel de acessibilidade, ou quando
+   está em "Automático" e o celular/computador está no modo escuro. */
+:root[data-tema="escuro"] {
+  color-scheme: dark;
+  --grafite: 245 245 247;
+  --offwhite: 0 0 0;
+  --superficie: 28 28 30;   /* #1C1C1E, os cartões do iOS escuro */
+  --tinta: 255 255 255;
+  --linha: 56 56 58;
+  --petroleo: 79 116 128;   /* um pouco mais claro: botão com texto branco ainda passa (5:1) */
+  --oliva: 106 123 69;
+  --terracota: 179 96 58;
+  --vidro: rgba(22, 22, 23, 0.78);
+  --campo: #2C2C2E;
+  --campo-foco: #3A3A3C;
+  --placeholder: #98989D;
+  --foco: rgba(156, 195, 206, 0.45);
+  --sombra-aba: 0 3px 8px rgba(0, 0, 0, 0.5);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    color-scheme: dark;
+    --grafite: 245 245 247;
+    --offwhite: 0 0 0;
+    --superficie: 28 28 30;
+    --tinta: 255 255 255;
+    --linha: 56 56 58;
+    --petroleo: 79 116 128;
+    --oliva: 106 123 69;
+    --terracota: 179 96 58;
+    --vidro: rgba(22, 22, 23, 0.78);
+    --campo: #2C2C2E;
+    --campo-foco: #3A3A3C;
+    --placeholder: #98989D;
+    --foco: rgba(156, 195, 206, 0.45);
+    --sombra-aba: 0 3px 8px rgba(0, 0, 0, 0.5);
+  }
+}
+
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 80px; background: rgb(var(--offwhite)); }
+
+/* No escuro, TEXTO em petróleo/oliva/terracota usa um tom mais claro para ser legível no fundo preto. */
+:root[data-tema="escuro"] .text-petroleo { color: #9CC3CE; }
+:root[data-tema="escuro"] .text-oliva { color: #B4C58A; }
+:root[data-tema="escuro"] .text-terracota { color: #EE9A72; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) .text-petroleo { color: #9CC3CE; }
+  :root:not([data-tema="claro"]) .text-oliva { color: #B4C58A; }
+  :root:not([data-tema="claro"]) .text-terracota { color: #EE9A72; }
+}
+
+/* A logo é petróleo-escuro: no modo escuro ela vira clara. */
+:root[data-tema="escuro"] .logo-tema { filter: brightness(0) invert(0.93); }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) .logo-tema { filter: brightness(0) invert(0.93); } }
+
+/* ---------- Contraste reforçado (painel de acessibilidade) ----------
+   Textos secundários ficam com a cor cheia, fios e bordas ficam mais visíveis
+   e os links ganham sublinhado, para quem tem baixa visão. */
+:root[data-contraste="alto"] [class*="text-grafite/"] { color: rgb(var(--grafite)) !important; }
+:root[data-contraste="alto"] [class*="border-tinta/"], :root[data-contraste="alto"] .lista-ios > * + * { border-color: rgb(var(--tinta) / 0.35) !important; }
+:root[data-contraste="alto"] [class*="bg-tinta/"] { background-color: rgb(var(--tinta) / 0.14) !important; }
+:root[data-contraste="alto"] main a:not([class*="bg-"]) { text-decoration: underline; text-underline-offset: 3px; }
+:root[data-contraste="alto"] input, :root[data-contraste="alto"] select, :root[data-contraste="alto"] textarea { box-shadow: inset 0 0 0 1.5px rgb(var(--tinta) / 0.5); }
+:root[data-contraste="alto"] .nav-vidro, :root[data-contraste="alto"] .tabbar { background: rgb(var(--superficie)); }
+body {
+  font-feature-settings: 'cv11', 'ss01'; /* Inter: "a" e "1" mais próximos do SF */
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  letter-spacing: -0.006em;
+}
+
+/* Títulos: peso firme e espaçamento apertado, como nas páginas da Apple. */
+h1, h2, h3 { letter-spacing: -0.022em; }
+.titulo-grande { letter-spacing: -0.04em; line-height: 1.04; }
+
+::selection { background: rgba(66, 91, 99, 0.2); }
+
+/* Foco visível só para teclado (o clique não mostra anel). */
+:focus-visible { outline: 3px solid var(--foco); outline-offset: 2px; border-radius: 10px; }
+button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
+
+/* ---------- Barra de navegação translúcida ---------- */
+.nav-vidro {
+  background: var(--vidro);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgb(var(--tinta) / 0.08);
+  padding-top: var(--topo-seguro);
+}
+.nav-vidro-escuro {
+  background: var(--vidro-escuro);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  padding-top: var(--topo-seguro);
+}
+
+/* ---------- Campos de formulário (estilo iOS: preenchido, sem borda) ---------- */
+input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]),
+select,
+textarea {
+  background-color: var(--campo) !important;
+  border-color: transparent !important;
+  border-radius: 12px !important;
+  transition: box-shadow 0.15s ease, background-color 0.15s ease;
+}
+input:not([type=checkbox]):not([type=radio]):focus,
+select:focus,
+textarea:focus {
+  background-color: var(--campo-foco) !important;
+  box-shadow: 0 0 0 4px var(--foco);
+  outline: none;
+}
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%236E6E73' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 38px !important;
+}
+input::placeholder, textarea::placeholder { color: var(--placeholder); }
+input, select, textarea { color: rgb(var(--grafite)); }
+input[type=checkbox] { accent-color: rgb(var(--petroleo)); width: 18px; height: 18px; }
+
+/* ---------- Controle segmentado (as abas das áreas logadas) ---------- */
+.segmentado {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: rgba(118, 118, 128, 0.12);
+  border-radius: 12px;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.segmentado::-webkit-scrollbar { display: none; }
+/* Respeita as classes do Tailwind "hidden md:inline-flex" (abas do topo só no computador). */
+.segmentado.hidden { display: none; }
+@media (min-width: 768px) { .segmentado.md\:inline-flex { display: inline-flex; } }
+.segmentado .aba {
+  border-radius: 9px !important;
+  padding: 7px 16px !important;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgb(var(--grafite)) !important;
+  background: transparent !important;
+  border: 0 !important;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.segmentado .aba[aria-selected=true], .segmentado .aba[aria-pressed=true] {
+  background: rgb(var(--superficie)) !important;
+  box-shadow: var(--sombra-aba);
+}
+:root[data-tema="escuro"] .segmentado .aba[aria-selected=true], :root[data-tema="escuro"] .segmentado .aba[aria-pressed=true] { background: #636366 !important; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) .segmentado .aba[aria-selected=true], :root:not([data-tema="claro"]) .segmentado .aba[aria-pressed=true] { background: #636366 !important; } }
+
+/* ---------- Barra de abas do app (só no celular, nas áreas do aluno e do professor) ---------- */
+.tabbar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 45;
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 8px calc(6px + var(--base-segura));
+  background: var(--vidro);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid rgb(var(--tinta) / 0.1);
+}
+.tabbar button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 0;
+  font-size: 10.5px;
+  font-weight: 500;
+  color: rgb(var(--grafite) / 0.68); /* 0.68: contraste AA mesmo sobre o vidro */
+  background: none;
+  border: 0;
+}
+.tabbar button svg { width: 26px; height: 26px; }
+.tabbar button[aria-selected=true] { color: rgb(var(--petroleo)); }
+:root[data-tema="escuro"] .tabbar button[aria-selected=true] { color: #9CC3CE; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) .tabbar button[aria-selected=true] { color: #9CC3CE; } }
+.com-tabbar { padding-bottom: calc(84px + var(--base-segura)); }
+@media (min-width: 768px) {
+  .tabbar { display: none; }
+  .com-tabbar { padding-bottom: 0; }
+}
+
+/* ---------- Lista agrupada (linhas dentro de um cartão, separadas por fio) ---------- */
+.lista-ios > * + * { border-top: 1px solid rgb(var(--tinta) / 0.1); }
+
+/* ---------- Abertura da home: a linha do pulso se desenha uma vez ---------- */
+.pulso-linha path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: desenhar-pulso 1.6s cubic-bezier(0.65, 0, 0.35, 1) 0.25s forwards;
+}
+@keyframes desenhar-pulso { to { stroke-dashoffset: 0; } }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -13,9 +253,98 @@
 }
 .toast-enter { animation: toast-in 0.25s ease-out; }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner { animation: spin 0.8s linear infinite; }
+
+/* Quem pediu menos movimento no sistema não vê animações. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .pulso-linha path { stroke-dashoffset: 0; }
 }
-.spinner {
-  animation: spin 0.8s linear infinite;
+
+/* Campo com erro (o checkout marca aria-invalid). */
+input[aria-invalid=true] { box-shadow: 0 0 0 2px rgb(var(--terracota)) !important; background-color: var(--campo-foco) !important; }
+
+/* Títulos e textos curtos sem palavra sozinha na última linha. */
+h1, h2, h3, .equilibrado { text-wrap: balance; }
+
+/* A gaveta do carrinho fechada fica fora da tela: sem sombra vazando na borda. */
+#cartDrawer[inert] { box-shadow: none; }
+
+/* ---------- Folha de detalhes (dialog nativo) ---------- */
+dialog.folha {
+  width: min(960px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  border: 0;
+  border-radius: 28px;
+  overflow: auto;
+  background: rgb(var(--superficie));
+  color: rgb(var(--grafite));
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
 }
+dialog.folha::backdrop { background: rgba(0, 0, 0, 0.35); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+dialog.folha[open] { animation: folha-entra 0.28s cubic-bezier(0.2, 0.9, 0.3, 1); }
+@keyframes folha-entra { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
+@media (max-width: 767px) {
+  /* No celular a folha sobe de baixo e ocupa a largura toda, como no iOS. */
+  dialog.folha {
+    width: 100vw; max-width: 100vw;
+    margin: auto 0 0 0;
+    max-height: 92vh;
+    border-radius: 24px 24px 0 0;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  dialog.folha[open] { animation: folha-sobe 0.32s cubic-bezier(0.2, 0.9, 0.3, 1); }
+  @keyframes folha-sobe { from { transform: translateY(100%); } to { transform: none; } }
+}
+
+/* Prévia do cartão no checkout (cor da marca, com brilho discreto). */
+.cartao-previa {
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 55%),
+    linear-gradient(135deg, #4F6C75 0%, #2F444B 100%);
+}
+
+#cupomCodigo::placeholder, #cartaoNome::placeholder { text-transform: none; }
+
+/* ---------- Acessibilidade ---------- */
+/* Link "Pular para o conteúdo": invisível até receber foco pelo teclado. */
+.pular-conteudo {
+  position: fixed; top: 10px; left: 10px; z-index: 200;
+  padding: 10px 16px; border-radius: 12px;
+  background: rgb(var(--grafite)); color: rgb(var(--superficie));
+  font-weight: 600; font-size: 15px;
+  transform: translateY(-160%); transition: transform 0.15s ease;
+}
+.pular-conteudo:focus { transform: none; outline: 3px solid var(--foco); }
+main:focus { outline: none; }
+
+/* Interruptor estilo iOS (role="switch"). */
+.interruptor {
+  width: 51px; height: 31px; border-radius: 999px; padding: 2px;
+  background: rgb(var(--tinta) / 0.16); transition: background-color 0.2s ease;
+  display: inline-flex; align-items: center;
+}
+.interruptor span {
+  width: 27px; height: 27px; border-radius: 999px; background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease;
+}
+.interruptor[aria-checked="true"] { background: #34A853; background: rgb(var(--oliva)); }
+.interruptor[aria-checked="true"] span { transform: translateX(20px); }
+
+dialog.folha-pequena { width: min(440px, calc(100vw - 32px)); }
+@media (max-width: 767px) { dialog.folha-pequena { width: 100vw; } }
+
+/* Barra fixa do checkout no celular (vidro, como a barra de abas). */
+.barra-pagar {
+  background: var(--vidro);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid rgb(var(--tinta) / 0.1);
+}
+
+/* Links no meio de um texto: sublinhados (não dependem só da cor para serem vistos). */
+p a.text-petroleo, li a.text-petroleo { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+:root[data-tema="escuro"] .seg-a11y input:checked + span { background: #636366; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) .seg-a11y input:checked + span { background: #636366; } }

@@ -49,6 +49,8 @@ Abra **http://localhost:3333/index.html**.
 | Aluno sem plano (não consegue agendar) | lucas@aluno.com | aluno123 |
 | Professores (PROFESSOR) | marcos@, renata@, diego@, anapaula@, bruno@ `pulso.com` | prof123 |
 
+Na tela de login, as contas de demonstração ficam num quadro: um toque preenche e-mail e senha.
+
 **Troque essas senhas antes de qualquer uso real.** Contas criadas pelo site (ou pelo Google) são sempre `ALUNO`; a role nunca vem do navegador.
 
 Para recriar o banco do zero: `npm run db:reset` (e depois `npm start`). Bancos de versões anteriores são atualizados sozinhos, sem precisar disso.
@@ -68,6 +70,20 @@ Para recriar o banco do zero: `npm run db:reset` (e depois `npm start`). Bancos 
 Depois do login cada perfil cai na própria página (aluno → `aluno.html`, professor → `professor.html`, recepção → `admin.html`).
 
 **PWA:** o site é instalável no celular (menu do navegador → *Adicionar à tela inicial*). Tem `manifest.json`, ícones, favicon, service worker (`sw.js`) e `offline.html`. O service worker guarda só HTML/CSS/JS/imagens; **nunca** respostas da API. Ao publicar uma versão nova, aumente `VERSAO` em `sw.js`. Em desenvolvimento, se o navegador mostrar arquivo antigo, use *Ctrl+Shift+R* ou limpe os dados do site.
+
+**Visual:** estilo Apple. Fonte do sistema (SF Pro no iPhone/Mac) com Inter como reserva, servida da pasta `frontend/fonts` (funciona offline e não depende do Google Fonts). As cores e a fonte do Tailwind ficam num lugar só, `frontend/js/tw-config.js`; os componentes repetidos (barra translúcida, campos, abas segmentadas, barra de abas do app no celular, listas agrupadas) ficam em `frontend/css/style.css`. No celular, as áreas do aluno e do professor têm barra de abas embaixo, como um app.
+
+**Loja:** fotos reais dos produtos (Unsplash, licença livre, recortadas com fundo transparente para todas terem o mesmo visual, em `frontend/img/produtos/fotos`, créditos em `CREDITOS.txt`); se uma foto faltar, aparece a ilustração `.svg`. Tocar no produto abre a tela de detalhes (foto grande, descrição, características, quantidade). A lista de características fica no `CATALOGO` de `backend/src/db/index.js`.
+
+**Pagamento:** etapas da compra, seus dados, como você recebe (retirada e/ou ativação do plano), formas de pagamento com prévia do cartão, cupom de desconto e comprovante para imprimir. Cupons de teste: `PULSO10` (10%) e `BEMVINDO20` (R$ 20 a partir de R$ 100); para criar outros, edite `CUPONS` em `backend/src/constants.js`.
+
+**Acessibilidade (para todos):**
+- **Modo claro e escuro:** botão de acessibilidade no topo, com as opções Automático (segue o celular/computador), Claro e Escuro. A escolha fica salva no navegador. As cores são variáveis CSS (`css/style.css`), e o Tailwind usa essas variáveis (`js/tw-config.js`): o mesmo HTML funciona nos dois temas.
+- **Contraste reforçado:** textos secundários com a cor cheia, bordas mais visíveis e links sublinhados, para quem tem baixa visão.
+- **Ouvir esta página:** o navegador lê o conteúdo em voz alta, em português (Web Speech API, sem custo).
+- **Libras:** o widget gratuito do VLibras (Governo Federal) aparece na lateral de todas as páginas.
+- **Leitores de tela e teclado:** link "Pular para o conteúdo" (primeiro Tab), regiões `header`/`main`/`nav`, rótulos em todos os campos e botões de ícone, avisos falados (`aria-live`), janelas nativas (`<dialog>`) que o Esc fecha, foco visível e respeito a "reduzir movimento".
+- **Auditoria:** todas as páginas e estados (janelas, carrinho, abas, formulários), nos dois temas, passam sem erros na verificação automática **axe-core** (regras WCAG 2.1 nível AA, incluindo contraste mínimo de 4,5:1).
 
 O **carrinho** (ícone no topo) guarda os itens no navegador. Para pagar é preciso estar logado: se não estiver, o login devolve você ao checkout. O botão **Sair** aparece no topo quando há sessão.
 
@@ -143,10 +159,11 @@ pulso-fullstack/
 └── frontend/
     ├── *.html                   # 7 páginas (+ offline.html)
     ├── manifest.json · sw.js · favicon.ico   # PWA
+    ├── fonts/                   # Inter (fonte local, licença OFL)
     ├── css/style.css
     ├── img/                     # logos, icons/ (PWA e favicon), produtos/ (fotos)
     └── js/                      # api.js (Auth + Api) · ui.js · cart.js · loja.js · checkout.js
-                                 # login.js · admin.js · admin-cadastros.js · aluno.js · professor.js · pwa.js · academia.js (dados da academia + mapa)
+                                 # tw-config.js (tema) · login.js · admin.js · admin-cadastros.js · aluno.js · professor.js · pwa.js · academia.js (dados da academia + mapa)
 ```
 
 Fluxo de uma requisição: `rota → middleware (JWT/role) → controller → SQLite → JSON`.
@@ -183,7 +200,8 @@ Base: `http://localhost:3333/api`. Rotas protegidas pedem `Authorization: Bearer
 | GET | `/auth/me` | logado | dados do usuário |
 | GET | `/planos` · `/produtos` · `/avisos` | público | |
 | GET | `/academia` | público | `{ academia, mapa: { consulta, chave } }` |
-| POST | `/pedidos` | logado | `{ itens:[{tipo,id,quantidade}], metodo, parcelas?, bandeira?, cartaoFinal? }` |
+| GET | `/cupons/:codigo?subtotal=` | público | prévia do desconto (o servidor recalcula ao criar o pedido) |
+| POST | `/pedidos` | logado | `{ itens:[{tipo,id,quantidade}], metodo, parcelas?, bandeira?, cartaoFinal?, cupom? }` |
 | GET | `/pedidos/meus` | logado | histórico do usuário |
 | GET | `/pedidos/:id` | dono ou ADMIN | acompanha Pix/boleto |
 | POST | `/pedidos/:id/pagar` | dono | só com `PAGAMENTO_SIMULADO=true` |
@@ -195,6 +213,7 @@ Base: `http://localhost:3333/api`. Rotas protegidas pedem `Authorization: Bearer
 | GET | `/aluno/plano` | ALUNO | plano ativo e pedido de cancelamento |
 | POST | `/aluno/plano/cancelamento` | ALUNO | `{ motivo }` → fica PENDENTE para a recepção |
 | GET | `/professor/agenda?de=&ate=` | PROFESSOR | só as aulas do próprio professor |
+| PATCH | `/professor/agendamentos/:id` | PROFESSOR | `{ status: "Em andamento" \| "Confirmado" }`: iniciar (ou desfazer) uma aula de hoje, só da própria agenda |
 | GET / PUT | `/professor/disponibilidade` | PROFESSOR | lê / grava `{ dias: { "1": ["08:00", …], … } }`; recusa (409) remover horário com aula marcada |
 | GET | `/admin/opcoes` | ADMIN | listas para os formulários |
 | GET / POST | `/admin/agendamentos` | ADMIN | consulta geral (filtros) / marcar aula no balcão |

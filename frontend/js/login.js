@@ -83,8 +83,9 @@ function mostrarAba(aba) {
   loginForm.classList.toggle('hidden', !login);
   registerForm.classList.toggle('hidden', login);
   registerForm.classList.toggle('flex', !login);
-  tabLogin.className = `flex-1 py-2 rounded-full transition ${login ? 'bg-grafite text-white' : 'text-grafite/60'}`;
-  tabRegister.className = `flex-1 py-2 rounded-full transition ${login ? 'text-grafite/60' : 'bg-grafite text-white'}`;
+  // O visual da aba ativa vem do CSS (.segmentado .aba[aria-selected=true]).
+  tabLogin.setAttribute('aria-selected', login);
+  tabRegister.setAttribute('aria-selected', !login);
 }
 
 /** Desabilita o botão enquanto a requisição roda (evita duplo envio). */
@@ -103,6 +104,14 @@ async function comBotaoOcupado(botao, textoOcupado, acao) {
 }
 
 tabLogin.addEventListener('click', () => mostrarAba('login'));
+
+// Contas de demonstração: um toque preenche e-mail e senha (cada perfil abre a sua área).
+document.querySelectorAll('[data-demo]').forEach((b) => b.addEventListener('click', () => {
+  const [email, senha] = b.dataset.demo.split('|');
+  document.getElementById('loginEmail').value = email;
+  document.getElementById('loginSenha').value = senha;
+  document.getElementById('loginSubmitBtn').focus();
+}));
 tabRegister.addEventListener('click', () => mostrarAba('register'));
 
 loginForm.addEventListener('submit', async (evento) => {

@@ -105,13 +105,13 @@ const CarrinhoUI = {
     botao.id = 'btnCarrinho';
     botao.type = 'button';
     botao.setAttribute('aria-label', 'Abrir carrinho');
-    botao.className = 'relative w-11 h-11 rounded-full border border-grafite/20 flex items-center justify-center hover:bg-grafite/5 transition';
+    botao.className = 'relative w-9 h-9 rounded-full flex items-center justify-center text-grafite hover:bg-tinta/5 transition';
     botao.innerHTML = `
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M6 7h12l-1 13H7L6 7Z" stroke="#1F1F1F" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M9 9V6a3 3 0 0 1 6 0v3" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round"/>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 7h12l-1 13H7L6 7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        <path d="M9 9V6a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
       </svg>
-      <span id="cartBadge" class="hidden absolute -top-1 -right-1 min-w-[20px] h-5 px-1 rounded-full bg-terracota text-white text-[11px] font-bold items-center justify-center">0</span>`;
+      <span id="cartBadge" class="hidden absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] px-1 rounded-full bg-terracota text-white text-[11px] font-bold items-center justify-center">0</span>`;
     btnEntrar.parentElement.insertBefore(botao, btnEntrar);
     botao.addEventListener('click', () => CarrinhoUI.abrir());
 
@@ -119,25 +119,25 @@ const CarrinhoUI = {
     document.body.insertAdjacentHTML(
       'beforeend',
       `
-      <div id="cartOverlay" class="fixed inset-0 bg-grafite/50 z-[70] hidden"></div>
+      <div id="cartOverlay" class="fixed inset-0 bg-black/25 backdrop-blur-[2px] z-[70] hidden"></div>
       <aside id="cartDrawer" role="dialog" aria-modal="true" aria-label="Carrinho de compras" inert
-        class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-[80] shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
-        <div class="flex items-center justify-between px-6 h-[76px] border-b border-grafite/10 shrink-0">
-          <h2 class="text-lg font-extrabold">Seu carrinho</h2>
-          <button id="cartFechar" type="button" aria-label="Fechar carrinho" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-grafite/5">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#1F1F1F" stroke-width="2" stroke-linecap="round"/></svg>
+        class="fixed top-0 right-0 h-full w-full max-w-md bg-superficie z-[80] shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="flex items-center justify-between px-6 pt-6 pb-2 shrink-0">
+          <h2 class="text-[28px] font-bold tracking-tight">Carrinho</h2>
+          <button id="cartFechar" type="button" aria-label="Fechar carrinho" class="w-8 h-8 flex items-center justify-center rounded-full bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
           </button>
         </div>
         <div id="cartItens" class="flex-1 overflow-y-auto px-6 py-5 flex flex-col gap-5"></div>
-        <div class="border-t border-grafite/10 px-6 py-5 shrink-0">
+        <div class="border-t border-tinta/[0.08] px-6 pt-5 pb-[calc(20px+env(safe-area-inset-bottom))] shrink-0">
           <div class="flex items-center justify-between mb-4">
-            <span class="text-grafite/60 text-sm">Total</span>
-            <span id="cartTotal" class="text-xl font-extrabold">R$ 0,00</span>
+            <span class="text-grafite/65 text-sm">Total</span>
+            <span id="cartTotal" class="text-xl font-semibold tracking-tight">R$ 0,00</span>
           </div>
-          <a id="cartIrPagar" href="checkout.html" class="block text-center w-full py-3.5 rounded-full bg-petroleo text-white font-semibold hover:opacity-90 transition">
+          <a id="cartIrPagar" href="checkout.html" class="block text-center w-full py-3.5 rounded-xl bg-petroleo text-white text-[17px] font-semibold hover:bg-petroleo/90 transition">
             Ir para o pagamento
           </a>
-          <button id="cartContinuar" type="button" class="mt-2 w-full py-3 rounded-full text-sm font-semibold text-grafite/70 hover:bg-grafite/5 transition">
+          <button id="cartContinuar" type="button" class="mt-1 w-full py-3 text-[15px] font-medium text-petroleo hover:underline">
             Continuar comprando
           </button>
         </div>
@@ -183,7 +183,7 @@ const CarrinhoUI = {
 
     if (itens.length === 0) {
       lista.innerHTML = `
-        <div class="m-auto text-center text-grafite/50">
+        <div class="m-auto text-center text-grafite/65">
           <p class="font-semibold text-grafite mb-1">Seu carrinho está vazio</p>
           <p class="text-sm">Escolha um plano ou um produto para começar.</p>
         </div>`;
@@ -193,25 +193,25 @@ const CarrinhoUI = {
     lista.innerHTML = itens
       .map((i) => {
         const foto = i.imagem && i.imagem.startsWith('img/')
-          ? `<img src="${escapeHtml(i.imagem)}" alt="" class="w-20 h-20 rounded-xl object-cover bg-grafite/5 shrink-0">`
+          ? `<img src="${escapeHtml(i.imagem)}" alt="" onerror="fotoReserva(this)" class="w-20 h-20 rounded-2xl object-cover bg-offwhite shrink-0">`
           : ICONE_PLANO;
         const controles = i.tipo === 'PLANO'
-          ? `<p class="text-xs text-grafite/50 mt-2">Plano de assinatura</p>`
+          ? `<p class="text-xs text-grafite/65 mt-2">Plano de assinatura</p>`
           : `<div class="flex items-center gap-1 mt-2">
-               <button type="button" data-acao="menos" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Diminuir quantidade de ${escapeHtml(i.nome)}" class="w-7 h-7 rounded-full border border-grafite/20 hover:bg-grafite/5 font-bold">−</button>
+               <button type="button" data-acao="menos" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Diminuir quantidade de ${escapeHtml(i.nome)}" class="w-7 h-7 rounded-full bg-tinta/[0.06] hover:bg-tinta/10 font-semibold">−</button>
                <span class="w-7 text-center text-sm font-semibold" aria-live="polite">${i.quantidade}</span>
-               <button type="button" data-acao="mais" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Aumentar quantidade de ${escapeHtml(i.nome)}" class="w-7 h-7 rounded-full border border-grafite/20 hover:bg-grafite/5 font-bold">+</button>
+               <button type="button" data-acao="mais" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Aumentar quantidade de ${escapeHtml(i.nome)}" class="w-7 h-7 rounded-full bg-tinta/[0.06] hover:bg-tinta/10 font-semibold">+</button>
              </div>`;
         return `
           <div class="flex gap-4">
             ${foto}
             <div class="flex-1 min-w-0">
               <p class="font-semibold text-sm leading-snug">${escapeHtml(i.nome)}</p>
-              <p class="text-petroleo font-bold text-sm mt-0.5">${formatarPreco(i.preco * i.quantidade)}</p>
+              <p class="text-grafite/65 text-sm mt-0.5">${formatarPreco(i.preco * i.quantidade)}</p>
               ${controles}
             </div>
             <button type="button" data-acao="remover" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Remover ${escapeHtml(i.nome)} do carrinho"
-              class="self-start w-8 h-8 flex items-center justify-center rounded-full text-grafite/40 hover:bg-grafite/5 hover:text-terracota">
+              class="self-start w-8 h-8 flex items-center justify-center rounded-full text-grafite/65 hover:bg-grafite/5 hover:text-terracota">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
             </button>
           </div>`;

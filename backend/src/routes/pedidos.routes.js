@@ -12,10 +12,11 @@
 
 import { Router } from 'express';
 import { authenticateToken } from '../middleware/auth.js';
-import { criar, meus, obter, pagar } from '../controllers/pedidosController.js';
+import { criar, meus, obter, pagar, verificarCupom } from '../controllers/pedidosController.js';
 
 const router = Router();
 
+router.get('/cupons/:codigo', verificarCupom); // público: só calcula a prévia do desconto
 router.post('/pedidos', authenticateToken, criar);
 router.get('/pedidos/meus', authenticateToken, meus); // antes de /pedidos/:id, senão "meus" viraria um :id
 router.get('/pedidos/:id', authenticateToken, obter);
