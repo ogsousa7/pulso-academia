@@ -7,7 +7,7 @@ Um único comando (`npm start`) sobe a API **e** o site na mesma porta.
 
 **Site no ar:** https://pulso-academia.onrender.com (Render; cada `git push` publica a versão nova)
 
-Desenvolvido por [True Ember](https://true-ember-site.netlify.app).
+Desenvolvido por [True Ember](https://true-ember.netlify.app).
 
 ---
 
