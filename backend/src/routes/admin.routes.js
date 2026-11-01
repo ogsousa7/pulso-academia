@@ -28,6 +28,10 @@ router.get('/planos', cad.listarPlanos);
 router.post('/planos', cad.criarPlano);
 router.put('/planos/:id', cad.atualizarPlano);
 
+router.get('/produtos', cad.listarProdutos);
+router.post('/produtos', cad.criarProduto);
+router.put('/produtos/:id', cad.atualizarProduto);
+
 router.get('/alunos', cad.listarAlunos);
 router.post('/alunos', cad.criarAluno);
 router.put('/alunos/:id', cad.atualizarAluno);

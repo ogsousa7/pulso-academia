@@ -26,7 +26,7 @@ function lerLista(texto) {
 /** GET /api/produtos */
 export function listarProdutos(req, res) {
   const produtos = db
-    .prepare('SELECT id, nome, preco, categoria, descricao, imagem, detalhes FROM produtos ORDER BY categoria, nome ASC')
+    .prepare('SELECT id, nome, preco, categoria, descricao, imagem, detalhes FROM produtos WHERE ativo = 1 ORDER BY categoria, nome ASC')
     .all()
     .map((p) => ({ ...p, detalhes: lerLista(p.detalhes) }));
   res.json({ produtos });

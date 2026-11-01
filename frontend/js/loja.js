@@ -44,7 +44,7 @@ function renderPlanos(planos) {
       const economia = mensal && meses > 1 ? mensal.preco * meses - plano.preco : 0;
       const porMes = meses > 1 ? `ou ${formatarPreco(plano.preco / meses)} por mês` : 'sem fidelidade';
       return `
-      <div class="bg-superficie rounded-3xl p-8 flex flex-col ${destaque ? 'ring-2 ring-terracota' : ''}">
+      <div class="cartao-sobe bg-superficie rounded-3xl p-8 flex flex-col ${destaque ? 'ring-2 ring-terracota' : ''}">
         <p class="min-h-[24px]">${destaque ? '<span class="inline-block px-2.5 py-0.5 rounded-full bg-terracota text-white text-[12px] font-semibold">Mais escolhido</span>' : ''}</p>
         <p class="text-[21px] font-semibold tracking-tight mt-1">${escapeHtml(plano.nome)}</p>
         <p class="text-grafite/65 text-[15px] mt-2 leading-snug min-h-[44px]">${escapeHtml(plano.descricao || '')}</p>
@@ -86,7 +86,7 @@ function renderProdutos() {
   grid.innerHTML = lista
     .map(
       (p) => `
-      <article class="bg-superficie rounded-3xl overflow-hidden flex flex-col group">
+      <article class="cartao-sobe bg-superficie rounded-3xl overflow-hidden flex flex-col group">
         <button type="button" data-ver="${p.id}" class="block text-left" aria-label="Ver detalhes de ${escapeHtml(p.nome)}">
           <span class="block overflow-hidden">
             <img src="${escapeHtml(p.imagem)}" alt="${escapeHtml(p.nome)}" loading="lazy" onerror="fotoReserva(this)"

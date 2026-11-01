@@ -123,21 +123,61 @@ function initMenuMobile() {
   const menu = document.getElementById('mobileMenu');
   if (!btn || !menu) return;
 
-  btn.addEventListener('click', () => {
+  const alternar = () => {
     menu.classList.toggle('hidden');
-    menu.classList.toggle('flex');
+    const aberto = menu.classList.toggle('flex');
+    btn.setAttribute('aria-expanded', aberto);
+  };
+  btn.setAttribute('aria-expanded', 'false');
+  btn.addEventListener('click', alternar);
+  // Tocar num link da mesma página rola até a seção: o menu não pode ficar aberto por cima dela.
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) alternar(); });
+}
+
+/* ---------- Animações ao rolar a página ---------- */
+
+/** Número que sobe até o valor final (ex.: <dd data-contar="350" data-prefixo="+">+350</dd>). */
+function animarContagem(el) {
+  const fim = Number(el.dataset.contar);
+  const casas = Number(el.dataset.casas || 0);
+  const prefixo = el.dataset.prefixo || '';
+  const duracao = 1200;
+  const inicio = performance.now();
+  const passo = (agora) => {
+    const t = Math.min((agora - inicio) / duracao, 1);
+    const valor = fim * (1 - (1 - t) ** 3); // começa rápido e desacelera no fim
+    el.textContent = prefixo + valor.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
+    if (t < 1) requestAnimationFrame(passo);
+  };
+  requestAnimationFrame(passo);
+}
+
+function iniciarAnimacoes() {
+  const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (semMovimento || !('IntersectionObserver' in window)) return; // sem animação: tudo já está visível
+  const observador = new IntersectionObserver((entradas) => {
+    entradas.filter((e) => e.isIntersecting).forEach((e) => {
+      e.target.classList.add('revelado');
+      e.target.querySelectorAll('[data-contar]').forEach(animarContagem);
+      observador.unobserve(e.target);
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('[data-revela]').forEach((el) => {
+    el.classList.add('revela');
+    observador.observe(el);
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   atualizarBotaoEntrar();
   initMenuMobile();
+  iniciarAnimacoes();
 });
 
 /* =========================================================
    ACESSIBILIDADE
    • "Pular para o conteúdo" (primeira coisa que o Tab alcança)
-   • Painel: tema Automático/Claro/Escuro, contraste reforçado e
+   • Painel: tema Automático/Claro/Escuro, tamanho do texto, contraste reforçado e
      "Ouvir esta página" (leitura em voz alta, em português)
    • VLibras: tradução para Libras do Governo Federal (gratuito)
    Leitores de tela (VoiceOver, TalkBack, NVDA) já funcionam no site
@@ -157,6 +197,13 @@ function aplicarTema(tema) {
   salvarPreferencia('pulso_tema', tema === 'auto' ? null : tema);
   const escuro = raiz.dataset.tema === 'escuro' || (!raiz.dataset.tema && matchMedia('(prefers-color-scheme: dark)').matches);
   document.querySelectorAll('meta[name="theme-color"]').forEach((m) => m.setAttribute('content', escuro ? '#000000' : getComputedStyle(document.body).backgroundColor));
+}
+
+/** texto: 'menor' | 'normal' | 'maior' | 'enorme' */
+function aplicarTexto(tamanho) {
+  if (tamanho === 'normal') delete document.documentElement.dataset.texto;
+  else document.documentElement.dataset.texto = tamanho;
+  salvarPreferencia('pulso_texto', tamanho === 'normal' ? null : tamanho);
 }
 
 function aplicarContraste(alto) {
@@ -211,7 +258,7 @@ function montarAcessibilidade() {
   const botao = document.createElement('button');
   botao.type = 'button';
   botao.id = 'btnAcessibilidade';
-  botao.setAttribute('aria-label', 'Acessibilidade: tema, contraste e leitura em voz alta');
+  botao.setAttribute('aria-label', 'Acessibilidade: tema, tamanho do texto, contraste e leitura em voz alta');
   botao.setAttribute('aria-haspopup', 'dialog');
   botao.className = 'w-9 h-9 rounded-full flex items-center justify-center text-grafite hover:bg-tinta/5 transition';
   botao.innerHTML = A11Y_ICONE;
@@ -242,6 +289,14 @@ function montarAcessibilidade() {
           <p class="text-[13px] text-grafite/65 mt-2">Automático segue o modo claro ou escuro do seu aparelho.</p>
         </fieldset>
 
+        <div class="mt-5">
+          <p id="a11yTextoRotulo" class="text-[15px] font-semibold mb-2">Tamanho do texto</p>
+          <div class="seg-texto flex gap-0.5 p-[3px] rounded-xl bg-tinta/[0.08]" role="group" aria-labelledby="a11yTextoRotulo">
+            ${[['menor', 'Menor', '14px'], ['normal', 'Normal', '17px'], ['maior', 'Maior', '20px'], ['enorme', 'Muito maior', '24px']].map(([valor, rotulo, tamanho]) => `
+              <button type="button" data-texto="${valor}" aria-label="${rotulo}" aria-pressed="${(document.documentElement.dataset.texto || 'normal') === valor}" style="font-size:${tamanho}">A</button>`).join('')}
+          </div>
+        </div>
+
         <div class="mt-5 flex items-center justify-between gap-4">
           <div>
             <p id="a11yContrasteRotulo" class="text-[15px] font-semibold">Contraste reforçado</p>
@@ -262,7 +317,6 @@ function montarAcessibilidade() {
         <ul class="mt-6 pt-5 border-t border-tinta/[0.08] flex flex-col gap-2.5 text-[13px] text-grafite/65">
           <li><strong class="text-grafite font-semibold">Libras:</strong> toque no botão azul do VLibras, na lateral da tela.</li>
           <li><strong class="text-grafite font-semibold">Leitor de tela:</strong> o site funciona com VoiceOver (iPhone), TalkBack (Android) e NVDA (computador).</li>
-          <li><strong class="text-grafite font-semibold">Texto maior:</strong> use o zoom do navegador (Ctrl e +) ou do celular. O layout se adapta.</li>
           <li><strong class="text-grafite font-semibold">Teclado:</strong> navegue com Tab; Esc fecha janelas.</li>
         </ul>
       </div>
@@ -276,6 +330,12 @@ function montarAcessibilidade() {
   botao.addEventListener('click', () => painel.showModal());
   painel.addEventListener('click', (e) => { if (e.target === painel || e.target.closest('[data-fechar-a11y]')) painel.close(); });
   painel.addEventListener('change', (e) => { if (e.target.name === 'a11yTema') aplicarTema(e.target.value); });
+  painel.querySelector('.seg-texto').addEventListener('click', (e) => {
+    const escolhido = e.target.closest('[data-texto]');
+    if (!escolhido) return;
+    aplicarTexto(escolhido.dataset.texto);
+    painel.querySelectorAll('[data-texto]').forEach((b) => b.setAttribute('aria-pressed', b === escolhido));
+  });
   document.getElementById('a11yContraste').addEventListener('click', (e) => {
     const ligado = e.currentTarget.getAttribute('aria-checked') !== 'true';
     e.currentTarget.setAttribute('aria-checked', ligado);

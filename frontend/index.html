@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pulso Academia</title>
+<meta name="description" content="Academia de bairro em Heliópolis, São Paulo. Planos acessíveis, agendamento online e professores da região.">
+<meta property="og:title" content="Pulso Academia">
+<meta property="og:description" content="Seu ritmo, nosso bairro. Planos acessíveis, agendamento online e professores da região.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pulso-academia.onrender.com">
+<meta property="og:image" content="https://pulso-academia.onrender.com/img/home/treino.jpg">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="js/tw-config.js"></script>
@@ -34,6 +40,7 @@
     <nav class="hidden md:flex items-center gap-9 text-[14px]">
       <a href="#sobre" class="text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
       <a href="loja.html" class="text-grafite/70 hover:text-grafite transition-colors">Planos e loja</a>
+      <a href="treino.html" class="text-grafite/70 hover:text-grafite transition-colors">Monte seu treino</a>
       <a href="#onde-estamos" class="text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
       <a href="#contato" class="text-grafite/70 hover:text-grafite transition-colors">Contato</a>
     </nav>
@@ -49,6 +56,7 @@
   <div id="mobileMenu" class="hidden md:hidden flex-col px-5 pb-3 text-[17px] font-semibold">
     <a href="#sobre" class="py-3 border-b border-tinta/5 last:border-0">Sobre</a>
     <a href="loja.html" class="py-3 border-b border-tinta/5 last:border-0">Planos e loja</a>
+    <a href="treino.html" class="py-3 border-b border-tinta/5 last:border-0">Monte seu treino</a>
     <a href="#onde-estamos" class="py-3 border-b border-tinta/5 last:border-0">Onde estamos</a>
     <a href="#contato" class="py-3 border-b border-tinta/5 last:border-0">Contato</a>
   </div>
@@ -61,11 +69,11 @@
     <svg class="pulso-linha mx-auto mb-6 md:mb-8 w-56 md:w-72 h-auto text-terracota" viewBox="0 0 300 60" fill="none" aria-hidden="true">
       <path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    <h1 class="titulo-grande text-[46px] sm:text-6xl md:text-[84px] xl:text-[96px] font-bold">Seu ritmo,<br class="sm:hidden"> nosso bairro.</h1>
-    <p class="equilibrado mt-5 md:mt-7 text-[19px] md:text-[26px] leading-snug text-grafite/65 max-w-[720px] mx-auto">
+    <h1 class="entra titulo-grande text-[46px] sm:text-6xl md:text-[84px] xl:text-[96px] font-bold">Seu ritmo,<br class="sm:hidden"> nosso bairro.</h1>
+    <p class="entra entra-2 equilibrado mt-5 md:mt-7 text-[19px] md:text-[26px] leading-snug text-grafite/65 max-w-[720px] mx-auto">
       Uma academia pensada para quem mora perto, treina no seu tempo e quer fazer parte de uma comunidade de verdade.
     </p>
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+    <div class="entra entra-3 mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
       <a href="loja.html" class="px-7 py-3.5 rounded-full bg-petroleo text-white text-[17px] font-medium hover:bg-petroleo/90 transition">Ver planos</a>
       <a href="aluno.html" class="px-2 py-3.5 text-[17px] font-medium text-petroleo hover:underline">Agendar uma aula</a>
     </div>
@@ -99,6 +107,7 @@
     <div class="flex items-center justify-between mt-5">
       <div id="carouselPontos" class="flex gap-2" aria-hidden="true"></div>
       <div class="flex gap-3">
+        <button id="carouselPausa" type="button" aria-label="Pausar as fotos" class="w-10 h-10 rounded-full bg-tinta/[0.06] text-grafite/70 flex items-center justify-center hover:bg-tinta/10 transition"></button>
         <button onclick="scrollCarousel(-1)" aria-label="Foto anterior" class="w-10 h-10 rounded-full bg-tinta/[0.06] text-grafite/70 flex items-center justify-center hover:bg-tinta/10 transition">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
@@ -113,8 +122,8 @@
 <!-- SOBRE -->
 <section id="sobre" class="py-24 md:py-32 px-5 bg-superficie">
   <div class="max-w-[1180px] mx-auto">
-    <h2 class="text-[40px] md:text-[64px] font-bold leading-[1.07] tracking-tight max-w-3xl">Academia é bem-estar, não intimidação.</h2>
-    <div class="mt-10 grid md:grid-cols-2 gap-x-12 gap-y-5 text-[17px] md:text-[21px] leading-relaxed text-grafite/65">
+    <h2 data-revela class="text-[40px] md:text-[64px] font-bold leading-[1.07] tracking-tight max-w-3xl">Academia é bem-estar, não intimidação.</h2>
+    <div data-revela class="mt-10 grid md:grid-cols-2 gap-x-12 gap-y-5 text-[17px] md:text-[21px] leading-relaxed text-grafite/65">
       <p>
         Nascemos no bairro pra servir o bairro. A Pulso emprega professores da própria região, com carga horária
         organizada e condições de trabalho decentes, porque um bom atendimento começa por quem ensina.
@@ -124,14 +133,25 @@
         na academia, e consegue agendar direto com o professor que quiser.
       </p>
     </div>
-    <dl class="mt-14 grid grid-cols-3 border-t border-linha">
-      <div class="pt-6 pr-4 flex flex-col-reverse justify-end"><dt class="text-[13px] text-grafite/65">alunos ativos</dt><dd class="text-3xl md:text-5xl font-semibold tracking-tight mt-1">+350</dd></div>
-      <div class="pt-6 px-4 border-l border-linha flex flex-col-reverse justify-end"><dt class="text-[13px] text-grafite/65">professores do bairro</dt><dd class="text-3xl md:text-5xl font-semibold tracking-tight mt-1">12</dd></div>
-      <div class="pt-6 pl-4 border-l border-linha flex flex-col-reverse justify-end"><dt class="text-[13px] text-grafite/65">nota dos alunos</dt><dd class="text-3xl md:text-5xl font-semibold tracking-tight mt-1">4,8</dd></div>
+    <dl data-revela class="mt-14 grid grid-cols-3 border-t border-linha">
+      <div class="pt-6 pr-4 flex flex-col-reverse justify-end"><dt class="text-[13px] text-grafite/65">alunos ativos</dt><dd class="text-3xl md:text-5xl font-semibold tracking-tight mt-1" data-contar="350" data-prefixo="+">+350</dd></div>
+      <div class="pt-6 px-4 border-l border-linha flex flex-col-reverse justify-end"><dt class="text-[13px] text-grafite/65">professores do bairro</dt><dd class="text-3xl md:text-5xl font-semibold tracking-tight mt-1" data-contar="12">12</dd></div>
+      <div class="pt-6 pl-4 border-l border-linha flex flex-col-reverse justify-end"><dt class="text-[13px] text-grafite/65">nota dos alunos</dt><dd class="text-3xl md:text-5xl font-semibold tracking-tight mt-1" data-contar="4.8" data-casas="1">4,8</dd></div>
     </dl>
   </div>
-  <div class="max-w-[1180px] mx-auto mt-16 md:mt-20 rounded-3xl overflow-hidden h-[320px] md:h-[520px] bg-offwhite">
+  <div data-revela class="max-w-[1180px] mx-auto mt-16 md:mt-20 rounded-3xl overflow-hidden h-[320px] md:h-[520px] bg-offwhite">
     <img src="img/home/recepcao.jpg" alt="Salão de treino da academia" class="w-full h-full object-cover" loading="lazy">
+  </div>
+</section>
+
+<!-- MONTE SEU TREINO -->
+<section class="px-5 pb-24 md:pb-32 bg-superficie">
+  <div data-revela class="max-w-[1180px] mx-auto rounded-3xl bg-petroleo text-white p-8 md:p-14 flex flex-col md:flex-row md:items-center justify-between gap-8">
+    <div class="max-w-xl">
+      <h2 class="text-[32px] md:text-[44px] font-bold tracking-tight leading-tight">Seu treino, montado em segundos.</h2>
+      <p class="mt-3 text-[17px] md:text-[19px] leading-snug text-white">Conte seu objetivo, seu nível e quanto tempo você tem, e receba um plano para a sua semana.</p>
+    </div>
+    <a href="treino.html" class="self-start md:self-auto shrink-0 px-7 py-3.5 rounded-full bg-white text-[#2F444B] text-[17px] font-semibold hover:scale-[1.03] active:scale-[0.99] transition">Montar meu treino</a>
   </div>
 </section>
 
@@ -139,7 +159,7 @@
 <section class="py-20 md:py-24 px-5 bg-offwhite">
   <div class="max-w-[1180px] mx-auto">
     <h2 class="text-[32px] md:text-[40px] font-bold tracking-tight mb-8">Avisos da academia</h2>
-    <div id="listaAvisos" class="grid md:grid-cols-2 gap-4">
+    <div id="listaAvisos" data-revela class="grid md:grid-cols-2 gap-4">
       <p class="text-grafite/65 text-sm">Carregando avisos...</p>
     </div>
   </div>
@@ -150,7 +170,7 @@
   <div class="max-w-[1180px] mx-auto">
     <h2 class="text-[32px] md:text-[40px] font-bold tracking-tight mb-8 max-w-[1180px] mx-auto">Onde estamos</h2>
 
-    <div class="grid lg:grid-cols-3 gap-4 items-stretch">
+    <div data-revela class="grid lg:grid-cols-3 gap-4 items-stretch">
       <div class="lg:col-span-2 relative rounded-3xl overflow-hidden bg-offwhite min-h-[340px] md:min-h-[440px]">
         <div id="mapaAcademia" class="absolute inset-0 flex items-center justify-center text-grafite/65 text-sm">Carregando mapa…</div>
       </div>
@@ -182,7 +202,7 @@
 </main>
 
 <!-- CONTATO / RODAPÉ (claro e discreto, como nas páginas da Apple) -->
-<footer id="contato" class="bg-offwhite text-grafite/65 text-[12px] leading-relaxed px-5 pt-10 pb-8">
+<footer id="contato" class="bg-offwhite text-grafite/65 text-[13px] leading-relaxed px-5 pt-10 pb-8">
   <div class="max-w-[1180px] mx-auto">
     <div class="grid sm:grid-cols-3 gap-8 pb-8 border-b border-linha">
       <div>
@@ -234,6 +254,36 @@
   }
   track.addEventListener('scroll', () => requestAnimationFrame(marcarPonto), { passive: true });
   marcarPonto();
+
+  /* Fotos passam sozinhas. Param quando a pessoa está lendo ou mexendo (mouse em cima, foco do
+     teclado, dedo na tela), com a aba em segundo plano, ou se ela pediu menos movimento. */
+  const INTERVALO_FOTOS = 5000;
+  const botaoPausa = document.getElementById('carouselPausa');
+  const ICONE_PAUSA = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+  const ICONE_PLAY = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>';
+  let fotosPausadas = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let interagindo = false;
+
+  function atualizarBotaoPausa() {
+    botaoPausa.innerHTML = fotosPausadas ? ICONE_PLAY : ICONE_PAUSA;
+    botaoPausa.setAttribute('aria-label', fotosPausadas ? 'Passar as fotos sozinhas' : 'Pausar as fotos');
+  }
+  botaoPausa.addEventListener('click', () => { fotosPausadas = !fotosPausadas; atualizarBotaoPausa(); });
+  atualizarBotaoPausa();
+
+  const areaFotos = track.parentElement;
+  areaFotos.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') interagindo = true; });
+  areaFotos.addEventListener('pointerleave', () => { interagindo = false; });
+  track.addEventListener('touchstart', () => { interagindo = true; }, { passive: true });
+  track.addEventListener('touchend', () => { setTimeout(() => { interagindo = false; }, INTERVALO_FOTOS); }, { passive: true });
+  track.addEventListener('focusin', () => { interagindo = true; });
+  track.addEventListener('focusout', () => { interagindo = false; });
+
+  setInterval(() => {
+    const posicao = track.getBoundingClientRect();
+    const naTela = posicao.bottom > 0 && posicao.top < innerHeight;
+    if (!fotosPausadas && !interagindo && !document.hidden && naTela) scrollCarousel(1);
+  }, INTERVALO_FOTOS);
 
   async function carregarAvisos() {
     const container = document.getElementById('listaAvisos');

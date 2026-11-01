@@ -7,14 +7,14 @@
    Para publicar uma versão nova do site, aumente VERSAO.
    ========================================================= */
 
-const VERSAO = 'pulso-v4'; // v4: modo claro/escuro, acessibilidade, fotos com fundo uniforme
+const VERSAO = 'pulso-v5'; // v5: montador de treinos, tamanho do texto, animações
 const CACHE_CASCO = `${VERSAO}-casco`;
 const CACHE_EXTERNO = `${VERSAO}-externo`;
 
 const CASCO = [
-  'offline.html', 'index.html', 'loja.html', 'login.html', 'checkout.html', 'aluno.html', 'professor.html', 'admin.html',
+  'offline.html', 'index.html', 'loja.html', 'treino.html', 'login.html', 'checkout.html', 'aluno.html', 'professor.html', 'admin.html',
   'css/style.css', 'fonts/inter.woff2',
-  'js/tw-config.js', 'js/api.js', 'js/ui.js', 'js/cart.js', 'js/loja.js', 'js/login.js', 'js/checkout.js', 'js/academia.js',
+  'js/tw-config.js', 'js/api.js', 'js/ui.js', 'js/cart.js', 'js/loja.js', 'js/treino.js', 'js/login.js', 'js/checkout.js', 'js/academia.js',
   'js/aluno.js', 'js/professor.js', 'js/admin.js', 'js/admin-cadastros.js', 'js/pwa.js',
   'img/logo-icon.png', 'img/logo-icon-branco.png', 'img/logo-horizontal.png',
   'img/icons/icon-192.png', 'manifest.json',

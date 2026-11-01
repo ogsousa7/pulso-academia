@@ -8,7 +8,7 @@
 
 const $ = (id) => document.getElementById(id);
 let opcoesAdmin = null;
-const ABAS = ['geral', 'agendamentos', 'planos', 'alunos', 'professores', 'solicitacoes', 'pagamentos', 'academia'];
+const ABAS = ['geral', 'agendamentos', 'planos', 'produtos', 'alunos', 'professores', 'solicitacoes', 'pagamentos', 'academia'];
 
 /* ---------- Abas ---------- */
 
@@ -20,6 +20,7 @@ function abrirAba(nome) {
   });
   const carregar = {
     geral: () => carregarTudo(), agendamentos: carregarAgendamentos, planos: () => CADASTROS.planos.carregar(),
+    produtos: () => CADASTROS.produtos.carregar(),
     alunos: () => CADASTROS.alunos.carregar(), professores: () => CADASTROS.professores.carregar(),
     solicitacoes: carregarSolicitacoes, pagamentos: carregarPagamentos,
   };
@@ -56,6 +57,28 @@ const CADASTROS = {
     ],
     novo: { periodo: 'por mês', ativo: true },
   },
+  produtos: {
+    recurso: 'produtos', singular: 'produto', plural: 'Produtos', chave: 'produtos', busca: true, buscaDica: 'Buscar por nome',
+    colunas: [
+      ['Produto', (p) => `<span class="flex items-center gap-3 min-w-[220px]">
+        <img src="${escapeHtml(p.imagem)}" alt="" loading="lazy" onerror="fotoReserva(this)" class="w-11 h-11 rounded-xl object-cover bg-offwhite shrink-0">
+        <span class="font-medium">${escapeHtml(p.nome)}</span></span>`],
+      ['Categoria', (p) => escapeHtml(nomeCategoria(p.categoria))],
+      ['Preço', (p) => formatarPreco(p.preco)],
+      ['Vendidos', (p) => p.vendidos],
+      ['Situação', (p) => SIM_NAO(p.ativo)],
+    ],
+    campos: () => [
+      { nome: 'imagem', rotulo: 'Foto do produto', tipo: 'foto' },
+      { nome: 'nome', rotulo: 'Nome do produto', max: 80 },
+      { nome: 'preco', rotulo: 'Preço (R$)', tipo: 'number', step: '0.01', min: '0.01' },
+      { nome: 'categoria', rotulo: 'Categoria', tipo: 'select', opcoes: opcoesAdmin.categoriasProduto },
+      { nome: 'descricao', rotulo: 'Descrição curta', tipo: 'textarea', max: 300, opcional: true },
+      { nome: 'detalhes', rotulo: 'Características (uma por linha, até 8)', tipo: 'linhas', opcional: true },
+      { nome: 'ativo', rotulo: 'Disponível na loja', tipo: 'check', soEdicao: true },
+    ],
+    novo: { categoria: 'suplemento', ativo: true },
+  },
   alunos: {
     recurso: 'alunos', singular: 'aluno', plural: 'Alunos', chave: 'alunos', busca: true,
     colunas: [
@@ -90,6 +113,8 @@ const CADASTROS = {
   },
 };
 
+const nomeCategoria = (chave) => opcoesAdmin.categoriasProduto.find(([valor]) => valor === chave)?.[1] ?? chave;
+
 for (const cfg of Object.values(CADASTROS)) {
   cfg.itens = [];
   cfg.raiz = $(`cad-${cfg.recurso}`);
@@ -100,7 +125,7 @@ for (const cfg of Object.values(CADASTROS)) {
         <div class="px-6 pt-5 pb-3 flex flex-wrap items-center gap-3 justify-between">
           <h2 class="text-[19px] font-semibold tracking-tight">${cfg.plural}</h2>
           <div class="flex items-center gap-2">
-            ${cfg.busca ? `<input type="search" data-busca placeholder="Buscar por nome ou e-mail" aria-label="Buscar"
+            ${cfg.busca ? `<input type="search" data-busca placeholder="${cfg.buscaDica || 'Buscar por nome ou e-mail'}" aria-label="Buscar"
               class="border border-grafite/15 rounded-full px-4 py-2 text-xs focus:outline-none focus:border-petroleo">` : ''}
             <button data-novo class="px-4 py-2 rounded-full bg-petroleo text-white text-[14px] font-medium hover:brightness-110 transition">Novo ${cfg.singular}</button>
           </div>
@@ -165,11 +190,29 @@ function abrirCadastro(cfg, item) {
       if (c.tipo === 'check') {
         return `<label class="flex items-center gap-2 text-sm font-medium"><input id="${id}" name="${c.nome}" type="checkbox" ${v ? 'checked' : ''}> ${c.rotulo}</label>`;
       }
+      if (c.tipo === 'foto') {
+        return `<div>
+          <p class="text-[13px] font-medium text-grafite/65">${c.rotulo}</p>
+          <div class="flex items-center gap-4 mt-1">
+            <img id="cadFotoPrevia" src="${escapeHtml(v || 'img/logo-icon.png')}" alt="" onerror="fotoReserva(this)" class="w-20 h-20 rounded-2xl object-cover bg-offwhite shrink-0">
+            <label class="px-4 py-2 rounded-full bg-tinta/[0.06] text-[14px] font-semibold cursor-pointer hover:bg-tinta/10 focus-within:ring-2 focus-within:ring-petroleo transition">
+              Escolher foto<input id="cadFotoArquivo" type="file" accept="image/*" class="sr-only">
+            </label>
+          </div>
+          <input type="hidden" name="${c.nome}" value="${escapeHtml(v)}">
+        </div>`;
+      }
       let campo;
       if (c.tipo === 'select') {
-        campo = `<select id="${id}" name="${c.nome}" class="${base}">${c.opcoes.map((o) => `<option ${o === v ? 'selected' : ''}>${escapeHtml(o)}</option>`).join('')}</select>`;
+        // opção simples ('por mês') ou par [valor, rótulo] (['suplemento', 'Suplementos'])
+        campo = `<select id="${id}" name="${c.nome}" class="${base}">${c.opcoes.map((o) => {
+          const [valor, rotulo] = Array.isArray(o) ? o : [o, o];
+          return `<option value="${escapeHtml(valor)}" ${valor === v ? 'selected' : ''}>${escapeHtml(rotulo)}</option>`;
+        }).join('')}</select>`;
       } else if (c.tipo === 'textarea') {
         campo = `<textarea id="${id}" name="${c.nome}" rows="3" maxlength="${c.max}" class="${base} resize-none">${escapeHtml(v)}</textarea>`;
+      } else if (c.tipo === 'linhas') {
+        campo = `<textarea id="${id}" name="${c.nome}" rows="4" class="${base} resize-none">${escapeHtml((v || []).join('\n'))}</textarea>`;
       } else {
         const obrigatorio = c.senha ? !item : !c.opcional;
         campo = `<input id="${id}" name="${c.nome}" type="${c.tipo || 'text'}" ${c.max ? `maxlength="${c.max}"` : ''} ${c.step ? `step="${c.step}"` : ''}
@@ -183,6 +226,39 @@ function abrirCadastro(cfg, item) {
   cadModal.classList.add('flex');
   cadForm.querySelector('input,select,textarea')?.focus();
 }
+
+/**
+ * Reduz a foto no navegador antes de enviar: recorte quadrado e, se preciso, menos qualidade,
+ * até caber no limite do servidor. A foto fica guardada no banco, junto do produto.
+ */
+async function reduzirFoto(arquivo) {
+  const LIMITE = 85_000;
+  const bitmap = await createImageBitmap(arquivo);
+  const lado = Math.min(bitmap.width, bitmap.height);
+  const canvas = document.createElement('canvas');
+  for (const tamanho of [640, 480, 360]) {
+    canvas.width = canvas.height = tamanho;
+    canvas.getContext('2d').drawImage(bitmap, (bitmap.width - lado) / 2, (bitmap.height - lado) / 2, lado, lado, 0, 0, tamanho, tamanho);
+    for (const qualidade of [0.82, 0.7, 0.55]) {
+      const webp = canvas.toDataURL('image/webp', qualidade);
+      // Navegador sem WEBP no canvas (Safari) devolve PNG: nesse caso usa JPEG.
+      const foto = webp.startsWith('data:image/webp') ? webp : canvas.toDataURL('image/jpeg', qualidade);
+      if (foto.length <= LIMITE) return foto;
+    }
+  }
+  throw new Error('Essa foto é muito pesada. Tente outra.');
+}
+
+cadForm.addEventListener('change', async (e) => {
+  if (e.target.id !== 'cadFotoArquivo' || !e.target.files[0]) return;
+  try {
+    const foto = await reduzirFoto(e.target.files[0]);
+    cadForm.elements.imagem.value = foto;
+    $('cadFotoPrevia').src = foto;
+  } catch (erro) {
+    showToast(erro.message || 'Não foi possível ler essa imagem.', 'error');
+  }
+});
 
 function fecharCadastro() {
   cadModal.classList.add('hidden');
@@ -199,7 +275,9 @@ cadForm.addEventListener('submit', async (evento) => {
   for (const c of cfg.campos()) {
     if (c.soEdicao && !item) continue;
     const campo = cadForm.elements[c.nome];
-    dados[c.nome] = c.tipo === 'check' ? campo.checked : campo.value;
+    if (c.tipo === 'check') dados[c.nome] = campo.checked;
+    else if (c.tipo === 'linhas') dados[c.nome] = campo.value.split('\n').map((l) => l.trim()).filter(Boolean);
+    else dados[c.nome] = campo.value;
   }
   if (item && dados.senha === '') delete dados.senha;
   const botao = $('cadSalvar');

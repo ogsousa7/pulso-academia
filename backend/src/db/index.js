@@ -243,6 +243,9 @@ garantirColuna('planos', 'ativo', 'INTEGER NOT NULL DEFAULT 1');
 garantirColuna('produtos', 'descricao', "TEXT NOT NULL DEFAULT ''");
 garantirColuna('produtos', 'imagem', "TEXT NOT NULL DEFAULT ''");
 garantirColuna('produtos', 'detalhes', "TEXT NOT NULL DEFAULT '[]'"); // lista em JSON (tela do produto)
+garantirColuna('produtos', 'ativo', 'INTEGER NOT NULL DEFAULT 1'); // desativado some da loja, mas fica no histórico
+garantirColuna('produtos', 'slug', 'TEXT'); // identifica os produtos do CATALOGO, mesmo se a recepção mudar o nome
+garantirColuna('produtos', 'editado', 'INTEGER NOT NULL DEFAULT 0'); // 1 = a recepção mexeu: o catálogo não sobrescreve mais
 
 garantirColuna('pedidos', 'parcelas', 'INTEGER NOT NULL DEFAULT 1');
 garantirColuna('pedidos', 'bandeira', 'TEXT');
@@ -264,8 +267,9 @@ garantirColuna('agendamentos', 'tipo_treino', "TEXT NOT NULL DEFAULT 'Musculaç�
 garantirColuna('agendamentos', 'nivel', "TEXT NOT NULL DEFAULT 'Iniciante'");
 
 /* ------------------------- CATÁLOGO DA LOJA --------------------------
-   Fonte única dos produtos. É sincronizado a CADA start: o que já existe (pelo
-   nome) é atualizado, o que falta é inserido. Seguro de repetir, e é assim que
+   Produtos iniciais da loja. É sincronizado a CADA start: o que falta é inserido
+   e o que já existe é atualizado, MENOS o que a recepção editou no painel
+   (coluna "editado"), que nunca é sobrescrito. Seguro de repetir, e é assim que
    os produtos novos e as fotos chegam em bancos antigos.
 ------------------------------------------------------------------------ */
 
@@ -302,21 +306,23 @@ const CATALOGO = [
 ];
 
 function sincronizarCatalogo() {
-  const existe = db.prepare('SELECT id FROM produtos WHERE nome = ?');
+  const marcarSlug = db.prepare('UPDATE produtos SET slug = ? WHERE nome = ? AND slug IS NULL'); // bancos antigos
+  const existe = db.prepare('SELECT id, editado FROM produtos WHERE slug = ?');
   const inserir = db.prepare(
-    'INSERT INTO produtos (nome, preco, categoria, descricao, imagem, detalhes) VALUES (?, ?, ?, ?, ?, ?)'
+    'INSERT INTO produtos (nome, preco, categoria, descricao, imagem, detalhes, slug) VALUES (?, ?, ?, ?, ?, ?, ?)'
   );
   const atualizar = db.prepare(
-    'UPDATE produtos SET preco = ?, categoria = ?, descricao = ?, imagem = ?, detalhes = ? WHERE id = ?'
+    'UPDATE produtos SET nome = ?, preco = ?, categoria = ?, descricao = ?, imagem = ?, detalhes = ? WHERE id = ?'
   );
 
   for (const [nome, preco, categoria, descricao, slug, detalhes] of CATALOGO) {
     // Foto real (Unsplash, recortada com fundo transparente, em img/produtos/fotos). Se faltar, o site usa a ilustração .svg.
     const imagem = `img/produtos/fotos/${slug}.webp`;
     const lista = JSON.stringify(detalhes ?? []);
-    const atual = existe.get(nome);
-    if (atual) atualizar.run(preco, categoria, descricao, imagem, lista, atual.id);
-    else inserir.run(nome, preco, categoria, descricao, imagem, lista);
+    marcarSlug.run(slug, nome);
+    const atual = existe.get(slug);
+    if (!atual) inserir.run(nome, preco, categoria, descricao, imagem, lista, slug);
+    else if (!atual.editado) atualizar.run(nome, preco, categoria, descricao, imagem, lista, atual.id);
   }
 }
 

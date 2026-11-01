@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monte seu treino — Pulso Academia</title>
+<meta name="description" content="Responda cinco perguntas e receba um plano de treino pensado para o seu objetivo, nível e tempo.">
+<meta property="og:title" content="Monte seu treino — Pulso Academia">
+<meta property="og:description" content="Responda cinco perguntas e receba um plano de treino para o seu objetivo, nível e tempo.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://pulso-academia.onrender.com/img/home/treino.jpg">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="js/tw-config.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F5F5F7">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="img/icons/apple-touch-icon.png">
+</head>
+
+<body class="bg-offwhite text-grafite antialiased font-sans">
+
+<header class="nav-vidro fixed top-0 left-0 w-full z-40">
+  <div class="max-w-[1180px] mx-auto px-5 md:px-8 h-[60px] flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-3 shrink-0" aria-label="Pulso Academia, início">
+      <img src="img/logo-icon.png" alt="Pulso Academia" class="logo-tema h-8 w-auto">
+    </a>
+
+    <nav class="hidden md:flex items-center gap-9 text-[14px]">
+      <a href="index.html#sobre" class="text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
+      <a href="loja.html" class="text-grafite/70 hover:text-grafite transition-colors">Planos e loja</a>
+      <a href="treino.html" class="text-grafite font-medium transition-colors" aria-current="page">Monte seu treino</a>
+      <a href="index.html#onde-estamos" class="text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <button id="btnEntrar" class="px-4 py-2 rounded-full bg-grafite text-superficie text-[14px] font-medium hover:bg-grafite/85 transition">Entrar</button>
+      <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-tinta/5">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobileMenu" class="hidden md:hidden flex-col px-5 pb-3 text-[17px] font-semibold">
+    <a href="index.html#sobre" class="py-3 border-b border-tinta/5 last:border-0">Sobre</a>
+    <a href="loja.html" class="py-3 border-b border-tinta/5 last:border-0">Planos e loja</a>
+    <a href="treino.html" class="py-3 border-b border-tinta/5 last:border-0">Monte seu treino</a>
+    <a href="index.html#onde-estamos" class="py-3 border-b border-tinta/5 last:border-0">Onde estamos</a>
+  </div>
+</header>
+
+<main class="pt-[60px]">
+  <section class="px-5 pt-14 md:pt-20 pb-20">
+    <div class="max-w-[760px] mx-auto">
+      <h1 class="entra text-[44px] md:text-[64px] font-bold tracking-tight leading-none">Monte seu treino</h1>
+      <p class="entra entra-2 mt-4 text-[19px] md:text-[21px] text-grafite/65 leading-snug">Cinco perguntas rápidas e você recebe um plano para a sua semana.</p>
+
+      <form id="formTreino" class="entra entra-3 mt-10 bg-superficie rounded-3xl p-6 md:p-8 flex flex-col gap-7">
+        <fieldset>
+          <legend class="text-[17px] font-semibold mb-3">Qual é o seu objetivo?</legend>
+          <div class="escolhas" data-campo="objetivo" data-opcoes="Ganhar massa muscular|Emagrecer|Ganhar força|Melhorar o condicionamento|Saúde e bem-estar" data-marcado="Ganhar massa muscular"></div>
+        </fieldset>
+        <fieldset>
+          <legend class="text-[17px] font-semibold mb-3">Qual é o seu nível?</legend>
+          <div class="escolhas" data-campo="nivel" data-opcoes="Iniciante|Intermediário|Avançado" data-marcado="Iniciante"></div>
+        </fieldset>
+        <fieldset>
+          <legend class="text-[17px] font-semibold mb-3">Quantos dias por semana?</legend>
+          <div class="escolhas" data-campo="dias" data-opcoes="2|3|4|5|6" data-marcado="3"></div>
+        </fieldset>
+        <fieldset>
+          <legend class="text-[17px] font-semibold mb-3">Quanto tempo em cada treino?</legend>
+          <div class="escolhas" data-campo="minutos" data-opcoes="30|45|60|90" data-sufixo=" min" data-marcado="45"></div>
+        </fieldset>
+        <fieldset>
+          <legend class="text-[17px] font-semibold mb-3">Onde você vai treinar?</legend>
+          <div class="escolhas" data-campo="local" data-opcoes="Academia completa|Halteres e elásticos|Em casa, sem equipamento" data-marcado="Academia completa"></div>
+        </fieldset>
+        <div>
+          <label for="restricoes" class="text-[17px] font-semibold">Alguma dor ou restrição? <span class="font-normal text-grafite/65">(opcional)</span></label>
+          <textarea id="restricoes" name="restricoes" rows="2" maxlength="200" placeholder="Ex.: dor no joelho direito" class="mt-3 w-full px-4 py-3 text-[17px] resize-none"></textarea>
+          <p class="text-[13px] text-grafite/65 mt-2">Não escreva nome, documento ou outros dados pessoais: este texto é enviado ao serviço de IA do Google. <a href="privacidade.html" class="text-petroleo">Saiba mais</a>.</p>
+        </div>
+        <button type="submit" id="btnMontar" class="py-3.5 rounded-full bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 active:scale-[0.99] transition">Montar meu treino</button>
+      </form>
+
+      <div id="carregando" class="hidden mt-10 bg-superficie rounded-3xl p-10 text-center" role="status">
+        <svg class="pulso-batendo mx-auto w-40 h-auto text-terracota" viewBox="0 0 300 60" fill="none" aria-hidden="true">
+          <path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="mt-5 text-[17px] font-semibold">Montando o seu treino…</p>
+        <p class="mt-1 text-[14px] text-grafite/65">Pode levar alguns segundos.</p>
+      </div>
+
+      <section id="resultado" class="hidden mt-10" aria-live="polite" tabindex="-1"></section>
+    </div>
+  </section>
+</main>
+
+<footer class="px-5 md:px-8 py-10 text-[13px] text-grafite/65 border-t border-linha">
+  <div class="max-w-[1180px] mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-tema h-8 w-auto self-start">
+    <p>© 2026 Pulso Academia. Projeto escolar da Etec Heliópolis. Desenvolvido por <a href="https://true-ember.netlify.app" target="_blank" rel="noopener" class="font-semibold text-grafite underline underline-offset-2">True Ember</a>. <a href="privacidade.html" class="text-grafite underline underline-offset-2">Política de Privacidade</a></p>
+  </div>
+</footer>
+
+<div id="toastContainer" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 items-end" aria-live="polite"></div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/treino.js"></script>
+<script src="js/pwa.js"></script>
+</body>
+</html>

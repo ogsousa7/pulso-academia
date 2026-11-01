@@ -10,7 +10,7 @@
 
 import bcrypt from 'bcryptjs';
 import { db, transacao } from '../db/index.js';
-import { STATUS_AGENDAMENTO, TIPOS_TREINO, NIVEIS } from '../constants.js';
+import { CATEGORIAS_PRODUTO, STATUS_AGENDAMENTO, TIPOS_TREINO, NIVEIS } from '../constants.js';
 import { EMAIL_REGEX, dataISOValida, hojeISO, idValido, textoValido } from '../utils.js';
 import { cancelarAulasFuturasDoAluno } from '../services/agenda.js';
 
@@ -63,6 +63,79 @@ export function atualizarPlano(req, res) {
   db.prepare('UPDATE planos SET nome = ?, preco = ?, periodo = ?, descricao = ?, ativo = ? WHERE id = ?')
     .run(dados.nome, dados.preco, dados.periodo, dados.descricao, ativo, id);
   res.json({ plano: db.prepare('SELECT * FROM planos WHERE id = ?').get(id) });
+}
+
+/* ------------------------------ PRODUTOS ------------------------------ */
+
+const FOTO_PADRAO = 'img/logo-icon.png';
+const FOTO_MAX_CARACTERES = 90_000; // o painel reduz a foto no navegador antes de enviar
+const FOTO_ARQUIVO = /^img\/[\w-]+(\/[\w-]+)*\.(webp|png|jpe?g|svg)$/;
+const FOTO_ENVIADA = /^data:image\/(webp|jpeg|png);base64,[A-Za-z0-9+/]+=*$/;
+
+function lerDetalhes(texto) {
+  try {
+    const lista = JSON.parse(texto);
+    return Array.isArray(lista) ? lista : [];
+  } catch {
+    return [];
+  }
+}
+
+/** GET /api/admin/produtos?busca= — todos, inclusive os desativados, com o total já vendido. */
+export function listarProdutos(req, res) {
+  const busca = `%${String(req.query.busca ?? '').trim()}%`;
+  const produtos = db
+    .prepare(
+      `SELECT p.id, p.nome, p.preco, p.categoria, p.descricao, p.imagem, p.detalhes, p.ativo,
+              (SELECT COALESCE(SUM(i.quantidade), 0) FROM pedido_itens i JOIN pedidos pd ON pd.id = i.pedido_id
+                WHERE i.tipo = 'PRODUTO' AND i.item_id = p.id AND pd.status = 'PAGO') AS vendidos
+       FROM produtos p WHERE p.nome LIKE ? ORDER BY p.ativo DESC, p.categoria, p.nome`
+    )
+    .all(busca)
+    .map((p) => ({ ...p, detalhes: lerDetalhes(p.detalhes) }));
+  res.json({ produtos });
+}
+
+function lerProduto(body) {
+  const { nome, preco, categoria, descricao = '', imagem = '', detalhes = [] } = body ?? {};
+  if (!textoValido(nome, 80)) return { erro: 'Informe o nome do produto (até 80 caracteres).' };
+  const valor = Number(preco);
+  if (!Number.isFinite(valor) || valor <= 0 || valor > 100000) return { erro: 'Informe um preço válido (maior que zero).' };
+  if (!Object.hasOwn(CATEGORIAS_PRODUTO, categoria)) return { erro: 'Categoria inválida.' };
+  if (typeof descricao !== 'string' || descricao.length > 300) return { erro: 'A descrição pode ter até 300 caracteres.' };
+  const foto = typeof imagem === 'string' ? imagem : '';
+  const fotoOk = foto === '' || FOTO_ARQUIVO.test(foto) || (FOTO_ENVIADA.test(foto) && foto.length <= FOTO_MAX_CARACTERES);
+  if (!fotoOk) return { erro: 'Foto inválida. Escolha uma imagem JPG, PNG ou WEBP.' };
+  const itens = Array.isArray(detalhes) ? detalhes : [];
+  if (itens.length > 8 || itens.some((d) => !textoValido(d, 120))) return { erro: 'Use até 8 características, com até 120 caracteres cada.' };
+  return {
+    dados: {
+      nome: nome.trim(), preco: Math.round(valor * 100) / 100, categoria, descricao: descricao.trim(),
+      imagem: foto || FOTO_PADRAO, detalhes: JSON.stringify(itens.map((d) => d.trim())),
+    },
+  };
+}
+
+/** POST /api/admin/produtos */
+export function criarProduto(req, res) {
+  const { erro: msg, dados } = lerProduto(req.body);
+  if (msg) return erro(res, 400, msg);
+  const r = db
+    .prepare('INSERT INTO produtos (nome, preco, categoria, descricao, imagem, detalhes, editado) VALUES (?, ?, ?, ?, ?, ?, 1)')
+    .run(dados.nome, dados.preco, dados.categoria, dados.descricao, dados.imagem, dados.detalhes);
+  res.status(201).json({ produto: { id: Number(r.lastInsertRowid), ...dados, ativo: 1 } });
+}
+
+/** PUT /api/admin/produtos/:id — edita dados e/ou ativa/desativa (`ativo`). Nada é apagado: pedidos antigos citam o produto. */
+export function atualizarProduto(req, res) {
+  const id = idValido(req.params.id);
+  if (!id || !db.prepare('SELECT id FROM produtos WHERE id = ?').get(id)) return erro(res, 404, 'Produto não encontrado.');
+  const { erro: msg, dados } = lerProduto(req.body);
+  if (msg) return erro(res, 400, msg);
+  const ativo = req.body.ativo === false || req.body.ativo === 0 ? 0 : 1;
+  db.prepare('UPDATE produtos SET nome = ?, preco = ?, categoria = ?, descricao = ?, imagem = ?, detalhes = ?, ativo = ?, editado = 1 WHERE id = ?')
+    .run(dados.nome, dados.preco, dados.categoria, dados.descricao, dados.imagem, dados.detalhes, ativo, id);
+  res.json({ produto: { id, ...dados, ativo } });
 }
 
 /* ------------------------- ALUNOS / PROFESSORES ----------------------- */
@@ -300,5 +373,8 @@ export function resolverSolicitacao(req, res) {
 
 /** Listas fixas para os formulários da recepção. */
 export function opcoesAdmin(req, res) {
-  res.json({ periodos: PERIODOS, tiposTreino: TIPOS_TREINO, niveis: NIVEIS, statusAgendamento: STATUS_AGENDAMENTO });
+  res.json({
+    periodos: PERIODOS, tiposTreino: TIPOS_TREINO, niveis: NIVEIS, statusAgendamento: STATUS_AGENDAMENTO,
+    categoriasProduto: Object.entries(CATEGORIAS_PRODUTO),
+  });
 }

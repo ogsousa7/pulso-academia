@@ -273,8 +273,9 @@ h1, h2, h3, .equilibrado { text-wrap: balance; }
 
 /* ---------- Folha de detalhes (dialog nativo) ---------- */
 dialog.folha {
-  width: min(960px, calc(100vw - 48px));
-  max-height: calc(100vh - 48px);
+  /* O zoom do tamanho do texto também aumenta vw/vh: a divisão mantém a janela dentro da tela. */
+  width: min(960px, calc(100vw / var(--escala) - 48px));
+  max-height: calc(100vh / var(--escala) - 48px);
   border: 0;
   border-radius: 28px;
   overflow: auto;
@@ -288,9 +289,9 @@ dialog.folha[open] { animation: folha-entra 0.28s cubic-bezier(0.2, 0.9, 0.3, 1)
 @media (max-width: 767px) {
   /* No celular a folha sobe de baixo e ocupa a largura toda, como no iOS. */
   dialog.folha {
-    width: 100vw; max-width: 100vw;
+    width: calc(100vw / var(--escala)); max-width: calc(100vw / var(--escala));
     margin: auto 0 0 0;
-    max-height: 92vh;
+    max-height: calc(92vh / var(--escala));
     border-radius: 24px 24px 0 0;
     padding-bottom: env(safe-area-inset-bottom);
   }
@@ -332,8 +333,8 @@ main:focus { outline: none; }
 .interruptor[aria-checked="true"] { background: #34A853; background: rgb(var(--oliva)); }
 .interruptor[aria-checked="true"] span { transform: translateX(20px); }
 
-dialog.folha-pequena { width: min(440px, calc(100vw - 32px)); }
-@media (max-width: 767px) { dialog.folha-pequena { width: 100vw; } }
+dialog.folha-pequena { width: min(440px, calc(100vw / var(--escala) - 32px)); }
+@media (max-width: 767px) { dialog.folha-pequena { width: calc(100vw / var(--escala)); } }
 
 /* Barra fixa do checkout no celular (vidro, como a barra de abas). */
 .barra-pagar {
@@ -348,3 +349,61 @@ p a.text-petroleo, li a.text-petroleo { text-decoration: underline; text-underli
 
 :root[data-tema="escuro"] .seg-a11y input:checked + span { background: #636366; }
 @media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) .seg-a11y input:checked + span { background: #636366; } }
+
+/* ---------- Tamanho do texto (painel de acessibilidade) ----------
+   O site usa medidas em px, então o "zoom" aumenta textos e espaços juntos e o layout continua proporcional. */
+:root { --escala: 1; }
+:root[data-texto="menor"] { --escala: 0.92; }
+:root[data-texto="maior"] { --escala: 1.12; }
+:root[data-texto="enorme"] { --escala: 1.25; }
+body { zoom: var(--escala); }
+.seg-texto button { flex: 1; padding: 8px 0; border-radius: 9px; font-weight: 700; line-height: 1; color: rgb(var(--grafite)); }
+.seg-texto button[aria-pressed="true"] { background: rgb(var(--superficie)); box-shadow: var(--sombra-aba); }
+:root[data-tema="escuro"] .seg-texto button[aria-pressed="true"] { background: #636366; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) .seg-texto button[aria-pressed="true"] { background: #636366; } }
+
+/* ---------- Animações de entrada ---------- */
+html { scroll-behavior: smooth; }
+/* .entra: títulos da abertura. .entra-2/.entra-3 vêm logo depois, em sequência. */
+.entra { animation: entra-suave 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.entra-2 { animation-delay: 0.1s; }
+.entra-3 { animation-delay: 0.2s; }
+@keyframes entra-suave { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+/* .revela: o ui.js coloca a classe e tira quando o bloco aparece na tela (sem JS, tudo fica visível). */
+.revela { opacity: 0; transform: translateY(22px); }
+.revela.revelado { opacity: 1; transform: none; transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+/* Cartões que sobem um pouco ao passar o mouse (só em quem tem mouse). */
+@media (hover: hover) {
+  .cartao-sobe { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .cartao-sobe:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1); }
+}
+
+/* Linha do pulso batendo enquanto o treino é montado. */
+.pulso-batendo path { stroke-dasharray: 340; animation: pulso-corre 1.5s linear infinite; }
+@keyframes pulso-corre { from { stroke-dashoffset: 680; } to { stroke-dashoffset: 0; } }
+.dia-treino { animation: entra-suave 0.5s ease both; }
+
+/* ---------- Opções do montador de treinos ---------- */
+.escolhas { display: flex; flex-wrap: wrap; gap: 8px; }
+.escolha span {
+  display: block; padding: 10px 16px; border-radius: 999px; cursor: pointer;
+  font-size: 15px; font-weight: 500; background: rgb(var(--tinta) / 0.06);
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.escolha span:hover { background: rgb(var(--tinta) / 0.1); }
+.escolha input:checked + span { background: rgb(var(--petroleo)); color: #fff; }
+.escolha input:focus-visible + span { outline: 3px solid var(--foco); outline-offset: 2px; }
+
+/* Impressão do treino: só o plano, sem menus. */
+@media print {
+  header, footer, #formTreino, .entra, .nao-imprimir, #toastContainer, [vw] { display: none !important; }
+  body, .bg-offwhite, .bg-superficie { background: #fff !important; color: #000 !important; }
+  .dia-treino { break-inside: avoid; border: 1px solid #ccc; }
+}
+
+/* Sem animação de entrada para quem pediu menos movimento. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .revela { opacity: 1; transform: none; }
+}

@@ -163,6 +163,9 @@ const Api = {
   pagarPedido: (id) => apiFetch(`/pedidos/${id}/pagar`, { method: 'POST' }), // só no modo demonstração
   meusPedidos: () => apiFetch('/pedidos/meus'),
 
+  // Montador de treinos (público)
+  montarTreino: (dados) => apiFetch('/treino', { method: 'POST', body: JSON.stringify(dados) }),
+
   // Aluno (role ALUNO)
   alunoOpcoes: () => apiFetch('/aluno/opcoes'),
   alunoHorarios: (professorId, data) => apiFetch(`/aluno/horarios?professorId=${professorId}&data=${data}`),

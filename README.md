@@ -66,10 +66,11 @@ Para recriar o banco do zero: `npm run db:reset` (e depois `npm start`). Bancos 
 | `index.html` | público | Home, avisos, **mapa "Onde estamos"** e contato |
 | `loja.html` | público | 3 planos e 14 produtos com foto, filtro por categoria, carrinho e **mapa de retirada** |
 | `checkout.html` | logado | Pagamento por cartão, Pix ou boleto (simulado) e confirmação |
+| `treino.html` | público | **Monte seu treino:** cinco perguntas e um plano semanal montado por IA (ou por regras, se a IA estiver desligada) |
 | `login.html` | público | Entrar, criar conta e **entrar com Google** |
 | `aluno.html` | só ALUNO | **Agendar aula** (tipo, nível, professor, data, horário livre), **minhas aulas** (cancelar com 2 h de antecedência), **meu plano** (e pedido de cancelamento) e meus pedidos |
 | `professor.html` | só PROFESSOR | **Minha agenda** (só as próprias aulas) e **meus horários** (disponibilidade por dia da semana) |
-| `admin.html` | só ADMIN | Abas: visão geral, agendamentos, **planos, alunos e professores (cadastros)**, solicitações de cancelamento, pagamentos (filtros) e informações da academia |
+| `admin.html` | só ADMIN | Abas: visão geral, agendamentos, **planos, produtos, alunos e professores (cadastros)**, solicitações de cancelamento, pagamentos (filtros) e informações da academia |
 
 Depois do login cada perfil cai na própria página (aluno → `aluno.html`, professor → `professor.html`, recepção → `admin.html`).
 
@@ -83,6 +84,7 @@ Depois do login cada perfil cai na própria página (aluno → `aluno.html`, pro
 
 **Acessibilidade (para todos):**
 - **Modo claro e escuro:** botão de acessibilidade no topo, com as opções Automático (segue o celular/computador), Claro e Escuro. A escolha fica salva no navegador. As cores são variáveis CSS (`css/style.css`), e o Tailwind usa essas variáveis (`js/tw-config.js`): o mesmo HTML funciona nos dois temas.
+- **Tamanho do texto:** quatro tamanhos no painel de acessibilidade. A escolha fica salva no navegador.
 - **Contraste reforçado:** textos secundários com a cor cheia, bordas mais visíveis e links sublinhados, para quem tem baixa visão.
 - **Ouvir esta página:** o navegador lê o conteúdo em voz alta, em português (Web Speech API, sem custo).
 - **Libras:** o widget gratuito do VLibras (Governo Federal) aparece na lateral de todas as páginas.
@@ -144,7 +146,21 @@ A chave da Embed API é pública por natureza (vai para o navegador); a proteç�
 
 > O endereço de exemplo ("Rua das Palmeiras, 245") é fictício. Em **Informações da academia**, troque o campo **Localização no mapa** por um endereço real (ou coordenadas, ex.: `-23.5958,-46.6061`) para o pino cair no lugar certo.
 
-## 8. Estrutura de pastas
+## 8. Montador de treinos com IA (opcional)
+
+A página `treino.html` manda as respostas para `POST /api/treino`. Sem configurar nada, um **gerador por regras** monta o plano, e a tela avisa que não foi IA. Para ligar a IA do Google (Gemini):
+
+1. Crie uma chave em https://aistudio.google.com/apikey.
+2. Cole no `.env` (ou nas variáveis de ambiente do Render): `GEMINI_API_KEY=sua-chave`.
+3. Reinicie o servidor.
+
+A chave fica só no servidor; o navegador nunca a vê. Modelo padrão: `gemini-3.5-flash-lite` (troque com `GEMINI_MODELO`).
+
+**Proteções:** 8 pedidos por hora por IP e no máximo 200 usos da IA por dia (`GEMINI_LIMITE_DIA`). Passou do limite do dia, a chave falhou ou a IA demorou mais de 20 segundos? O gerador por regras responde no lugar. A resposta da IA é validada e todo texto passa por `escapeHtml` antes de ir para a tela.
+
+**Privacidade:** no plano gratuito o Google pode usar o texto enviado para melhorar os produtos dele, por isso o formulário pede para não escrever dados pessoais (veja `privacidade.html`).
+
+## 9. Estrutura de pastas
 
 ```
 pulso-fullstack/
@@ -158,7 +174,7 @@ pulso-fullstack/
 │       ├── middleware/          # auth.js (JWT, role) · rateLimit.js
 │       ├── routes/              # auth · loja · pedidos · aluno · professor · admin
 │       ├── controllers/         # regra de cada endpoint
-│       ├── services/            # google.js · matriculas.js · agenda.js (horários livres)
+│       ├── services/            # google.js · matriculas.js · agenda.js (horários livres) · treino.js (IA e regras)
 │       └── utils.js             # datas locais, validações
 └── frontend/
     ├── *.html                   # 7 páginas (+ offline.html)
@@ -172,7 +188,7 @@ pulso-fullstack/
 
 Fluxo de uma requisição: `rota → middleware (JWT/role) → controller → SQLite → JSON`.
 
-## 9. Banco de dados
+## 10. Banco de dados
 
 | Tabela | Para quê |
 |---|---|
@@ -186,11 +202,11 @@ Fluxo de uma requisição: `rota → middleware (JWT/role) → controller → SQ
 | `avisos` | comunicados da recepção |
 | `academia` | endereço, contato, horários, descrição e localização no mapa (linha única) |
 
-O catálogo de produtos fica em `backend/src/db/index.js` (`CATALOGO`) e é sincronizado a cada `npm start`: para adicionar um produto, inclua uma linha ali e uma imagem em `frontend/img/produtos/`.
+Os produtos são editados no painel da recepção, na aba **Produtos** (foto, nome, preço, categoria, descrição e características). Produto não é apagado, é desativado: some da loja, mas continua nos pedidos antigos. O `CATALOGO` em `backend/src/db/index.js` só cria os produtos iniciais e nunca sobrescreve o que a recepção editou (coluna `editado`). As fotos enviadas pelo painel são reduzidas no navegador e ficam guardadas no próprio banco.
 
 Senhas são guardadas com **bcrypt**. Todas as consultas usam parâmetros (`?`), o que evita SQL Injection.
 
-## 10. API (contrato para as outras equipes)
+## 11. API (contrato para as outras equipes)
 
 Base: `http://localhost:3333/api`. Rotas protegidas pedem `Authorization: Bearer <token>` (o token vem do login). Erros sempre no formato `{ "erro": "mensagem" }`.
 
@@ -205,6 +221,7 @@ Base: `http://localhost:3333/api`. Rotas protegidas pedem `Authorization: Bearer
 | GET | `/planos` · `/produtos` · `/avisos` | público | |
 | GET | `/academia` | público | `{ academia, mapa: { consulta, chave } }` |
 | GET | `/cupons/:codigo?subtotal=` | público | prévia do desconto (o servidor recalcula ao criar o pedido) |
+| POST | `/treino` | público, limitada | `{ objetivo, nivel, dias, minutos, local, restricoes? }` → `{ fonte: "ia"\|"regras", treino }` |
 | POST | `/pedidos` | logado | `{ itens:[{tipo,id,quantidade}], metodo, parcelas?, bandeira?, cartaoFinal?, cupom? }` |
 | GET | `/pedidos/meus` | logado | histórico do usuário |
 | GET | `/pedidos/:id` | dono ou ADMIN | acompanha Pix/boleto |
@@ -222,7 +239,7 @@ Base: `http://localhost:3333/api`. Rotas protegidas pedem `Authorization: Bearer
 | GET | `/admin/opcoes` | ADMIN | listas para os formulários |
 | GET / POST | `/admin/agendamentos` | ADMIN | consulta geral (filtros) / marcar aula no balcão |
 | PATCH | `/admin/agendamentos/:id` | ADMIN | `{ status }` |
-| GET / POST / PUT | `/admin/planos` · `/admin/alunos` · `/admin/professores` (`PUT /:id`) | ADMIN | cadastros; plano e conta não são apagados, só desativados |
+| GET / POST / PUT | `/admin/planos` · `/admin/produtos` · `/admin/alunos` · `/admin/professores` (`PUT /:id`) | ADMIN | cadastros; plano, produto e conta não são apagados, só desativados |
 | GET | `/admin/solicitacoes` | ADMIN | pedidos de cancelamento de plano |
 | POST | `/admin/solicitacoes/:id/resolver` | ADMIN | `{ decisao: "APROVADA"\|"RECUSADA", resposta? }` (aprovar encerra o plano e cancela aulas futuras) |
 | POST | `/admin/avisos` | ADMIN | `{ texto }` |
@@ -239,7 +256,7 @@ TOKEN=$(curl -s -X POST localhost:3333/api/auth/login \
 curl localhost:3333/api/admin/dashboard/kpis -H "Authorization: Bearer $TOKEN"
 ```
 
-## 11. Casos de uso: o que já existe
+## 12. Casos de uso: o que já existe
 
 | Caso de uso | Situação |
 |---|---|
@@ -252,7 +269,7 @@ curl localhost:3333/api/admin/dashboard/kpis -H "Authorization: Bearer $TOKEN"
 | UC07 Manter Academia | Feito: academia, planos, alunos, professores, agendamentos, pagamentos e solicitações |
 | UC08 Agenda do Professor | Feito: ver a própria agenda e configurar disponibilidade (com checagem de conflito) |
 
-## 12. Decisões de segurança (e seus limites)
+## 13. Decisões de segurança (e seus limites)
 
 - **JWT em localStorage**: simples e didático, mas exposto a roubo se houver XSS. Por isso todo texto vindo do banco é escapado (`escapeHtml`) antes de ir para o HTML. Melhoria de produção: cookie `httpOnly` + `SameSite`.
 - **O guard do front é só UX.** Quem protege os dados é a API (`authenticateToken` + `requireAdmin`).
@@ -261,7 +278,7 @@ curl localhost:3333/api/admin/dashboard/kpis -H "Authorization: Bearer $TOKEN"
 - **CORS**: front e API ficam na mesma origem, então não é necessário. `CORS_ORIGIN` só serve se você abrir o front por outro servidor (ex.: Live Server na porta 5500).
 - Datas "de hoje" usam o fuso local, não UTC.
 
-## 13. Problemas comuns
+## 14. Problemas comuns
 
 | Sintoma | Causa / solução |
 |---|---|
@@ -276,6 +293,6 @@ curl localhost:3333/api/admin/dashboard/kpis -H "Authorization: Bearer $TOKEN"
 | Mapa em branco com chave | Chave restrita ao site errado, ou Maps Embed API não ativada. Apague a chave do `.env` para usar o mapa simples |
 | Pino do mapa no lugar errado | Troque *Localização no mapa* no painel por um endereço real ou coordenadas |
 
-## 14. Ideias de evolução
+## 15. Ideias de evolução
 
 Notificações (push) de aula · gateway de pagamento real · testes automatizados (`node:test`) · migrar para Prisma/PostgreSQL.

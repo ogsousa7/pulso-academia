@@ -97,7 +97,7 @@ const ICONE_PLANO_RESUMO = `
   </div>`;
 
 function linhaItem(i) {
-  const foto = i.imagem && i.imagem.startsWith('img/')
+  const foto = /^(img|data:image)/.test(i.imagem || '')
     ? `<img src="${escapeHtml(i.imagem)}" alt="" onerror="fotoReserva(this)" class="w-14 h-14 rounded-xl object-cover bg-offwhite shrink-0">`
     : ICONE_PLANO_RESUMO;
   const controles = i.tipo === 'PLANO'

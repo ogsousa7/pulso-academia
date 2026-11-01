@@ -20,6 +20,7 @@ import pedidosRoutes from './src/routes/pedidos.routes.js';
 import alunoRoutes from './src/routes/aluno.routes.js';
 import professorRoutes from './src/routes/professor.routes.js';
 import adminRoutes from './src/routes/admin.routes.js';
+import treinoRoutes from './src/routes/treino.routes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const FRONTEND_DIR = path.resolve(__dirname, '../frontend');
@@ -36,6 +37,10 @@ const ORIGENS_PERMITIDAS = (process.env.CORS_ORIGIN || 'http://localhost:5500,ht
   .filter(Boolean);
 
 app.disable('x-powered-by'); // não anuncia que é Express
+
+// No Render o site fica atrás de um proxy: sem isto, todos os visitantes pareceriam o mesmo
+// IP e os limites de tentativas (login, treinos) valeriam para o site inteiro.
+if (process.env.RENDER) app.set('trust proxy', 1);
 
 /* ------------------------------ Middlewares globais -------------------- */
 
@@ -70,6 +75,7 @@ app.use('/api', pedidosRoutes);    // checkout e histórico de pedidos (usuário
 app.use('/api/aluno', alunoRoutes);         // agendamento e plano do aluno (role ALUNO)
 app.use('/api/professor', professorRoutes); // agenda e disponibilidade (role PROFESSOR)
 app.use('/api/admin', adminRoutes); // tudo da recepção: JWT + role ADMIN em todas as rotas
+app.use('/api/treino', treinoRoutes); // montador de treinos (público, com limite de usos)
 
 /* ---------------------------- Frontend estático -------------------------
    O mesmo servidor entrega as páginas HTML/JS/CSS. Assim basta UM comando
@@ -80,13 +86,13 @@ app.use(express.static(FRONTEND_DIR));
 
 /* ------------------------------ 404 padrão ------------------------------ */
 
-// Rotas /api desconhecidas respondem JSON; o resto cai no 404 em texto simples.
+// Rotas /api desconhecidas respondem JSON; o resto cai na página 404 do site.
 app.use('/api', (req, res) => {
   res.status(404).json({ erro: `Rota não encontrada: ${req.method} ${req.originalUrl}` });
 });
 
 app.use((req, res) => {
-  res.status(404).send('Página não encontrada.');
+  res.status(404).sendFile(path.join(FRONTEND_DIR, '404.html'));
 });
 
 /* --------------------------- Tratamento de erros ------------------------

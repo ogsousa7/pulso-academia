@@ -19,6 +19,8 @@
     const tema = localStorage.getItem('pulso_tema'); // 'claro' | 'escuro' | null (automático)
     if (tema === 'claro' || tema === 'escuro') document.documentElement.dataset.tema = tema;
     if (localStorage.getItem('pulso_contraste') === 'alto') document.documentElement.dataset.contraste = 'alto';
+    const texto = localStorage.getItem('pulso_texto'); // 'menor' | 'maior' | 'enorme' | null (normal)
+    if (texto) document.documentElement.dataset.texto = texto;
   } catch { /* navegador sem localStorage: segue o sistema */ }
 })();
 

@@ -192,7 +192,7 @@ const CarrinhoUI = {
 
     lista.innerHTML = itens
       .map((i) => {
-        const foto = i.imagem && i.imagem.startsWith('img/')
+        const foto = /^(img|data:image)/.test(i.imagem || '')
           ? `<img src="${escapeHtml(i.imagem)}" alt="" onerror="fotoReserva(this)" class="w-20 h-20 rounded-2xl object-cover bg-offwhite shrink-0">`
           : ICONE_PLANO;
         const controles = i.tipo === 'PLANO'

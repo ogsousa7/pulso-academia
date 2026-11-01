@@ -14,6 +14,15 @@ export const TIPOS_TREINO = ['Musculação', 'Funcional', 'Cardio', 'Alongamento
 export const NIVEIS = ['Iniciante', 'Intermediário', 'Avançado'];
 export const DIAS_SEMANA = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
+/** Categorias da loja: a chave vai para o banco, o rótulo aparece no painel e na vitrine. */
+export const CATEGORIAS_PRODUTO = { suplemento: 'Suplementos', vestuario: 'Vestuário', acessorio: 'Acessórios' };
+
+/** Opções do montador de treinos (treino.html). */
+export const OBJETIVOS_TREINO = ['Ganhar massa muscular', 'Emagrecer', 'Ganhar força', 'Melhorar o condicionamento', 'Saúde e bem-estar'];
+export const LOCAIS_TREINO = ['Academia completa', 'Halteres e elásticos', 'Em casa, sem equipamento'];
+export const DURACOES_TREINO = [30, 45, 60, 90]; // minutos por sessão
+export const DIAS_TREINO = { minimo: 2, maximo: 6 }; // dias por semana
+
 export const STATUS_AGENDAMENTO = ['Confirmado', 'Em andamento', 'Cancelado'];
 
 /** O aluno só pode cancelar uma aula que começa daqui a, no mínimo, X horas. */

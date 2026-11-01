@@ -68,7 +68,7 @@ function montarItens(corpo) {
   if (bruto.length > MAX_ITENS) return { erro: `Máximo de ${MAX_ITENS} itens por pedido.` };
 
   const buscarPlano = db.prepare('SELECT id, nome, preco, periodo FROM planos WHERE id = ? AND ativo = 1');
-  const buscarProduto = db.prepare('SELECT id, nome, preco FROM produtos WHERE id = ?');
+  const buscarProduto = db.prepare('SELECT id, nome, preco FROM produtos WHERE id = ? AND ativo = 1');
 
   const itens = [];
   let planos = 0;
