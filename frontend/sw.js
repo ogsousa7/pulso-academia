@@ -7,7 +7,7 @@
    Para publicar uma versão nova do site, aumente VERSAO.
    ========================================================= */
 
-const VERSAO = 'pulso-v5'; // v5: montador de treinos, tamanho do texto, animações
+const VERSAO = 'pulso-v6'; // v6: visual novo (abertura escura, fundo areia, logo maior)
 const CACHE_CASCO = `${VERSAO}-casco`;
 const CACHE_EXTERNO = `${VERSAO}-externo`;
 

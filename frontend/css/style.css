@@ -21,18 +21,18 @@
 :root {
   color-scheme: light;
   --grafite: 29 29 31;      /* #1D1D1F texto */
-  --offwhite: 245 245 247;  /* #F5F5F7 fundo */
-  --superficie: 255 255 255;
+  --offwhite: 245 240 232;  /* #F5F0E8 fundo areia: menos branco, mais acolhedor */
+  --superficie: 255 252 247; /* #FFFCF7 cartões */
   --tinta: 0 0 0;
-  --linha: 210 210 215;
+  --linha: 222 213 200;
   --petroleo: 66 91 99;     /* #425B63 marca */
   --oliva: 92 107 59;       /* #5C6B3B confirmação (5,8:1 no branco) */
   --terracota: 164 83 47;   /* #A4532F destaque (5,4:1 no branco) */
 
-  --vidro: rgba(251, 251, 253, 0.8);
-  --campo: #F2F2F7;
+  --vidro: rgba(248, 243, 236, 0.82);
+  --campo: #F1EBE2;
   --campo-foco: #FFFFFF;
-  --placeholder: #737378;
+  --placeholder: #6B6B70;
   --foco: rgba(66, 91, 99, 0.35);
   --sombra-aba: 0 3px 8px rgba(0, 0, 0, 0.12), 0 1px 1px rgba(0, 0, 0, 0.04);
   --topo-seguro: env(safe-area-inset-top, 0px);
@@ -407,3 +407,68 @@ html { scroll-behavior: smooth; }
   html { scroll-behavior: auto; }
   .revela { opacity: 1; transform: none; }
 }
+
+/* =========================================================
+   Visual da marca (home e páginas públicas)
+   ========================================================= */
+
+/* Títulos fortes, em maiúsculas: a voz da marca. */
+.titulo-hero { font-size: clamp(34px, 9.5vw, 96px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.95; }
+.titulo-secao { font-size: clamp(32px, 6vw, 56px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1; }
+.titulo-pagina { font-size: clamp(40px, 9vw, 72px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.95; }
+.rotulo-secao { font-size: 13px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: rgb(var(--terracota)); }
+:root[data-tema="escuro"] .rotulo-secao { color: #EE9A72; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) .rotulo-secao { color: #EE9A72; } }
+
+/* Logo branca para fundos escuros (a original é petróleo). */
+.logo-branca { filter: brightness(0) invert(1); }
+
+/* Abertura: foto com véu petróleo → terracota, sempre escura (nos dois temas). */
+.hero { min-height: min(92vh, 860px); display: flex; align-items: center; background: #141A1C; }
+.hero > div:last-child { width: 100%; }
+.hero-veu { background: linear-gradient(100deg, rgba(16, 24, 27, 0.94) 0%, rgba(35, 55, 61, 0.82) 48%, rgba(164, 83, 47, 0.45) 100%); }
+.hero-foto { animation: aproxima 18s ease-out both; }
+@keyframes aproxima { from { transform: scale(1.08); } to { transform: scale(1); } }
+
+.botao-destaque, .botao-contorno {
+  display: inline-flex; align-items: center; justify-content: center; padding: 15px 30px; border-radius: 999px;
+  font-size: 16px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.botao-destaque { background: #A4532F; color: #fff; box-shadow: 0 10px 30px rgba(164, 83, 47, 0.35); }
+.botao-destaque:hover { background: #B45D36; transform: translateY(-2px); }
+.botao-contorno { color: #fff; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.8); }
+.botao-contorno:hover { background: rgba(255, 255, 255, 0.12); }
+.botao-destaque:active, .botao-contorno:active { transform: scale(0.98); }
+
+.numero-grande { font-size: clamp(36px, 7vw, 64px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+
+/* Cartões de modalidade: cor sólida, ícone grande e texto branco. */
+.modalidade { display: flex; flex-direction: column; min-height: 280px; padding: 28px; border-radius: 24px; color: #fff; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.modalidade svg { width: 44px; height: 44px; }
+.modalidade h3 { margin-top: auto; padding-top: 32px; font-size: clamp(21px, 2.1vw, 26px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; }
+.modalidade p { margin-top: 6px; font-size: 15px; line-height: 1.45; color: rgba(255, 255, 255, 0.9); }
+.modalidade span { margin-top: 18px; font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+@media (hover: hover) { .modalidade:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); } }
+
+/* Topo da home: transparente sobre a foto até a pessoa rolar a página. */
+header[data-hero]:not(.rolou):not(:has(#mobileMenu.flex)) { background: linear-gradient(rgba(0, 0, 0, 0.45), transparent); border-bottom-color: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+header[data-hero]:not(.rolou):not(:has(#mobileMenu.flex)) .logo-topo { filter: brightness(0) invert(1); }
+header[data-hero]:not(.rolou):not(:has(#mobileMenu.flex)) .link-topo { color: rgba(255, 255, 255, 0.88); }
+header[data-hero]:not(.rolou):not(:has(#mobileMenu.flex)) .link-topo:hover { color: #fff; }
+header[data-hero]:not(.rolou):not(:has(#mobileMenu.flex)) #btnEntrar { background: #fff; color: #1D1D1F; }
+header[data-hero]:not(.rolou):not(:has(#mobileMenu.flex)) :is(#btnAcessibilidade, #btnCarrinho, #mobileMenuBtn) { color: #fff; }
+header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+
+/* Faixa areia mais escura, para alternar com o fundo (no escuro vira um cinza quase preto). */
+:root { --areia: 236 227 213; }
+:root[data-tema="escuro"] { --areia: 22 22 24; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) { --areia: 22 22 24; } }
+.fundo-areia { background: rgb(var(--areia)); }
+
+/* Rodapé escuro, com a logo branca. */
+.rodape-escuro { background: #141A1C; color: rgba(255, 255, 255, 0.72); }
+.rodape-escuro a { color: #fff; }
+:root[data-contraste="alto"] .rodape-escuro { color: #fff; }
+
+@media (prefers-reduced-motion: reduce) { .hero-foto { animation: none; } }

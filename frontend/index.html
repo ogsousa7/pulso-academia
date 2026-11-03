@@ -15,7 +15,7 @@
 <script src="js/tw-config.js"></script>
 <link rel="stylesheet" href="css/style.css">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#141A1C">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32.png">
@@ -28,25 +28,25 @@
 
 </head>
 
-<body class="bg-superficie text-grafite antialiased font-sans">
+<body class="bg-offwhite text-grafite antialiased font-sans">
 
-<!-- HEADER: barra translúcida, só a logo (o menu da conta aparece no lugar do "Entrar" quando há login) -->
-<header class="nav-vidro fixed top-0 left-0 w-full z-40">
-  <div class="max-w-[1180px] mx-auto px-5 md:px-8 h-[60px] flex items-center justify-between gap-4">
-    <a href="index.html" class="flex items-center gap-3 shrink-0" aria-label="Pulso Academia, início">
-      <img src="img/logo-icon.png" alt="Pulso Academia" class="logo-tema h-8 w-auto">
+<!-- HEADER: transparente sobre a foto da abertura; ao rolar, vira a barra translúcida (ui.js coloca .rolou) -->
+<header data-hero class="nav-vidro fixed top-0 left-0 w-full z-40">
+  <div class="max-w-[1180px] mx-auto px-5 md:px-8 h-[64px] flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center shrink-0" aria-label="Pulso Academia, início">
+      <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-tema logo-topo h-7 sm:h-8 md:h-9 w-auto">
     </a>
 
-    <nav class="hidden md:flex items-center gap-9 text-[14px]">
-      <a href="#sobre" class="text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
-      <a href="loja.html" class="text-grafite/70 hover:text-grafite transition-colors">Planos e loja</a>
-      <a href="treino.html" class="text-grafite/70 hover:text-grafite transition-colors">Monte seu treino</a>
-      <a href="#onde-estamos" class="text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
-      <a href="#contato" class="text-grafite/70 hover:text-grafite transition-colors">Contato</a>
+    <nav class="hidden md:flex items-center gap-8 text-[14px] font-medium">
+      <a href="#sobre" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
+      <a href="loja.html" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Planos e loja</a>
+      <a href="treino.html" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Monte seu treino</a>
+      <a href="#onde-estamos" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
+      <a href="#contato" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Contato</a>
     </nav>
 
     <div class="flex items-center gap-2">
-      <button id="btnEntrar" class="px-4 py-2 rounded-full bg-grafite text-superficie text-[14px] font-medium hover:bg-grafite/85 transition">Entrar</button>
+      <button id="btnEntrar" class="px-4 py-2 rounded-full bg-grafite text-superficie text-[14px] font-semibold hover:bg-grafite/85 transition">Entrar</button>
       <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-tinta/5">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
@@ -63,55 +63,102 @@
 </header>
 
 <main>
-<!-- ABERTURA: título grande e a linha do pulso (a marca) se desenhando -->
-<section class="pt-[60px] bg-superficie">
-  <div class="max-w-[1180px] mx-auto px-5 pt-14 md:pt-20 pb-12 md:pb-14 text-center">
-    <svg class="pulso-linha mx-auto mb-6 md:mb-8 w-56 md:w-72 h-auto text-terracota" viewBox="0 0 300 60" fill="none" aria-hidden="true">
-      <path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+<!-- ABERTURA: foto em tela cheia, logo grande e a linha do pulso se desenhando -->
+<section class="hero relative overflow-hidden text-white">
+  <img src="img/home/recepcao.jpg" alt="" class="hero-foto absolute inset-0 w-full h-full object-cover" fetchpriority="high">
+  <div class="hero-veu absolute inset-0"></div>
+  <div class="relative max-w-[1180px] mx-auto px-5 md:px-8 pt-[124px] md:pt-[150px] pb-16 md:pb-24">
+    <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-branca entra w-[240px] sm:w-[320px] md:w-[440px] h-auto">
+    <svg class="pulso-linha mt-6 md:mt-8 w-48 md:w-64 h-auto text-[#F2A07A]" viewBox="0 0 300 60" fill="none" aria-hidden="true">
+      <path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    <h1 class="entra titulo-grande text-[46px] sm:text-6xl md:text-[84px] xl:text-[96px] font-bold">Seu ritmo,<br class="sm:hidden"> nosso bairro.</h1>
-    <p class="entra entra-2 equilibrado mt-5 md:mt-7 text-[19px] md:text-[26px] leading-snug text-grafite/65 max-w-[720px] mx-auto">
-      Uma academia pensada para quem mora perto, treina no seu tempo e quer fazer parte de uma comunidade de verdade.
+    <h1 class="titulo-hero entra entra-2 mt-5">Seu ritmo,<br><span class="text-[#F2A07A]">nosso bairro.</span></h1>
+    <p class="entra entra-3 mt-6 max-w-[560px] text-[18px] md:text-[22px] leading-snug text-white/90">
+      Academia pensada para quem mora perto, treina no seu tempo e quer fazer parte de uma comunidade de verdade.
     </p>
-    <div class="entra entra-3 mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
-      <a href="loja.html" class="px-7 py-3.5 rounded-full bg-petroleo text-white text-[17px] font-medium hover:bg-petroleo/90 transition">Ver planos</a>
-      <a href="aluno.html" class="px-2 py-3.5 text-[17px] font-medium text-petroleo hover:underline">Agendar uma aula</a>
+    <div class="entra entra-3 mt-9 flex flex-wrap gap-3">
+      <a href="loja.html#planos" class="botao-destaque">Matricule-se</a>
+      <a href="aluno.html" class="botao-contorno">Agendar uma aula</a>
+    </div>
+    <ul class="entra entra-3 mt-10 flex flex-wrap gap-x-6 gap-y-2 text-[14px] md:text-[15px] font-semibold text-white/90">
+      <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#F2A07A]"></span>Sem fidelidade</li>
+      <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#F2A07A]"></span>Agende pelo celular</li>
+      <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#F2A07A]"></span>Aberta das 6h às 22h</li>
+    </ul>
+  </div>
+</section>
+
+<!-- NÚMEROS: faixa na cor da marca -->
+<section class="bg-[#2F444B] text-white px-5">
+  <dl data-revela class="max-w-[1180px] mx-auto grid grid-cols-3 divide-x divide-white/15 py-8 md:py-12">
+    <div class="px-2 md:px-6 flex flex-col-reverse items-center text-center"><dt class="text-[12px] md:text-[14px] font-semibold uppercase tracking-[0.12em] text-white/75 mt-1">alunos ativos</dt><dd class="numero-grande" data-contar="350" data-prefixo="+">+350</dd></div>
+    <div class="px-2 md:px-6 flex flex-col-reverse items-center text-center"><dt class="text-[12px] md:text-[14px] font-semibold uppercase tracking-[0.12em] text-white/75 mt-1">professores do bairro</dt><dd class="numero-grande" data-contar="12">12</dd></div>
+    <div class="px-2 md:px-6 flex flex-col-reverse items-center text-center"><dt class="text-[12px] md:text-[14px] font-semibold uppercase tracking-[0.12em] text-white/75 mt-1">nota dos alunos</dt><dd class="numero-grande" data-contar="4.8" data-casas="1">4,8</dd></div>
+  </dl>
+</section>
+
+<!-- MODALIDADES: cartões coloridos (cores fixas: o contraste vale nos dois temas) -->
+<section class="py-20 md:py-28 px-5">
+  <div class="max-w-[1180px] mx-auto">
+    <p class="rotulo-secao">Modalidades</p>
+    <h2 data-revela class="titulo-secao mt-2">Escolha como você quer treinar.</h2>
+    <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <a href="aluno.html" data-revela class="modalidade bg-[#425B63]">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h2m14 0h2M6.5 8v8m11-8v8M9 10v4m6-4v4M9 12h6"/></svg>
+        <h3>Musculação</h3><p>Força e definição com acompanhamento de quem entende.</p><span>Agendar aula →</span>
+      </a>
+      <a href="aluno.html" data-revela class="modalidade bg-[#A4532F]">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4.5" r="1.8"/><path d="M7 21l3-6 3 2v4M10 15l1.5-5L15 13h4M11.5 10 8 9l-2 3"/></svg>
+        <h3>Funcional</h3><p>Circuitos dinâmicos que trabalham o corpo todo.</p><span>Agendar aula →</span>
+      </a>
+      <a href="aluno.html" data-revela class="modalidade bg-[#5C6B3B]">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
+        <h3>Cardio</h3><p>Fôlego e disposição para o dia a dia.</p><span>Agendar aula →</span>
+      </a>
+      <a href="aluno.html" data-revela class="modalidade bg-[#2A2A2D]">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="1.8"/><path d="M4 9.5c5 1.5 11 1.5 16 0M12 10.5v4.5l-4 5m4-5 4 5"/></svg>
+        <h3>Alongamento</h3><p>Mobilidade, postura e menos dor nas costas.</p><span>Agendar aula →</span>
+      </a>
     </div>
   </div>
+</section>
 
-  <!-- Carrossel de fotos: fica dentro da mesma largura do site (no PC aparecem 2 fotos inteiras) -->
+<!-- FOTOS: carrossel dentro da largura do site (no PC aparecem 2 fotos inteiras) -->
+<section class="pb-20 md:pb-28">
   <div class="max-w-[1180px] mx-auto px-5 md:px-8">
+    <p class="rotulo-secao">Por dentro da Pulso</p>
+    <h2 class="titulo-secao mt-2 mb-8">Um lugar feito para você voltar.</h2>
     <div id="carouselTrack" tabindex="0" role="region" aria-label="Fotos da academia (use as setas do teclado para rolar)" class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth rounded-3xl">
-      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[580px] relative rounded-3xl overflow-hidden bg-offwhite">
-        <img src="img/home/treino.jpg" alt="Pessoa fazendo abdominal no colchonete" class="w-full h-full object-cover">
-        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
-        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-semibold leading-tight tracking-tight max-w-md">Treine perto de casa, sem enrolação.</figcaption>
+      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[560px] relative rounded-3xl overflow-hidden bg-superficie">
+        <img src="img/home/treino.jpg" alt="Pessoa fazendo abdominal no colchonete" class="w-full h-full object-cover" loading="lazy">
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-extrabold leading-tight tracking-tight max-w-md">Treine perto de casa, sem enrolação.</figcaption>
       </figure>
-      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[580px] relative rounded-3xl overflow-hidden bg-offwhite">
-        <img src="img/home/alongamento.jpg" alt="Aula em grupo de exercícios no solo" class="w-full h-full object-cover">
-        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
-        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-semibold leading-tight tracking-tight max-w-md">Modalidades pra todas as idades e ritmos.</figcaption>
+      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[560px] relative rounded-3xl overflow-hidden bg-superficie">
+        <img src="img/home/alongamento.jpg" alt="Aula em grupo de exercícios no solo" class="w-full h-full object-cover" loading="lazy">
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-extrabold leading-tight tracking-tight max-w-md">Modalidades pra todas as idades e ritmos.</figcaption>
       </figure>
-      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[580px] relative rounded-3xl overflow-hidden bg-offwhite">
+      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[560px] relative rounded-3xl overflow-hidden bg-superficie">
         <img src="img/home/grupo.jpg" alt="Aluno fazendo flexão com halteres" class="w-full h-full object-cover" loading="lazy">
-        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
-        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-semibold leading-tight tracking-tight max-w-md">Gente do seu bairro te motivando todo dia.</figcaption>
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-extrabold leading-tight tracking-tight max-w-md">Gente do seu bairro te motivando todo dia.</figcaption>
       </figure>
-      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[580px] relative rounded-3xl overflow-hidden bg-offwhite">
+      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[560px] relative rounded-3xl overflow-hidden bg-superficie">
         <img src="img/home/ambiente.jpg" alt="Aluna treinando no aparelho" class="w-full h-full object-cover" loading="lazy">
-        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
-        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-semibold leading-tight tracking-tight max-w-md">Preço justo, sem letra miúda.</figcaption>
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-extrabold leading-tight tracking-tight max-w-md">Preço justo, sem letra miúda.</figcaption>
       </figure>
     </div>
 
     <div class="flex items-center justify-between mt-5">
       <div id="carouselPontos" class="flex gap-2" aria-hidden="true"></div>
       <div class="flex gap-3">
-        <button id="carouselPausa" type="button" aria-label="Pausar as fotos" class="w-10 h-10 rounded-full bg-tinta/[0.06] text-grafite/70 flex items-center justify-center hover:bg-tinta/10 transition"></button>
-        <button onclick="scrollCarousel(-1)" aria-label="Foto anterior" class="w-10 h-10 rounded-full bg-tinta/[0.06] text-grafite/70 flex items-center justify-center hover:bg-tinta/10 transition">
+        <button id="carouselPausa" type="button" aria-label="Pausar as fotos" class="w-10 h-10 rounded-full bg-tinta/[0.07] text-grafite/75 flex items-center justify-center hover:bg-tinta/10 transition"></button>
+        <button onclick="scrollCarousel(-1)" aria-label="Foto anterior" class="w-10 h-10 rounded-full bg-tinta/[0.07] text-grafite/75 flex items-center justify-center hover:bg-tinta/10 transition">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <button onclick="scrollCarousel(1)" aria-label="Próxima foto" class="w-10 h-10 rounded-full bg-tinta/[0.06] text-grafite/70 flex items-center justify-center hover:bg-tinta/10 transition">
+        <button onclick="scrollCarousel(1)" aria-label="Próxima foto" class="w-10 h-10 rounded-full bg-tinta/[0.07] text-grafite/75 flex items-center justify-center hover:bg-tinta/10 transition">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
       </div>
@@ -120,10 +167,11 @@
 </section>
 
 <!-- SOBRE -->
-<section id="sobre" class="py-24 md:py-32 px-5 bg-superficie">
+<section id="sobre" class="py-20 md:py-28 px-5 fundo-areia">
   <div class="max-w-[1180px] mx-auto">
-    <h2 data-revela class="text-[40px] md:text-[64px] font-bold leading-[1.07] tracking-tight max-w-3xl">Academia é bem-estar, não intimidação.</h2>
-    <div data-revela class="mt-10 grid md:grid-cols-2 gap-x-12 gap-y-5 text-[17px] md:text-[21px] leading-relaxed text-grafite/65">
+    <p class="rotulo-secao">Sobre a Pulso</p>
+    <h2 data-revela class="titulo-secao mt-2 max-w-3xl">Academia é bem-estar, não intimidação.</h2>
+    <div data-revela class="mt-10 grid md:grid-cols-2 gap-x-12 gap-y-5 text-[17px] md:text-[20px] leading-relaxed text-grafite/75">
       <p>
         Nascemos no bairro pra servir o bairro. A Pulso emprega professores da própria região, com carga horária
         organizada e condições de trabalho decentes, porque um bom atendimento começa por quem ensina.
@@ -133,32 +181,28 @@
         na academia, e consegue agendar direto com o professor que quiser.
       </p>
     </div>
-    <dl data-revela class="mt-14 grid grid-cols-3 border-t border-linha">
-      <div class="pt-6 pr-4 flex flex-col-reverse justify-end"><dt class="text-[13px] text-grafite/65">alunos ativos</dt><dd class="text-3xl md:text-5xl font-semibold tracking-tight mt-1" data-contar="350" data-prefixo="+">+350</dd></div>
-      <div class="pt-6 px-4 border-l border-linha flex flex-col-reverse justify-end"><dt class="text-[13px] text-grafite/65">professores do bairro</dt><dd class="text-3xl md:text-5xl font-semibold tracking-tight mt-1" data-contar="12">12</dd></div>
-      <div class="pt-6 pl-4 border-l border-linha flex flex-col-reverse justify-end"><dt class="text-[13px] text-grafite/65">nota dos alunos</dt><dd class="text-3xl md:text-5xl font-semibold tracking-tight mt-1" data-contar="4.8" data-casas="1">4,8</dd></div>
-    </dl>
-  </div>
-  <div data-revela class="max-w-[1180px] mx-auto mt-16 md:mt-20 rounded-3xl overflow-hidden h-[320px] md:h-[520px] bg-offwhite">
-    <img src="img/home/recepcao.jpg" alt="Salão de treino da academia" class="w-full h-full object-cover" loading="lazy">
   </div>
 </section>
 
-<!-- MONTE SEU TREINO -->
-<section class="px-5 pb-24 md:pb-32 bg-superficie">
-  <div data-revela class="max-w-[1180px] mx-auto rounded-3xl bg-petroleo text-white p-8 md:p-14 flex flex-col md:flex-row md:items-center justify-between gap-8">
+<!-- MONTE SEU TREINO: faixa escura com foto -->
+<section class="relative overflow-hidden text-white">
+  <img src="img/home/grupo.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+  <div class="absolute inset-0 bg-gradient-to-r from-[#141A1C]/95 via-[#141A1C]/85 to-[#141A1C]/50"></div>
+  <div data-revela class="relative max-w-[1180px] mx-auto px-5 md:px-8 py-20 md:py-28 flex flex-col md:flex-row md:items-center justify-between gap-8">
     <div class="max-w-xl">
-      <h2 class="text-[32px] md:text-[44px] font-bold tracking-tight leading-tight">Seu treino, montado em segundos.</h2>
-      <p class="mt-3 text-[17px] md:text-[19px] leading-snug text-white">Conte seu objetivo, seu nível e quanto tempo você tem, e receba um plano para a sua semana.</p>
+      <p class="rotulo-secao !text-[#F2A07A]">Novo</p>
+      <h2 class="titulo-secao mt-2">Seu treino, montado em segundos.</h2>
+      <p class="mt-4 text-[17px] md:text-[20px] leading-snug text-white/90">Conte seu objetivo, seu nível e quanto tempo você tem, e receba um plano para a sua semana.</p>
     </div>
-    <a href="treino.html" class="self-start md:self-auto shrink-0 px-7 py-3.5 rounded-full bg-white text-[#2F444B] text-[17px] font-semibold hover:scale-[1.03] active:scale-[0.99] transition">Montar meu treino</a>
+    <a href="treino.html" class="botao-destaque self-start md:self-auto shrink-0">Montar meu treino</a>
   </div>
 </section>
 
 <!-- AVISOS (dados reais vindos da API) -->
-<section class="py-20 md:py-24 px-5 bg-offwhite">
+<section class="py-20 md:py-24 px-5">
   <div class="max-w-[1180px] mx-auto">
-    <h2 class="text-[32px] md:text-[40px] font-bold tracking-tight mb-8">Avisos da academia</h2>
+    <p class="rotulo-secao">Fique por dentro</p>
+    <h2 class="titulo-secao mt-2 mb-8">Avisos da academia</h2>
     <div id="listaAvisos" data-revela class="grid md:grid-cols-2 gap-4">
       <p class="text-grafite/65 text-sm">Carregando avisos...</p>
     </div>
@@ -166,16 +210,17 @@
 </section>
 
 <!-- ONDE ESTAMOS (mapa do Google; dados vêm de GET /api/academia) -->
-<section id="onde-estamos" class="py-20 md:py-24 px-5 bg-superficie">
+<section id="onde-estamos" class="pb-20 md:pb-28 px-5">
   <div class="max-w-[1180px] mx-auto">
-    <h2 class="text-[32px] md:text-[40px] font-bold tracking-tight mb-8 max-w-[1180px] mx-auto">Onde estamos</h2>
+    <p class="rotulo-secao">Venha conhecer</p>
+    <h2 class="titulo-secao mt-2 mb-8">Onde estamos</h2>
 
     <div data-revela class="grid lg:grid-cols-3 gap-4 items-stretch">
-      <div class="lg:col-span-2 relative rounded-3xl overflow-hidden bg-offwhite min-h-[340px] md:min-h-[440px]">
+      <div class="lg:col-span-2 relative rounded-3xl overflow-hidden bg-superficie min-h-[340px] md:min-h-[440px]">
         <div id="mapaAcademia" class="absolute inset-0 flex items-center justify-center text-grafite/65 text-sm">Carregando mapa…</div>
       </div>
 
-      <div class="bg-offwhite rounded-3xl p-7 md:p-8 flex flex-col gap-6">
+      <div class="bg-superficie rounded-3xl p-7 md:p-8 flex flex-col gap-6">
         <div>
           <p class="text-[13px] text-grafite/65 mb-1">Endereço</p>
           <p class="text-[17px] font-semibold leading-snug" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p>
@@ -191,7 +236,7 @@
         </div>
         <div class="flex flex-col gap-2 mt-auto">
           <a id="linkComoChegar" href="https://www.google.com/maps/dir/?api=1&destination=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer"
-            class="text-center py-3 rounded-full bg-petroleo text-white text-[15px] font-medium hover:bg-petroleo/90 transition">Como chegar</a>
+            class="text-center py-3 rounded-full bg-petroleo text-white text-[15px] font-semibold hover:bg-petroleo/90 transition">Como chegar</a>
           <a id="linkAbrirMapa" href="https://www.google.com/maps/search/?api=1&query=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer"
             class="text-center py-3 text-[15px] font-medium text-petroleo hover:underline">Abrir no Google Maps</a>
         </div>
@@ -201,29 +246,29 @@
 </section>
 </main>
 
-<!-- CONTATO / RODAPÉ (claro e discreto, como nas páginas da Apple) -->
-<footer id="contato" class="bg-offwhite text-grafite/65 text-[13px] leading-relaxed px-5 pt-10 pb-8">
+<!-- CONTATO / RODAPÉ: escuro, com a logo branca -->
+<footer id="contato" class="rodape-escuro text-[14px] leading-relaxed px-5 pt-14 pb-8">
   <div class="max-w-[1180px] mx-auto">
-    <div class="grid sm:grid-cols-3 gap-8 pb-8 border-b border-linha">
+    <div class="grid sm:grid-cols-3 gap-8 pb-10 border-b border-white/15">
       <div>
-        <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-tema h-9 w-auto mb-4">
+        <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-branca h-11 w-auto mb-5">
         <p class="max-w-xs" data-academia="descricao">
           Academia de bairro, acolhedora e acessível. Projeto acadêmico de Fábrica de Software, inspirado no ODS 8 da ONU (trabalho decente e crescimento econômico).
         </p>
       </div>
       <div>
-        <p class="font-semibold text-grafite mb-2">Contato</p>
+        <p class="font-bold uppercase tracking-[0.12em] text-[13px] text-white mb-3">Contato</p>
         <p data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p>
         <p data-academia="email">contato@pulsoacademia.com.br</p>
         <p data-academia="telefone">(11) 4002-8922</p>
       </div>
       <div>
-        <p class="font-semibold text-grafite mb-2">Horário</p>
+        <p class="font-bold uppercase tracking-[0.12em] text-[13px] text-white mb-3">Horário</p>
         <p data-academia="horario_semana">Segunda a sexta: 6h – 22h</p>
         <p data-academia="horario_sabado">Sábado: 8h – 14h</p>
       </div>
     </div>
-    <p class="pt-5 text-grafite/65">© 2026 Pulso Academia. Projeto escolar da Etec Heliópolis. Desenvolvido por <a href="https://true-ember.netlify.app" target="_blank" rel="noopener" class="font-semibold text-grafite underline underline-offset-2">True Ember</a>. <a href="privacidade.html" class="text-grafite underline underline-offset-2">Política de Privacidade</a></p>
+    <p class="pt-6 text-[13px]">© 2026 Pulso Academia. Projeto escolar da Etec Heliópolis. Desenvolvido por <a href="https://true-ember.netlify.app" target="_blank" rel="noopener" class="font-semibold text-white underline underline-offset-2">True Ember</a>. <a href="privacidade.html" class="text-white underline underline-offset-2">Política de Privacidade</a></p>
   </div>
 </footer>
 

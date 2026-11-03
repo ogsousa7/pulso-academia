@@ -168,9 +168,19 @@ function iniciarAnimacoes() {
   });
 }
 
+/** Topo da home (data-hero): transparente sobre a foto; ao rolar, vira a barra translúcida. */
+function initTopoHero() {
+  const topo = document.querySelector('header[data-hero]');
+  if (!topo) return;
+  const marcar = () => topo.classList.toggle('rolou', window.scrollY > 40);
+  window.addEventListener('scroll', marcar, { passive: true });
+  marcar();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   atualizarBotaoEntrar();
   initMenuMobile();
+  initTopoHero();
   iniciarAnimacoes();
 });
 
