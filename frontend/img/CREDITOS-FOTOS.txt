@@ -1,0 +1,28 @@
+Fotos do Unsplash (https://unsplash.com/license): uso livre, inclusive comercial, sem exigência de atribuição.
+
+img/home/abertura.webp: https://images.unsplash.com/photo-1689877020200-403d8542d95d
+img/galeria/forca.webp: https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5
+img/galeria/professor.webp: https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b
+img/galeria/foco.webp: https://images.unsplash.com/photo-1772450014622-1c209d012c2e
+img/galeria/turma.webp: https://images.unsplash.com/photo-1518310383802-640c2de311b2
+img/galeria/barra.webp: https://images.unsplash.com/photo-1517836357463-d25dfeac3438
+img/galeria/agachamento.webp: https://images.unsplash.com/photo-1761839258420-5c3e2f2e2a74
+img/modalidades/musculacao.webp: https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e
+img/modalidades/funcional.webp: https://images.unsplash.com/photo-1758875569612-94d5e0f1a35f
+img/modalidades/cardio.webp: https://images.unsplash.com/photo-1648995361141-30676a75fd27
+img/modalidades/alongamento.webp: https://images.unsplash.com/photo-1787647089849-d082bb425a4a
+img/historia/2020.webp: https://images.unsplash.com/photo-1791772615845-5aaeb681051a
+img/historia/2021.webp: https://images.unsplash.com/photo-1623874514711-0f321325f318
+img/historia/2023.webp: https://images.unsplash.com/photo-1648542036561-e1d66a5ae2b1
+img/historia/2026.webp: https://images.unsplash.com/photo-1719239163994-6413670c4e9f
+img/equipe/marcos.webp: https://images.unsplash.com/photo-1758875568932-0eefd3e60090
+img/equipe/diego.webp: https://images.unsplash.com/photo-1738523686578-f18348c8292b
+img/equipe/bruno.webp: https://images.unsplash.com/photo-1704223523169-52feeed90365
+img/equipe/renata.webp: https://images.unsplash.com/photo-1683848644087-c3cb69b77d4f
+img/equipe/ana-paula.webp: https://images.unsplash.com/photo-1589860518300-9eac95f784d9
+img/depoimentos/juliana.webp: https://images.unsplash.com/photo-1580489944761-15a19d654956
+img/depoimentos/rafael.webp: https://images.unsplash.com/photo-1757744705465-ea08b0ddc38a
+img/depoimentos/carlos.webp: https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f
+img/home/loja.webp: https://images.unsplash.com/photo-1722925541142-5db2668ca492
+img/home/treino-faixa.webp: https://images.unsplash.com/photo-1599058917212-d750089bc07e
+img/home/treino-pagina.webp: https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3

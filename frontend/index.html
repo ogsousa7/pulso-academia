@@ -9,7 +9,7 @@
 <meta property="og:description" content="Seu ritmo, nosso bairro. Planos acessíveis, agendamento online e professores da região.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://pulso-academia.onrender.com">
-<meta property="og:image" content="https://pulso-academia.onrender.com/img/home/treino.jpg">
+<meta property="og:image" content="https://pulso-academia.onrender.com/img/home/abertura.webp">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="js/tw-config.js"></script>
@@ -41,8 +41,8 @@
       <a href="#sobre" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
       <a href="loja.html" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Planos e loja</a>
       <a href="treino.html" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Monte seu treino</a>
+      <a href="#grade" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Grade de aulas</a>
       <a href="#onde-estamos" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
-      <a href="#contato" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Contato</a>
     </nav>
 
     <div class="flex items-center gap-2">
@@ -57,6 +57,9 @@
     <a href="#sobre" class="py-3 border-b border-tinta/5 last:border-0">Sobre</a>
     <a href="loja.html" class="py-3 border-b border-tinta/5 last:border-0">Planos e loja</a>
     <a href="treino.html" class="py-3 border-b border-tinta/5 last:border-0">Monte seu treino</a>
+    <a href="#equipe" class="py-3 border-b border-tinta/5 last:border-0">Equipe</a>
+    <a href="#grade" class="py-3 border-b border-tinta/5 last:border-0">Grade de aulas</a>
+    <a href="#faq" class="py-3 border-b border-tinta/5 last:border-0">Perguntas frequentes</a>
     <a href="#onde-estamos" class="py-3 border-b border-tinta/5 last:border-0">Onde estamos</a>
     <a href="#contato" class="py-3 border-b border-tinta/5 last:border-0">Contato</a>
   </div>
@@ -65,10 +68,10 @@
 <main>
 <!-- ABERTURA: foto em tela cheia, logo grande e a linha do pulso se desenhando -->
 <section class="hero relative overflow-hidden text-white">
-  <img src="img/home/recepcao.jpg" alt="" class="hero-foto absolute inset-0 w-full h-full object-cover" fetchpriority="high">
+  <img src="img/home/abertura.webp" alt="" class="hero-foto absolute inset-0 w-full h-full object-cover" fetchpriority="high">
   <div class="hero-veu absolute inset-0"></div>
   <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="marca-dagua">
-  <div class="relative max-w-[1180px] mx-auto px-5 md:px-8 pt-[124px] md:pt-[150px] pb-16 md:pb-24">
+  <div class="relative max-w-[1180px] mx-auto px-5 md:px-8 pt-[124px] md:pt-[150px] pb-28 md:pb-36">
     <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-branca entra w-[260px] sm:w-[380px] md:w-[540px] h-auto">
     <svg class="pulso-linha mt-6 md:mt-8 w-48 md:w-64 h-auto text-[#F2A07A]" viewBox="0 0 300 60" fill="none" aria-hidden="true">
       <path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -81,91 +84,94 @@
       <a href="loja.html#planos" class="botao-destaque">Matricule-se</a>
       <a href="aluno.html" class="botao-contorno">Agendar uma aula</a>
     </div>
-    <ul class="entra entra-3 mt-10 flex flex-wrap gap-x-6 gap-y-2 text-[14px] md:text-[15px] font-semibold text-white/90">
-      <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#F2A07A]"></span>Sem fidelidade</li>
-      <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#F2A07A]"></span>Agende pelo celular</li>
-      <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#F2A07A]"></span>Aberta das 6h às 22h</li>
-    </ul>
   </div>
 </section>
 
-<!-- LETREIRO: frases da marca passando (decorativo; o conteúdo já está na página) -->
-<div class="letreiro" aria-hidden="true"><div class="letreiro-trilho"><span>Seu ritmo</span><i></i><span>Nosso bairro</span><i></i><span>Sem fidelidade</span><i></i><span>Das 6h às 22h</span><i></i><span>Professores da região</span><i></i><span>#NoPulsoDoBairro</span><i></i><span>Seu ritmo</span><i></i><span>Nosso bairro</span><i></i><span>Sem fidelidade</span><i></i><span>Das 6h às 22h</span><i></i><span>Professores da região</span><i></i><span>#NoPulsoDoBairro</span><i></i></div></div>
+<!-- BENEFÍCIOS: faixa que sobe sobre a borda da abertura -->
+<section class="px-5 relative z-10">
+  <ul class="beneficios max-w-[1180px] mx-auto">
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-3-6.24M20 4v4h-4"/><path d="M9 12l2 2 4-4"/></svg><div><strong>Sem fidelidade</strong><span>No plano mensal, cancele quando quiser.</span></div></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><strong>Das 6h às 22h</strong><span>E sábado das 8h às 14h.</span></div></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg><div><strong>Agende pelo celular</strong><span>Escolha aula, professor e horário.</span></div></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3 3 0 0 1 0 6M18 14c1.9.7 3 2.6 3 5"/></svg><div><strong>Professores do bairro</strong><span>Gente que conhece a sua rotina.</span></div></li>
+  </ul>
+</section>
 
-<!-- NÚMEROS: faixa na cor da marca -->
-<section class="bg-[#2F444B] text-white px-5">
-  <dl data-revela class="max-w-[1180px] mx-auto grid grid-cols-3 divide-x divide-white/15 py-8 md:py-12">
-    <div class="px-2 md:px-6 flex flex-col-reverse items-center text-center"><dt class="text-[12px] md:text-[14px] font-semibold uppercase tracking-[0.12em] text-white/75 mt-1">alunos ativos</dt><dd class="numero-grande" data-contar="350" data-prefixo="+">+350</dd></div>
-    <div class="px-2 md:px-6 flex flex-col-reverse items-center text-center"><dt class="text-[12px] md:text-[14px] font-semibold uppercase tracking-[0.12em] text-white/75 mt-1">professores do bairro</dt><dd class="numero-grande" data-contar="12">12</dd></div>
-    <div class="px-2 md:px-6 flex flex-col-reverse items-center text-center"><dt class="text-[12px] md:text-[14px] font-semibold uppercase tracking-[0.12em] text-white/75 mt-1">nota dos alunos</dt><dd class="numero-grande" data-contar="4.8" data-casas="1">4,8</dd></div>
+<!-- NÚMEROS -->
+<section class="px-5 pt-20 md:pt-24">
+  <dl data-revela class="max-w-[1180px] mx-auto grid grid-cols-3 divide-x divide-linha">
+    <div class="px-2 md:px-6 flex flex-col-reverse items-center text-center"><dt class="text-[12px] md:text-[14px] font-bold uppercase tracking-[0.12em] text-grafite/65 mt-1">alunos ativos</dt><dd class="numero-grande text-petroleo" data-contar="350" data-prefixo="+">+350</dd></div>
+    <div class="px-2 md:px-6 flex flex-col-reverse items-center text-center"><dt class="text-[12px] md:text-[14px] font-bold uppercase tracking-[0.12em] text-grafite/65 mt-1">professores do bairro</dt><dd class="numero-grande text-petroleo" data-contar="12">12</dd></div>
+    <div class="px-2 md:px-6 flex flex-col-reverse items-center text-center"><dt class="text-[12px] md:text-[14px] font-bold uppercase tracking-[0.12em] text-grafite/65 mt-1">nota dos alunos</dt><dd class="numero-grande text-petroleo" data-contar="4.8" data-casas="1">4,8</dd></div>
   </dl>
 </section>
 
-<!-- MODALIDADES: cartões coloridos (cores fixas: o contraste vale nos dois temas) -->
-<section class="py-20 md:py-28 px-5">
+<!-- MODALIDADES: painéis com foto; o escolhido se abre (no celular, cartões empilhados) -->
+<section id="modalidades" class="py-20 md:py-28 px-5">
   <div class="max-w-[1180px] mx-auto">
     <p class="rotulo-secao">Modalidades</p>
     <h2 data-revela class="titulo-secao mt-2">Escolha como você quer treinar.</h2>
-    <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <a href="aluno.html" data-revela class="modalidade bg-[#425B63]">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h2m14 0h2M6.5 8v8m11-8v8M9 10v4m6-4v4M9 12h6"/></svg>
-        <h3>Musculação</h3><p>Força e definição com acompanhamento de quem entende.</p><span>Agendar aula →</span>
+    <div class="paineis mt-10" data-revela>
+      <a href="aluno.html" class="painel-modalidade aberto" style="--cor:#425B63">
+        <img src="img/modalidades/musculacao.webp" alt="" loading="lazy">
+        <div class="painel-conteudo">
+          <span class="painel-tag">01</span>
+          <h3>Musculação</h3>
+          <p>Força e definição com acompanhamento de quem entende. Treino montado para o seu objetivo.</p>
+          <span class="painel-link">Agendar aula →</span>
+        </div>
       </a>
-      <a href="aluno.html" data-revela class="modalidade bg-[#A4532F]">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13" cy="4.5" r="1.8"/><path d="M7 21l3-6 3 2v4M10 15l1.5-5L15 13h4M11.5 10 8 9l-2 3"/></svg>
-        <h3>Funcional</h3><p>Circuitos dinâmicos que trabalham o corpo todo.</p><span>Agendar aula →</span>
+      <a href="aluno.html" class="painel-modalidade" style="--cor:#A4532F">
+        <img src="img/modalidades/funcional.webp" alt="" loading="lazy">
+        <div class="painel-conteudo">
+          <span class="painel-tag">02</span>
+          <h3>Funcional</h3>
+          <p>Circuitos dinâmicos que trabalham o corpo todo. Ninguém fica parado.</p>
+          <span class="painel-link">Agendar aula →</span>
+        </div>
       </a>
-      <a href="aluno.html" data-revela class="modalidade bg-[#5C6B3B]">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg>
-        <h3>Cardio</h3><p>Fôlego e disposição para o dia a dia.</p><span>Agendar aula →</span>
+      <a href="aluno.html" class="painel-modalidade" style="--cor:#5C6B3B">
+        <img src="img/modalidades/cardio.webp" alt="" loading="lazy">
+        <div class="painel-conteudo">
+          <span class="painel-tag">03</span>
+          <h3>Cardio</h3>
+          <p>Fôlego e disposição para o dia a dia, com esteiras, bikes e treinos intervalados.</p>
+          <span class="painel-link">Agendar aula →</span>
+        </div>
       </a>
-      <a href="aluno.html" data-revela class="modalidade bg-[#2A2A2D]">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="1.8"/><path d="M4 9.5c5 1.5 11 1.5 16 0M12 10.5v4.5l-4 5m4-5 4 5"/></svg>
-        <h3>Alongamento</h3><p>Mobilidade, postura e menos dor nas costas.</p><span>Agendar aula →</span>
+      <a href="aluno.html" class="painel-modalidade" style="--cor:#2A2A2D">
+        <img src="img/modalidades/alongamento.webp" alt="" loading="lazy">
+        <div class="painel-conteudo">
+          <span class="painel-tag">04</span>
+          <h3>Alongamento</h3>
+          <p>Mobilidade, postura e menos dor nas costas. Para todas as idades.</p>
+          <span class="painel-link">Agendar aula →</span>
+        </div>
       </a>
     </div>
   </div>
 </section>
 
-<!-- FOTOS: carrossel dentro da largura do site (no PC aparecem 2 fotos inteiras) -->
-<section class="pb-20 md:pb-28">
-  <div class="max-w-[1180px] mx-auto px-5 md:px-8">
-    <p class="rotulo-secao">Por dentro da Pulso</p>
-    <h2 class="titulo-secao mt-2 mb-8">Um lugar feito para você voltar.</h2>
-    <div id="carouselTrack" tabindex="0" role="region" aria-label="Fotos da academia (use as setas do teclado para rolar)" class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth rounded-3xl">
-      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[560px] relative rounded-3xl overflow-hidden bg-superficie">
-        <img src="img/home/treino.jpg" alt="Pessoa fazendo abdominal no colchonete" class="w-full h-full object-cover" loading="lazy">
-        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
-        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-extrabold leading-tight tracking-tight max-w-md">Treine perto de casa, sem enrolação.</figcaption>
-      </figure>
-      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[560px] relative rounded-3xl overflow-hidden bg-superficie">
-        <img src="img/home/alongamento.jpg" alt="Aula em grupo de exercícios no solo" class="w-full h-full object-cover" loading="lazy">
-        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
-        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-extrabold leading-tight tracking-tight max-w-md">Modalidades pra todas as idades e ritmos.</figcaption>
-      </figure>
-      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[560px] relative rounded-3xl overflow-hidden bg-superficie">
-        <img src="img/home/grupo.jpg" alt="Aluno fazendo flexão com halteres" class="w-full h-full object-cover" loading="lazy">
-        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
-        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-extrabold leading-tight tracking-tight max-w-md">Gente do seu bairro te motivando todo dia.</figcaption>
-      </figure>
-      <figure class="snap-start shrink-0 w-[86%] md:w-[calc(50%-10px)] h-[440px] md:h-[520px] xl:h-[560px] relative rounded-3xl overflow-hidden bg-superficie">
-        <img src="img/home/ambiente.jpg" alt="Aluna treinando no aparelho" class="w-full h-full object-cover" loading="lazy">
-        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
-        <figcaption class="absolute bottom-7 left-7 right-7 md:bottom-9 md:left-9 text-white text-[26px] md:text-[32px] font-extrabold leading-tight tracking-tight max-w-md">Preço justo, sem letra miúda.</figcaption>
-      </figure>
-    </div>
-
-    <div class="flex items-center justify-between mt-5">
-      <div id="carouselPontos" class="flex gap-2" aria-hidden="true"></div>
-      <div class="flex gap-3">
-        <button id="carouselPausa" type="button" aria-label="Pausar as fotos" class="w-10 h-10 rounded-full bg-tinta/[0.07] text-grafite/75 flex items-center justify-center hover:bg-tinta/10 transition"></button>
-        <button onclick="scrollCarousel(-1)" aria-label="Foto anterior" class="w-10 h-10 rounded-full bg-tinta/[0.07] text-grafite/75 flex items-center justify-center hover:bg-tinta/10 transition">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button onclick="scrollCarousel(1)" aria-label="Próxima foto" class="w-10 h-10 rounded-full bg-tinta/[0.07] text-grafite/75 flex items-center justify-center hover:bg-tinta/10 transition">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
+<!-- GALERIA: tela cheia, estilo stories (barras de progresso, contador, passa sozinha) -->
+<section class="galeria" id="galeria" aria-roledescription="carrossel" aria-label="Fotos da Pulso">
+  <div class="galeria-slides">
+    <figure class="galeria-slide ativo"><img src="img/galeria/forca.webp" alt="Aluna levantando a barra acima da cabeça"><figcaption>Força no seu ritmo.</figcaption></figure>
+    <figure class="galeria-slide"><img src="img/galeria/professor.webp" alt="Professora corrigindo a postura de um aluno na flexão" loading="lazy"><figcaption>Professor do seu lado.</figcaption></figure>
+    <figure class="galeria-slide"><img src="img/galeria/turma.webp" alt="Turma treinando com halteres numa sala de tijolos" loading="lazy"><figcaption>Treinar junto é melhor.</figcaption></figure>
+    <figure class="galeria-slide"><img src="img/galeria/foco.webp" alt="Aluna concentrada antes de levantar o peso" loading="lazy"><figcaption>Foco que vira hábito.</figcaption></figure>
+    <figure class="galeria-slide"><img src="img/galeria/agachamento.webp" alt="Aluna fazendo agachamento com barra" loading="lazy"><figcaption>Todo corpo é bem-vindo.</figcaption></figure>
+    <figure class="galeria-slide"><img src="img/galeria/barra.webp" alt="Pessoa se preparando para levantar a barra do chão" loading="lazy"><figcaption>Seu próximo recorde começa aqui.</figcaption></figure>
+  </div>
+  <div class="galeria-topo">
+    <p class="rotulo-secao !text-[#F2A07A]">Por dentro da Pulso</p>
+    <div class="galeria-barras" aria-hidden="true"></div>
+  </div>
+  <div class="galeria-controles">
+    <p class="galeria-contador" aria-live="polite"><span id="galeriaAtual">01</span> / <span id="galeriaTotal">06</span></p>
+    <div class="flex gap-2">
+      <button type="button" id="galeriaAnterior" aria-label="Foto anterior"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button type="button" id="galeriaPausa" aria-label="Pausar as fotos"></button>
+      <button type="button" id="galeriaProxima" aria-label="Próxima foto"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
   </div>
 </section>
@@ -200,7 +206,7 @@
       <li class="lt-item">
         <span class="lt-ponto" aria-hidden="true"></span>
         <article class="lt-cartao" data-revela="esquerda">
-          <img src="img/home/alongamento.jpg" alt="Aula em grupo de exercícios no solo" loading="lazy">
+          <img src="img/historia/2020.webp" alt="Grupo grande se exercitando num parque" loading="lazy">
           <div>
             <p class="lt-ano">2020</p>
             <h3>Treino na praça</h3>
@@ -211,7 +217,7 @@
       <li class="lt-item">
         <span class="lt-ponto" aria-hidden="true"></span>
         <article class="lt-cartao" data-revela="direita">
-          <img src="img/home/recepcao.jpg" alt="Salão de treino da academia" loading="lazy">
+          <img src="img/historia/2021.webp" alt="Primeira sala de treino, com bancos e aparelhos" loading="lazy">
           <div>
             <p class="lt-ano">2021</p>
             <h3>As portas se abrem</h3>
@@ -222,7 +228,7 @@
       <li class="lt-item">
         <span class="lt-ponto" aria-hidden="true"></span>
         <article class="lt-cartao" data-revela="esquerda">
-          <img src="img/home/grupo.jpg" alt="Aluno fazendo flexão com halteres" loading="lazy">
+          <img src="img/historia/2023.webp" alt="Professor orientando uma aluna no exercício" loading="lazy">
           <div>
             <p class="lt-ano">2023</p>
             <h3>O bairro ensinando o bairro</h3>
@@ -233,7 +239,7 @@
       <li class="lt-item">
         <span class="lt-ponto" aria-hidden="true"></span>
         <article class="lt-cartao" data-revela="direita">
-          <img src="img/home/app.webp" alt="Tela de agendamento de aulas no celular" loading="lazy">
+          <img src="img/historia/2026.webp" alt="Aluno consultando o celular na academia" loading="lazy">
           <div>
             <p class="lt-ano">2026</p>
             <h3>A Pulso no seu bolso</h3>
@@ -242,6 +248,65 @@
         </article>
       </li>
       </ol>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPE: os professores cadastrados no sistema -->
+<section id="equipe" class="py-20 md:py-28 px-5">
+  <div class="max-w-[1180px] mx-auto">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="rotulo-secao">Equipe</p>
+        <h2 data-revela class="titulo-secao mt-2">Quem treina com você.</h2>
+      </div>
+      <a href="aluno.html" class="link-forte">Agendar com um professor →</a>
+    </div>
+    <ul class="equipe mt-10">
+      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/marcos.webp" alt="Professor Marcos" loading="lazy"><div><strong>Marcos</strong><span style="--cor:#425B63">Musculação</span></div></a></li>
+      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/renata.webp" alt="Professora Renata" loading="lazy"><div><strong>Renata</strong><span style="--cor:#A4532F">Funcional</span></div></a></li>
+      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/diego.webp" alt="Professor Diego" loading="lazy"><div><strong>Diego</strong><span style="--cor:#5C6B3B">Cardio</span></div></a></li>
+      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/ana-paula.webp" alt="Professora Ana Paula" loading="lazy"><div><strong>Ana Paula</strong><span style="--cor:#2A2A2D">Alongamento</span></div></a></li>
+      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/bruno.webp" alt="Professor Bruno" loading="lazy"><div><strong>Bruno</strong><span style="--cor:#425B63">Musculação</span></div></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- GRADE DE AULAS EM GRUPO (montada pelo js/home.js; filtro por modalidade) -->
+<section id="grade" class="py-20 md:py-28 px-5 fundo-areia">
+  <div class="max-w-[1180px] mx-auto">
+    <p class="rotulo-secao">Grade de aulas</p>
+    <h2 data-revela class="titulo-secao mt-2">Aulas em grupo da semana.</h2>
+    <div class="mt-8 flex flex-wrap gap-2" id="gradeFiltros" role="group" aria-label="Filtrar por modalidade"></div>
+    <p class="grade-dica">Arraste a tabela para o lado para ver todos os dias →</p>
+    <div class="grade-rolagem mt-4" tabindex="0" aria-label="Grade de aulas da semana">
+      <table class="grade" id="gradeTabela"></table>
+    </div>
+    <p class="mt-4 text-[14px] text-grafite/65">Musculação livre durante todo o horário de funcionamento. As aulas em grupo têm vagas limitadas: agende pela sua área.</p>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="py-20 md:py-28 px-5">
+  <div class="max-w-[1180px] mx-auto">
+    <p class="rotulo-secao">Quem treina aqui</p>
+    <h2 data-revela class="titulo-secao mt-2">A Pulso na voz dos alunos.</h2>
+    <div class="depoimentos mt-10">
+      <figure data-revela class="depoimento">
+        <p class="estrelas" role="img" aria-label="5 de 5 estrelas">★★★★★</p>
+        <blockquote>“Eu tinha vergonha de academia. Aqui o professor me chamou pelo nome no primeiro dia e montou um treino que eu consigo fazer.”</blockquote>
+        <figcaption><img src="img/depoimentos/juliana.webp" alt="" loading="lazy"><span><strong>Juliana Alves</strong>Aluna há 2 anos</span></figcaption>
+      </figure>
+      <figure data-revela class="depoimento depoimento-destaque">
+        <p class="estrelas" role="img" aria-label="5 de 5 estrelas">★★★★★</p>
+        <blockquote>“Agendo a aula pelo celular no caminho do trabalho. Chego, o Marcos já está me esperando. Perdi 9 kg sem sofrer.”</blockquote>
+        <figcaption><img src="img/depoimentos/rafael.webp" alt="" loading="lazy"><span><strong>Rafael Mendes</strong>Aluno há 1 ano</span></figcaption>
+      </figure>
+      <figure data-revela class="depoimento">
+        <p class="estrelas" role="img" aria-label="5 de 5 estrelas">★★★★★</p>
+        <blockquote>“Preço justo, perto de casa e sem letra miúda. Trouxe minha esposa e meu filho, agora a gente treina junto.”</blockquote>
+        <figcaption><img src="img/depoimentos/carlos.webp" alt="" loading="lazy"><span><strong>Carlos Souza</strong>Aluno há 3 anos</span></figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -259,7 +324,7 @@
 
 <!-- MONTE SEU TREINO: faixa escura com foto -->
 <section class="relative overflow-hidden text-white">
-  <img src="img/home/grupo.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+  <img src="img/home/treino-faixa.webp" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
   <div class="absolute inset-0 bg-gradient-to-r from-[#141A1C]/95 via-[#141A1C]/85 to-[#141A1C]/50"></div>
   <div data-revela class="relative max-w-[1180px] mx-auto px-5 md:px-8 py-20 md:py-28 flex flex-col md:flex-row md:items-center justify-between gap-8">
     <div class="max-w-xl">
@@ -268,6 +333,22 @@
       <p class="mt-4 text-[17px] md:text-[20px] leading-snug text-white/90">Conte seu objetivo, seu nível e quanto tempo você tem, e receba um plano para a sua semana.</p>
     </div>
     <a href="treino.html" class="botao-destaque self-start md:self-auto shrink-0">Montar meu treino</a>
+  </div>
+</section>
+
+<!-- PERGUNTAS FREQUENTES -->
+<section id="faq" class="py-20 md:py-28 px-5">
+  <div class="max-w-[860px] mx-auto">
+    <p class="rotulo-secao">Dúvidas</p>
+    <h2 data-revela class="titulo-secao mt-2">Perguntas frequentes.</h2>
+    <div class="faq mt-10">
+      <details><summary>Tem fidelidade?</summary><p>O plano mensal não tem fidelidade: você paga mês a mês. Os planos trimestral e anual são pagos de uma vez e saem mais baratos por mês.</p></details>
+      <details><summary>Como faço a matrícula?</summary><p>Escolha um plano na <a href="loja.html#planos">loja</a>, pague por Pix, cartão ou boleto e o plano é ativado na hora em que o pagamento é confirmado.</p></details>
+      <details><summary>Como agendo uma aula?</summary><p>Entre na <a href="aluno.html">sua área</a>, escolha a modalidade, o professor, o dia e um horário livre. Dá para agendar com até 30 dias de antecedência.</p></details>
+      <details><summary>Posso cancelar uma aula marcada?</summary><p>Pode, pela sua área, até 2 horas antes do início. Assim a vaga fica livre para outro aluno.</p></details>
+      <details><summary>Como cancelo o meu plano?</summary><p>Na sua área, em "Meu plano", faça o pedido de cancelamento. A recepção responde e você acompanha tudo por lá.</p></details>
+      <details><summary>Quais são as formas de pagamento?</summary><p>Pix, cartão de crédito (com parcelas sem juros a partir de R$ 20 por parcela) e boleto. Os produtos da loja são retirados na recepção, sem frete.</p></details>
+    </div>
   </div>
 </section>
 
@@ -343,82 +424,7 @@
 <script src="js/ui.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/academia.js"></script>
-<script>
-  const track = document.getElementById('carouselTrack');
-  const slides = [...track.querySelectorAll(':scope > figure')];
-  const pontos = document.getElementById('carouselPontos');
-  pontos.innerHTML = slides.map(() => '<span class="w-2 h-2 rounded-full bg-tinta/15 transition-colors"></span>').join('');
-
-  function scrollCarousel(direcao) {
-    const largura = slides[0].getBoundingClientRect().width + 20; // 20 = gap-5
-    const fim = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
-    if (direcao > 0 && fim) track.scrollTo({ left: 0, behavior: 'smooth' }); // volta ao começo
-    else track.scrollBy({ left: direcao * largura, behavior: 'smooth' });
-  }
-
-  // Ponto escuro = foto que está à esquerda na tela.
-  function marcarPonto() {
-    const largura = slides[0].getBoundingClientRect().width + 20;
-    const atual = Math.round(track.scrollLeft / largura);
-    [...pontos.children].forEach((p, i) => p.classList.toggle('bg-grafite/70', i === atual));
-  }
-  track.addEventListener('scroll', () => requestAnimationFrame(marcarPonto), { passive: true });
-  marcarPonto();
-
-  /* Fotos passam sozinhas. Param quando a pessoa está lendo ou mexendo (mouse em cima, foco do
-     teclado, dedo na tela), com a aba em segundo plano, ou se ela pediu menos movimento. */
-  const INTERVALO_FOTOS = 5000;
-  const botaoPausa = document.getElementById('carouselPausa');
-  const ICONE_PAUSA = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
-  const ICONE_PLAY = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>';
-  let fotosPausadas = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let interagindo = false;
-
-  function atualizarBotaoPausa() {
-    botaoPausa.innerHTML = fotosPausadas ? ICONE_PLAY : ICONE_PAUSA;
-    botaoPausa.setAttribute('aria-label', fotosPausadas ? 'Passar as fotos sozinhas' : 'Pausar as fotos');
-  }
-  botaoPausa.addEventListener('click', () => { fotosPausadas = !fotosPausadas; atualizarBotaoPausa(); });
-  atualizarBotaoPausa();
-
-  const areaFotos = track.parentElement;
-  areaFotos.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') interagindo = true; });
-  areaFotos.addEventListener('pointerleave', () => { interagindo = false; });
-  track.addEventListener('touchstart', () => { interagindo = true; }, { passive: true });
-  track.addEventListener('touchend', () => { setTimeout(() => { interagindo = false; }, INTERVALO_FOTOS); }, { passive: true });
-  track.addEventListener('focusin', () => { interagindo = true; });
-  track.addEventListener('focusout', () => { interagindo = false; });
-
-  setInterval(() => {
-    const posicao = track.getBoundingClientRect();
-    const naTela = posicao.bottom > 0 && posicao.top < innerHeight;
-    if (!fotosPausadas && !interagindo && !document.hidden && naTela) scrollCarousel(1);
-  }, INTERVALO_FOTOS);
-
-  async function carregarAvisos() {
-    const container = document.getElementById('listaAvisos');
-    try {
-      const { avisos } = await Api.listarAvisos();
-      if (avisos.length === 0) {
-        container.innerHTML = `<p class="text-grafite/65 text-sm">Nenhum aviso no momento.</p>`;
-        return;
-      }
-      container.innerHTML = avisos
-        .map(
-          (a) => `
-          <div class="bg-superficie rounded-2xl p-6">
-            <p class="text-[13px] text-grafite/65 mb-2">${formatarDataHora(a.criado_em)}</p>
-            <p class="text-[17px] leading-snug">${escapeHtml(a.texto)}</p>
-          </div>`
-        )
-        .join('');
-    } catch (erro) {
-      container.innerHTML = `<p class="text-terracota text-sm">Não foi possível carregar os avisos (${escapeHtml(erro.message)}).</p>`;
-    }
-  }
-
-  carregarAvisos();
-</script>
+<script src="js/home.js"></script>
 <script src="js/pwa.js"></script>
 </body>
 </html>

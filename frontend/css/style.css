@@ -474,7 +474,7 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 @media (prefers-reduced-motion: reduce) { .hero-foto { animation: none; } }
 
 /* =========================================================
-   Identidade Pulso: letreiro, marca d'água, linha do tempo,
+   Identidade Pulso: marca d'água, linha do tempo,
    planos em blocos de cor e páginas com abertura escura
    ========================================================= */
 
@@ -482,12 +482,6 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 .marca-dagua { position: absolute; right: -6%; bottom: -12%; width: min(62vw, 720px); height: auto; opacity: 0.07; pointer-events: none; user-select: none; }
 .marca-dagua-esquerda { left: -10%; right: auto; top: 6%; bottom: auto; opacity: 0.05; }
 
-/* Letreiro: frases da marca passando numa faixa terracota. */
-.letreiro { overflow: hidden; background: #A4532F; color: #fff; padding: 16px 0; }
-.letreiro-trilho { display: flex; align-items: center; width: max-content; animation: letreiro 34s linear infinite; }
-.letreiro span { padding: 0 22px; font-size: clamp(18px, 2.4vw, 26px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; }
-.letreiro i { width: 10px; height: 10px; border-radius: 50%; background: #F9D3BF; flex: none; }
-@keyframes letreiro { to { transform: translateX(-50%); } }
 
 /* Páginas internas: a mesma abertura escura da home, mais baixa. */
 .faixa-topo { position: relative; overflow: hidden; background: #141A1C; padding: 132px 0 64px; }
@@ -564,6 +558,147 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 @media (min-width: 768px) { .cta-fixo { display: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .letreiro-trilho { animation: none; }
   .lt-item.ativo .lt-ponto { animation: none; }
+}
+
+/* =========================================================
+   Home v3: benefícios, painéis, galeria stories, equipe,
+   grade de aulas, depoimentos e perguntas frequentes
+   ========================================================= */
+
+/* Faixa de benefícios: cartão que sobe sobre a borda da abertura. */
+.beneficios { margin-top: -64px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; border-radius: 24px; background: rgb(var(--superficie)); box-shadow: 0 24px 60px rgba(20, 26, 28, 0.16); overflow: hidden; }
+.beneficios li { display: flex; gap: 14px; align-items: flex-start; padding: 26px 24px; }
+.beneficios li + li { border-left: 1px solid rgb(var(--linha)); }
+.beneficios svg { flex: none; width: 34px; height: 34px; padding: 6px; border-radius: 10px; background: #A4532F; color: #fff; }
+.beneficios strong { display: block; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; }
+.beneficios span { display: block; margin-top: 3px; font-size: 14px; line-height: 1.4; color: rgb(var(--grafite) / 0.7); }
+@media (max-width: 900px) {
+  .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .beneficios li:nth-child(3) { border-left: 0; }
+  .beneficios li:nth-child(n + 3) { border-top: 1px solid rgb(var(--linha)); }
+}
+@media (max-width: 520px) {
+  .beneficios { grid-template-columns: minmax(0, 1fr); }
+  .beneficios li + li { border-left: 0; border-top: 1px solid rgb(var(--linha)); }
+  .beneficios li { padding: 18px 20px; }
+}
+
+/* Modalidades: painéis lado a lado; o aberto ganha espaço e mostra o texto. */
+.paineis { display: flex; gap: 12px; height: 560px; }
+.painel-modalidade { position: relative; flex: 1; min-width: 0; border-radius: 26px; overflow: hidden; color: #fff; transition: flex 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.painel-modalidade.aberto { flex: 3.2; }
+.painel-modalidade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+.painel-modalidade.aberto img { transform: scale(1.04); }
+.painel-modalidade::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(10, 14, 16, 0.92) 0%, rgba(10, 14, 16, 0.35) 55%, rgba(10, 14, 16, 0.1) 100%); }
+.painel-modalidade::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; z-index: 2; background: var(--cor); }
+.painel-conteudo { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 28px; }
+.painel-tag { display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--cor); font-size: 14px; font-weight: 900; }
+.painel-modalidade h3 { margin-top: 14px; font-size: clamp(22px, 2.4vw, 34px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1; white-space: nowrap; }
+.painel-modalidade p, .painel-link { display: block; max-width: 380px; opacity: 0; transform: translateY(10px); transition: opacity 0.4s ease, transform 0.4s ease; }
+.painel-modalidade p { margin-top: 10px; font-size: 16px; line-height: 1.45; color: rgba(255, 255, 255, 0.9); }
+.painel-link { margin-top: 16px; font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; }
+.painel-modalidade.aberto p, .painel-modalidade.aberto .painel-link { opacity: 1; transform: none; transition-delay: 0.2s; }
+/* Fechado (só no computador): o nome fica na vertical, como uma lombada. */
+@media (min-width: 1024px) {
+  .painel-modalidade:not(.aberto) h3 { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 26px; }
+  .painel-modalidade:not(.aberto) p, .painel-modalidade:not(.aberto) .painel-link { display: none; }
+}
+@media (max-width: 1023px) {
+  .paineis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); height: auto; }
+  .painel-modalidade, .painel-modalidade.aberto { flex: none; height: 380px; }
+  .painel-modalidade p, .painel-link { opacity: 1; transform: none; }
+}
+@media (max-width: 560px) { .paineis { grid-template-columns: minmax(0, 1fr); } .painel-modalidade, .painel-modalidade.aberto { height: 320px; } }
+
+/* Galeria em tela cheia, estilo stories. A barra da foto atual enche em 6 s e passa para a próxima. */
+.galeria { position: relative; height: clamp(520px, 88vh, 860px); overflow: hidden; background: #0E1314; color: #fff; touch-action: pan-y; }
+.galeria-slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity 0.9s ease; }
+.galeria-slide.ativo { opacity: 1; }
+.galeria-slide img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); }
+.galeria-slide.ativo img { animation: aproxima-galeria 7s ease-out both; }
+@keyframes aproxima-galeria { from { transform: scale(1.1); } to { transform: scale(1); } }
+.galeria-slide::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(8, 12, 13, 0.85) 0%, rgba(8, 12, 13, 0.15) 50%, rgba(8, 12, 13, 0.55) 100%); }
+.galeria-slide figcaption { position: absolute; z-index: 1; left: max(20px, calc((100vw - 1180px) / 2)); right: 20px; bottom: 120px; max-width: 900px; font-size: clamp(38px, 7vw, 96px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.95; opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease 0.25s, transform 0.6s ease 0.25s; }
+.galeria-slide.ativo figcaption { opacity: 1; transform: none; }
+.galeria-topo { position: absolute; z-index: 2; top: 92px; left: max(20px, calc((100vw - 1180px) / 2)); right: max(20px, calc((100vw - 1180px) / 2)); }
+.galeria-barras { display: flex; gap: 6px; margin-top: 14px; }
+.galeria-barras span { flex: 1; height: 4px; border-radius: 4px; background: rgba(255, 255, 255, 0.28); overflow: hidden; }
+.galeria-barras i { display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: left; background: #fff; }
+.galeria-barras span.vista i { transform: scaleX(1); }
+.galeria-barras span.rodando i { animation: barra-galeria 6s linear forwards; }
+@keyframes barra-galeria { to { transform: scaleX(1); } }
+.galeria.pausada .galeria-barras span.rodando i, .galeria.fora-da-tela .galeria-barras span.rodando i { animation-play-state: paused; }
+@media (hover: hover) { .galeria:hover .galeria-barras span.rodando i { animation-play-state: paused; } }
+.galeria-controles { position: absolute; z-index: 2; left: max(20px, calc((100vw - 1180px) / 2)); right: max(20px, calc((100vw - 1180px) / 2)); bottom: 40px; display: flex; align-items: center; justify-content: space-between; }
+.galeria-contador { font-size: 15px; font-weight: 800; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.85); }
+.galeria-contador span:first-child { font-size: 22px; color: #fff; }
+.galeria-controles button { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: rgba(255, 255, 255, 0.14); color: #fff; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: background-color 0.2s ease; }
+.galeria-controles button:hover { background: rgba(255, 255, 255, 0.28); }
+@media (max-width: 640px) { .galeria-slide figcaption { bottom: 110px; } .galeria-controles { bottom: 28px; } }
+
+/* Equipe: retratos verticais; a foto ganha cor ao passar o mouse. */
+.equipe { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; list-style: none; padding: 0; }
+.professor { display: block; position: relative; border-radius: 22px; overflow: hidden; background: #1F2629; color: #fff; }
+.professor img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: grayscale(0.85); transition: filter 0.4s ease, transform 0.6s ease; }
+.professor:hover img, .professor:focus-visible img { filter: none; transform: scale(1.04); }
+.professor > div { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 18px 18px; background: linear-gradient(to top, rgba(10, 14, 16, 0.92), transparent); }
+.professor strong { display: block; font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; }
+.professor span { display: inline-block; margin-top: 6px; padding: 3px 10px; border-radius: 999px; background: var(--cor); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
+.link-forte { font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: rgb(var(--terracota)); }
+:root[data-tema="escuro"] .link-forte { color: #EE9A72; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) .link-forte { color: #EE9A72; } }
+@media (max-width: 1023px) { .equipe { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .equipe { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 20px; gap: 12px; margin-inline: -20px; padding-inline: 20px; scrollbar-width: none; }
+  .equipe::-webkit-scrollbar { display: none; }
+  .equipe li { flex: 0 0 62%; scroll-snap-align: start; }
+}
+
+/* Grade de aulas: tabela da semana com filtro por modalidade. */
+.filtro-grade { padding: 9px 16px; border-radius: 999px; background: rgb(var(--tinta) / 0.07); font-size: 14px; font-weight: 800; transition: background-color 0.2s ease, color 0.2s ease; }
+.filtro-grade[aria-pressed="true"] { background: #A4532F; color: #fff; }
+.grade-dica { display: none; margin-top: 16px; font-size: 13px; color: rgb(var(--grafite) / 0.65); }
+@media (max-width: 760px) { .grade-dica { display: block; } }
+.grade-rolagem { overflow-x: auto; border-radius: 20px; background: rgb(var(--superficie)); }
+.grade { width: 100%; min-width: 760px; border-collapse: collapse; }
+.grade th, .grade td { padding: 10px; border-bottom: 1px solid rgb(var(--linha)); text-align: left; vertical-align: top; }
+.grade thead th { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; color: rgb(var(--grafite) / 0.7); }
+.grade thead th small { display: block; font-size: 11px; color: rgb(var(--terracota)); letter-spacing: 0.08em; }
+.grade tbody th { width: 72px; font-size: 15px; font-weight: 900; font-variant-numeric: tabular-nums; }
+.grade td.hoje, .grade th.hoje { background: rgb(var(--terracota) / 0.06); }
+.aula { display: block; padding: 8px 10px; border-radius: 12px; border-left: 4px solid var(--cor); background: rgb(var(--tinta) / 0.05); font-size: 13px; line-height: 1.3; color: rgb(var(--grafite) / 0.75); transition: opacity 0.25s ease; }
+.aula strong { display: block; font-size: 14px; font-weight: 800; color: rgb(var(--grafite)); }
+.aula.apagada { opacity: 0.18; }
+
+/* Depoimentos: cartões com aspas grandes; o do meio em destaque. */
+.depoimentos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.depoimento { position: relative; display: flex; flex-direction: column; margin: 0; padding: 30px; border-radius: 24px; background: rgb(var(--superficie)); }
+.depoimento::before { content: "“"; position: absolute; right: 22px; top: -6px; font-size: 120px; font-weight: 900; line-height: 1; color: rgb(var(--terracota) / 0.15); }
+.depoimento-destaque { background: #2F444B; color: #fff; }
+.depoimento-destaque::before { color: rgba(255, 255, 255, 0.12); }
+.estrelas { color: #E0A33A; font-size: 18px; letter-spacing: 2px; }
+.depoimento blockquote { margin: 14px 0 0; font-size: 18px; line-height: 1.5; font-weight: 500; }
+.depoimento figcaption { display: flex; align-items: center; gap: 12px; margin-top: auto; padding-top: 24px; }
+.depoimento figcaption img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; }
+.depoimento figcaption strong { display: block; font-size: 15px; font-weight: 900; }
+.depoimento figcaption span { font-size: 13px; color: rgb(var(--grafite) / 0.65); }
+.depoimento-destaque figcaption span { color: rgba(255, 255, 255, 0.75); }
+@media (max-width: 900px) { .depoimentos { grid-template-columns: minmax(0, 1fr); } }
+
+/* Avisos com o mesmo acabamento. */
+.aviso { padding: 24px; border-radius: 20px; background: rgb(var(--superficie)); border-left: 5px solid #A4532F; }
+
+/* Perguntas frequentes em sanfona. */
+.faq details { border-bottom: 1px solid rgb(var(--linha)); }
+.faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; cursor: pointer; list-style: none; font-size: 19px; font-weight: 800; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: #A4532F; color: #fff; font-size: 22px; font-weight: 500; transition: transform 0.3s ease; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq p { padding: 0 0 22px; font-size: 17px; line-height: 1.6; color: rgb(var(--grafite) / 0.75); max-width: 70ch; }
+.faq a { color: rgb(var(--terracota)); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .galeria-slide.ativo img { animation: none; transform: none; }
+  .painel-modalidade, .painel-modalidade img { transition: none; }
 }
