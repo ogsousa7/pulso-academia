@@ -431,7 +431,7 @@ html { scroll-behavior: smooth; }
 @keyframes aproxima { from { transform: scale(1.08); } to { transform: scale(1); } }
 
 .botao-destaque, .botao-contorno {
-  display: inline-flex; align-items: center; justify-content: center; padding: 15px 30px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center; padding: 16px 32px; border-radius: 4px;
   font-size: 16px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
   transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -510,7 +510,7 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 .plano-detalhe { margin-top: 8px; font-size: 14px; color: rgba(255, 255, 255, 0.85); }
 .plano-economia { margin-top: 10px; min-height: 26px; align-self: flex-start; font-size: 13px; font-weight: 800; }
 .plano-economia:not(:empty) { padding: 4px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.16); }
-.plano-botao { position: relative; z-index: 1; margin-top: 28px; padding: 15px; border-radius: 999px; background: #fff; color: #1D1D1F; font-size: 15px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; transition: transform 0.2s ease; }
+.plano-botao { position: relative; z-index: 1; margin-top: 28px; padding: 15px; border-radius: 4px; background: #fff; color: #1D1D1F; font-size: 15px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; transition: transform 0.2s ease; }
 .plano-botao:hover { transform: scale(1.02); }
 .plano-botao:active { transform: scale(0.98); }
 
@@ -553,7 +553,7 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 .hashtag-gigante { margin-bottom: 40px; font-size: clamp(34px, 8.6vw, 116px); font-weight: 900; letter-spacing: -0.04em; line-height: 0.95; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.35); overflow-wrap: anywhere; }
 
 /* Matricule-se fixo no celular (home), depois que a abertura sai da tela. */
-.cta-fixo { position: fixed; left: 50%; white-space: nowrap; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 45; transform: translate(-50%, 140%); padding: 15px 34px; border-radius: 999px; background: #A4532F; color: #fff; font-size: 15px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 14px 34px rgba(164, 83, 47, 0.45); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.cta-fixo { position: fixed; left: 50%; white-space: nowrap; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 45; transform: translate(-50%, 140%); padding: 15px 34px; border-radius: 4px; background: #A4532F; color: #fff; font-size: 15px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 14px 34px rgba(164, 83, 47, 0.45); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .cta-fixo.visivel { transform: translate(-50%, 0); }
 @media (min-width: 768px) { .cta-fixo { display: none; } }
 
@@ -565,24 +565,6 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
    Home v3: benefícios, painéis, galeria stories, equipe,
    grade de aulas, depoimentos e perguntas frequentes
    ========================================================= */
-
-/* Faixa de benefícios: cartão que sobe sobre a borda da abertura. */
-.beneficios { margin-top: -64px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; border-radius: 24px; background: rgb(var(--superficie)); box-shadow: 0 24px 60px rgba(20, 26, 28, 0.16); overflow: hidden; }
-.beneficios li { display: flex; gap: 14px; align-items: flex-start; padding: 26px 24px; }
-.beneficios li + li { border-left: 1px solid rgb(var(--linha)); }
-.beneficios svg { flex: none; width: 34px; height: 34px; padding: 6px; border-radius: 10px; background: #A4532F; color: #fff; }
-.beneficios strong { display: block; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; }
-.beneficios span { display: block; margin-top: 3px; font-size: 14px; line-height: 1.4; color: rgb(var(--grafite) / 0.7); }
-@media (max-width: 900px) {
-  .beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .beneficios li:nth-child(3) { border-left: 0; }
-  .beneficios li:nth-child(n + 3) { border-top: 1px solid rgb(var(--linha)); }
-}
-@media (max-width: 520px) {
-  .beneficios { grid-template-columns: minmax(0, 1fr); }
-  .beneficios li + li { border-left: 0; border-top: 1px solid rgb(var(--linha)); }
-  .beneficios li { padding: 18px 20px; }
-}
 
 /* Modalidades: painéis lado a lado; o aberto ganha espaço e mostra o texto. */
 .paineis { display: flex; gap: 12px; height: 560px; }
@@ -779,3 +761,12 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
   .revela-img { clip-path: none; transition: none; }
   .boas-vindas-pulso path { stroke-dashoffset: 0; animation: none; }
 }
+
+/* Abertura limpa: link com seta ao lado do botão e os benefícios numa linha, separados por um fio. */
+.link-seta { display: inline-flex; align-items: center; gap: 8px; padding-bottom: 4px; border-bottom: 2px solid #F2A07A; color: #fff; font-size: 15px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.link-seta span { transition: transform 0.25s ease; }
+.link-seta:hover span { transform: translateX(5px); }
+.hero-beneficios { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 64px; padding: 24px 0 0; border-top: 1px solid rgba(255, 255, 255, 0.18); list-style: none; }
+.hero-beneficios strong { display: block; font-size: 14px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; }
+.hero-beneficios span { display: block; margin-top: 4px; font-size: 14px; color: rgba(255, 255, 255, 0.72); }
+@media (max-width: 860px) { .hero-beneficios { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 48px; } }

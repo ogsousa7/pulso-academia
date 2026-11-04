@@ -185,23 +185,24 @@ function iniciarAnimacoes() {
   const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (semMovimento || !('IntersectionObserver' in window)) return; // sem animação: tudo já está visível
   dividirTitulos();
-  // Fotos que se revelam como cortina.
+  // Fotos que se revelam como cortina. Quem dispara é o cartão em volta (que tem data-revela):
+  // a foto recortada pelo clip-path nunca "aparece" para o IntersectionObserver.
   document.querySelectorAll('.professor, .lt-cartao img').forEach((el, i) => {
     el.classList.add('revela-img');
     el.style.setProperty('--atraso', `${(i % 5) * 90}ms`);
-    el.setAttribute('data-revela', '');
   });
   // O título da abertura já está na tela: as palavras sobem logo (depois da tela de abertura, se houver).
   document.querySelectorAll('.titulo-hero.titulo-anima, .faixa-topo .titulo-anima').forEach((t) => requestAnimationFrame(() => t.classList.add('revelado')));
   const observador = new IntersectionObserver((entradas) => {
     entradas.filter((e) => e.isIntersecting).forEach((e) => {
       e.target.classList.add('revelado');
+      e.target.querySelectorAll('.revela-img').forEach((foto) => foto.classList.add('revelado'));
       e.target.querySelectorAll('[data-contar]').forEach(animarContagem);
       observador.unobserve(e.target);
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('[data-revela]').forEach((el) => {
-    if (!el.classList.contains('revela-img')) el.classList.add('revela');
+    el.classList.add('revela');
     observador.observe(el);
   });
   document.querySelectorAll('.titulo-anima:not(.revelado)').forEach((el) => observador.observe(el));

@@ -7,7 +7,7 @@
    Para publicar uma versão nova do site, aumente VERSAO.
    ========================================================= */
 
-const VERSAO = 'pulso-v9'; // v9: tela de abertura, transições, animações ao rolar e logo em mais lugares
+const VERSAO = 'pulso-v10'; // v10: abertura mais limpa e correção das fotos que não apareciam
 const CACHE_CASCO = `${VERSAO}-casco`;
 const CACHE_EXTERNO = `${VERSAO}-externo`;
 
