@@ -25,6 +25,10 @@ function desenharPlano({ fonte, treino }) {
     ? 'Montado por inteligência artificial (Gemini, do Google)'
     : 'Montado pelo nosso gerador automático';
   resultado.innerHTML = `
+    <div class="treino-cabecalho">
+      <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-tema treino-logo">
+      <span>Plano de treino</span>
+    </div>
     <div class="flex flex-wrap items-center justify-between gap-3 mb-5 nao-imprimir">
       <span class="px-3 py-1 rounded-full bg-oliva/10 text-oliva text-[13px] font-semibold">${selo}</span>
       <button type="button" id="btnImprimir" class="px-4 py-2 rounded-full bg-tinta/[0.06] text-[14px] font-semibold hover:bg-tinta/10 transition">Imprimir</button>

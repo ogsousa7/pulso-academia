@@ -22,6 +22,17 @@
     const texto = localStorage.getItem('pulso_texto'); // 'menor' | 'maior' | 'enorme' | null (normal)
     if (texto) document.documentElement.dataset.texto = texto;
   } catch { /* navegador sem localStorage: segue o sistema */ }
+  // Tela de abertura com a logo: na primeira visita, ao recarregar ou depois de tocar na logo (ui.js marca).
+  try {
+    const navegacao = performance.getEntriesByType('navigation')[0];
+    const recarregou = navegacao && navegacao.type === 'reload';
+    const primeiraVisita = !sessionStorage.getItem('pulso_visitou');
+    const pediu = sessionStorage.getItem('pulso_splash') === '1';
+    const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if ((primeiraVisita || recarregou || pediu) && !semMovimento) document.documentElement.dataset.splash = 'sim';
+    sessionStorage.setItem('pulso_visitou', '1');
+    sessionStorage.removeItem('pulso_splash');
+  } catch { /* navegador sem localStorage: segue o sistema */ }
 })();
 
 const cor = (variavel) => `rgb(var(--${variavel}) / <alpha-value>)`;

@@ -152,9 +152,47 @@ function animarContagem(el) {
   requestAnimationFrame(passo);
 }
 
+/** Divide os títulos grandes em palavras, para cada uma subir de dentro de uma "janela". */
+function dividirTitulos() {
+  document.querySelectorAll('.titulo-secao, .titulo-pagina, .titulo-hero').forEach((titulo) => {
+    if (titulo.dataset.dividido) return;
+    titulo.dataset.dividido = '1';
+    const textos = [];
+    const caminhante = document.createTreeWalker(titulo, NodeFilter.SHOW_TEXT);
+    while (caminhante.nextNode()) textos.push(caminhante.currentNode);
+    let indice = 0;
+    textos.forEach((no) => {
+      const pedacos = document.createDocumentFragment();
+      no.textContent.split(/(\s+)/).forEach((parte) => {
+        if (!parte) return;
+        if (/^\s+$/.test(parte)) { pedacos.append(parte); return; }
+        const janela = document.createElement('span');
+        janela.className = 'palavra';
+        const palavra = document.createElement('span');
+        palavra.textContent = parte;
+        palavra.style.setProperty('--i', indice++);
+        janela.append(palavra);
+        pedacos.append(janela);
+      });
+      no.replaceWith(pedacos);
+    });
+    titulo.removeAttribute('data-revela'); // a animação deste título é a das palavras
+    titulo.classList.add('titulo-anima');
+  });
+}
+
 function iniciarAnimacoes() {
   const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (semMovimento || !('IntersectionObserver' in window)) return; // sem animação: tudo já está visível
+  dividirTitulos();
+  // Fotos que se revelam como cortina.
+  document.querySelectorAll('.professor, .lt-cartao img').forEach((el, i) => {
+    el.classList.add('revela-img');
+    el.style.setProperty('--atraso', `${(i % 5) * 90}ms`);
+    el.setAttribute('data-revela', '');
+  });
+  // O título da abertura já está na tela: as palavras sobem logo (depois da tela de abertura, se houver).
+  document.querySelectorAll('.titulo-hero.titulo-anima, .faixa-topo .titulo-anima').forEach((t) => requestAnimationFrame(() => t.classList.add('revelado')));
   const observador = new IntersectionObserver((entradas) => {
     entradas.filter((e) => e.isIntersecting).forEach((e) => {
       e.target.classList.add('revelado');
@@ -163,9 +201,49 @@ function iniciarAnimacoes() {
     });
   }, { threshold: 0.12 });
   document.querySelectorAll('[data-revela]').forEach((el) => {
-    el.classList.add('revela');
+    if (!el.classList.contains('revela-img')) el.classList.add('revela');
     observador.observe(el);
   });
+  document.querySelectorAll('.titulo-anima:not(.revelado)').forEach((el) => observador.observe(el));
+}
+
+/** Movimento que acompanha a rolagem: barra de leitura e parallax das fotos e do "PULSO" vertical. */
+function initMovimentoAoRolar() {
+  const barra = document.createElement('div');
+  barra.className = 'progresso-pagina';
+  barra.setAttribute('aria-hidden', 'true');
+  document.body.append(barra);
+  const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const paralaxe = semMovimento ? [] : [
+    ...[...document.querySelectorAll('.hero .hero-foto, .faixa-topo .hero-foto')].map((el) => [el, 0.25]),
+    ...[...document.querySelectorAll('[data-paralaxe]')].map((el) => [el, Number(el.dataset.paralaxe)]),
+  ];
+  let agendado = false;
+  const atualizar = () => {
+    agendado = false;
+    const total = document.documentElement.scrollHeight - innerHeight;
+    barra.style.transform = `scaleX(${total > 0 ? Math.min(scrollY / total, 1) : 0})`;
+    paralaxe.forEach(([el, forca]) => {
+      const caixa = el.parentElement.getBoundingClientRect();
+      if (caixa.bottom < 0 || caixa.top > innerHeight) return; // fora da tela: não mexe
+      const deslocamento = (caixa.top + caixa.height / 2 - innerHeight / 2) * forca;
+      el.style.translate = `0 ${deslocamento.toFixed(1)}px`;
+    });
+  };
+  window.addEventListener('scroll', () => { if (!agendado) { agendado = true; requestAnimationFrame(atualizar); } }, { passive: true });
+  atualizar();
+}
+
+/** Tela de abertura: tocar na logo pede a tela de novo; ela sai do DOM depois da cortina subir. */
+function initTelaAbertura() {
+  document.querySelectorAll('a[aria-label^="Pulso Academia"]').forEach((a) => a.addEventListener('click', () => {
+    try { sessionStorage.setItem('pulso_splash', '1'); } catch { /* sem armazenamento */ }
+  }));
+  const tela = document.querySelector('.tela-abertura');
+  if (!tela) return;
+  if (!document.documentElement.dataset.splash) { tela.remove(); return; }
+  // Depois da cortina: tira a tela e o atraso das animações (senão os títulos esperariam ao rolar).
+  setTimeout(() => { tela.remove(); delete document.documentElement.dataset.splash; }, 2400);
 }
 
 /** Topo da home (data-hero): transparente sobre a foto; ao rolar, vira a barra translúcida. */
@@ -218,8 +296,10 @@ function initCtaFixo() {
 document.addEventListener('DOMContentLoaded', () => {
   atualizarBotaoEntrar();
   initMenuMobile();
+  initTelaAbertura();
   initTopoHero();
   iniciarAnimacoes();
+  initMovimentoAoRolar();
   initLinhaDoTempo();
   initCtaFixo();
 });

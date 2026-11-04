@@ -29,6 +29,12 @@
 </head>
 
 <body class="bg-offwhite text-grafite antialiased font-sans">
+<!-- Tela de abertura: só aparece na primeira visita, ao recarregar ou ao tocar na logo (tw-config.js decide) -->
+<div class="tela-abertura" aria-hidden="true">
+  <img src="img/logo-horizontal.png" alt="" class="tela-logo">
+  <svg class="tela-pulso" viewBox="0 0 300 60" fill="none"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+
 
 <!-- HEADER: transparente sobre a foto da abertura; ao rolar, vira a barra translúcida (ui.js coloca .rolou) -->
 <header data-hero class="nav-vidro fixed top-0 left-0 w-full z-40">
@@ -107,13 +113,15 @@
 </section>
 
 <!-- MODALIDADES: painéis com foto; o escolhido se abre (no celular, cartões empilhados) -->
-<section id="modalidades" class="py-20 md:py-28 px-5">
-  <div class="max-w-[1180px] mx-auto">
+<section id="modalidades" class="relative overflow-hidden py-20 md:py-28 px-5">
+  <span class="pulso-vertical pulso-vertical-direita" aria-hidden="true" data-paralaxe="-0.12">Pulso</span>
+  <div class="relative max-w-[1180px] mx-auto">
     <p class="rotulo-secao">Modalidades</p>
     <h2 data-revela class="titulo-secao mt-2">Escolha como você quer treinar.</h2>
     <div class="paineis mt-10" data-revela>
       <a href="aluno.html" class="painel-modalidade aberto" style="--cor:#425B63">
         <img src="img/modalidades/musculacao.webp" alt="" loading="lazy">
+        <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="painel-marca">
         <div class="painel-conteudo">
           <span class="painel-tag">01</span>
           <h3>Musculação</h3>
@@ -123,6 +131,7 @@
       </a>
       <a href="aluno.html" class="painel-modalidade" style="--cor:#A4532F">
         <img src="img/modalidades/funcional.webp" alt="" loading="lazy">
+        <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="painel-marca">
         <div class="painel-conteudo">
           <span class="painel-tag">02</span>
           <h3>Funcional</h3>
@@ -132,6 +141,7 @@
       </a>
       <a href="aluno.html" class="painel-modalidade" style="--cor:#5C6B3B">
         <img src="img/modalidades/cardio.webp" alt="" loading="lazy">
+        <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="painel-marca">
         <div class="painel-conteudo">
           <span class="painel-tag">03</span>
           <h3>Cardio</h3>
@@ -141,6 +151,7 @@
       </a>
       <a href="aluno.html" class="painel-modalidade" style="--cor:#2A2A2D">
         <img src="img/modalidades/alongamento.webp" alt="" loading="lazy">
+        <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="painel-marca">
         <div class="painel-conteudo">
           <span class="painel-tag">04</span>
           <h3>Alongamento</h3>
@@ -163,7 +174,10 @@
     <figure class="galeria-slide"><img src="img/galeria/barra.webp" alt="Pessoa se preparando para levantar a barra do chão" loading="lazy"><figcaption>Seu próximo recorde começa aqui.</figcaption></figure>
   </div>
   <div class="galeria-topo">
-    <p class="rotulo-secao !text-[#F2A07A]">Por dentro da Pulso</p>
+    <div class="flex items-center justify-between gap-4">
+      <p class="rotulo-secao !text-[#F2A07A]">Por dentro da Pulso</p>
+      <img src="img/logo-horizontal.png" alt="" aria-hidden="true" class="logo-branca h-7 md:h-9 w-auto">
+    </div>
     <div class="galeria-barras" aria-hidden="true"></div>
   </div>
   <div class="galeria-controles">
@@ -253,8 +267,9 @@
 </section>
 
 <!-- EQUIPE: os professores cadastrados no sistema -->
-<section id="equipe" class="py-20 md:py-28 px-5">
-  <div class="max-w-[1180px] mx-auto">
+<section id="equipe" class="relative overflow-hidden py-20 md:py-28 px-5">
+  <span class="pulso-vertical pulso-vertical-esquerda" aria-hidden="true" data-paralaxe="0.12">Pulso</span>
+  <div class="relative max-w-[1180px] mx-auto">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
         <p class="rotulo-secao">Equipe</p>
@@ -337,7 +352,8 @@
 </section>
 
 <!-- PERGUNTAS FREQUENTES -->
-<section id="faq" class="py-20 md:py-28 px-5">
+<section id="faq" class="relative overflow-hidden py-20 md:py-28 px-5">
+  <span class="pulso-vertical pulso-vertical-direita" aria-hidden="true" data-paralaxe="-0.1">Pulso</span>
   <div class="max-w-[860px] mx-auto">
     <p class="rotulo-secao">Dúvidas</p>
     <h2 data-revela class="titulo-secao mt-2">Perguntas frequentes.</h2>

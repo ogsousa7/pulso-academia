@@ -23,6 +23,12 @@
 </head>
 
 <body class="bg-offwhite text-grafite antialiased font-sans">
+<!-- Tela de abertura: só aparece na primeira visita, ao recarregar ou ao tocar na logo (tw-config.js decide) -->
+<div class="tela-abertura" aria-hidden="true">
+  <img src="img/logo-horizontal.png" alt="" class="tela-logo">
+  <svg class="tela-pulso" viewBox="0 0 300 60" fill="none"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+
 
 <header data-hero class="nav-vidro fixed top-0 left-0 w-full z-40">
   <div class="max-w-[1180px] mx-auto px-5 md:px-8 h-[64px] flex items-center justify-between gap-4">
@@ -59,6 +65,7 @@
     <div class="hero-veu absolute inset-0"></div>
     <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="marca-dagua">
     <div class="relative max-w-[760px] mx-auto px-5 md:px-0">
+      <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-branca entra w-[190px] md:w-[260px] h-auto mb-7">
       <p class="rotulo-secao entra !text-[#F2A07A]">Grátis e na hora</p>
       <h1 class="entra titulo-pagina mt-2">Monte seu treino.</h1>
       <svg class="pulso-linha mt-5 w-40 md:w-56 h-auto text-[#F2A07A]" viewBox="0 0 300 60" fill="none" aria-hidden="true"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>

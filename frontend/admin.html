@@ -32,13 +32,19 @@
 </head>
 
 <body class="bg-offwhite text-grafite antialiased font-sans min-h-screen">
+<!-- Tela de abertura: só aparece na primeira visita, ao recarregar ou ao tocar na logo (tw-config.js decide) -->
+<div class="tela-abertura" aria-hidden="true">
+  <img src="img/logo-horizontal.png" alt="" class="tela-logo">
+  <svg class="tela-pulso" viewBox="0 0 300 60" fill="none"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+
 
 <!-- HEADER: barra translúcida, só a logo (o menu da conta aparece no lugar do "Entrar" quando há login) -->
 <header class="nav-vidro sticky top-0 z-40">
   <div class="max-w-[1180px] mx-auto px-5 md:px-8 h-[60px] flex items-center justify-between gap-4">
     <a href="index.html" class="flex items-center gap-3 shrink-0" aria-label="Pulso Academia, início">
-      <img src="img/logo-icon.png" alt="Pulso Academia" class="logo-tema h-8 w-auto">
-      <span class="text-[15px] text-grafite/65 font-medium">Recepção</span>
+      <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-tema h-7 sm:h-8 w-auto">
+      <span class="hidden sm:inline text-[13px] font-extrabold uppercase tracking-[0.12em] text-terracota">Recepção</span>
     </a>
 
     <nav class="hidden md:flex items-center gap-9 text-[14px]">
@@ -64,12 +70,15 @@
 
 <main class="max-w-[1180px] mx-auto px-5 md:px-8 pt-8 md:pt-10 pb-12">
 
-  <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
-    <div>
-      <h1 id="saudacao" class="text-[34px] md:text-[40px] font-bold tracking-tight leading-tight">Olá, Recepção!</h1>
-      <p class="text-grafite/65 text-[15px] mt-1 first-letter:uppercase" id="dataHoje"></p>
+  <div class="boas-vindas flex flex-wrap items-center justify-between gap-4 mb-8">
+    <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="boas-vindas-marca">
+    <svg class="boas-vindas-pulso" viewBox="0 0 300 60" fill="none" aria-hidden="true"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="relative">
+      <p class="rotulo-secao !text-[#F2A07A]">Painel da recepção</p>
+      <h1 id="saudacao" class="titulo-painel mt-2">Olá, Recepção!</h1>
+      <p class="text-white/80 text-[15px] mt-2 first-letter:uppercase" id="dataHoje"></p>
     </div>
-    <button id="btnNovoAgendamento" class="px-5 py-2.5 rounded-full bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">
+    <button id="btnNovoAgendamento" class="relative botao-destaque">
       Novo agendamento
     </button>
   </div>

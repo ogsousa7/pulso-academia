@@ -23,6 +23,12 @@
 </head>
 
 <body class="bg-offwhite text-grafite antialiased font-sans min-h-screen flex items-center justify-center px-5 py-10">
+<!-- Tela de abertura: só aparece na primeira visita, ao recarregar ou ao tocar na logo (tw-config.js decide) -->
+<div class="tela-abertura" aria-hidden="true">
+  <img src="img/logo-horizontal.png" alt="" class="tela-logo">
+  <svg class="tela-pulso" viewBox="0 0 300 60" fill="none"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+
 
 <div data-a11y-slot class="fixed top-4 right-4"></div>
 

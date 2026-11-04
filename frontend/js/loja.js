@@ -47,7 +47,10 @@ function renderPlanos(planos) {
       const cor = destaque ? 'plano-destaque' : ['plano-escuro', 'plano-destaque', 'plano-marca'][i % 3];
       return `
       <article class="plano ${cor}">
-        <p class="plano-selo">${destaque ? 'Mais escolhido' : escapeHtml(plano.periodo)}</p>
+        <div class="plano-topo">
+          <p class="plano-selo">${destaque ? 'Mais escolhido' : escapeHtml(plano.periodo)}</p>
+          <img src="img/logo-horizontal.png" alt="" class="plano-logo">
+        </div>
         <h3 class="plano-nome">${escapeHtml(plano.nome)}</h3>
         <p class="plano-desc">${escapeHtml(plano.descricao || '')}</p>
         <p class="plano-preco">${formatarPreco(plano.preco)}</p>
