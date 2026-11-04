@@ -67,8 +67,9 @@
 <section class="hero relative overflow-hidden text-white">
   <img src="img/home/recepcao.jpg" alt="" class="hero-foto absolute inset-0 w-full h-full object-cover" fetchpriority="high">
   <div class="hero-veu absolute inset-0"></div>
+  <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="marca-dagua">
   <div class="relative max-w-[1180px] mx-auto px-5 md:px-8 pt-[124px] md:pt-[150px] pb-16 md:pb-24">
-    <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-branca entra w-[240px] sm:w-[320px] md:w-[440px] h-auto">
+    <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-branca entra w-[260px] sm:w-[380px] md:w-[540px] h-auto">
     <svg class="pulso-linha mt-6 md:mt-8 w-48 md:w-64 h-auto text-[#F2A07A]" viewBox="0 0 300 60" fill="none" aria-hidden="true">
       <path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -87,6 +88,9 @@
     </ul>
   </div>
 </section>
+
+<!-- LETREIRO: frases da marca passando (decorativo; o conteúdo já está na página) -->
+<div class="letreiro" aria-hidden="true"><div class="letreiro-trilho"><span>Seu ritmo</span><i></i><span>Nosso bairro</span><i></i><span>Sem fidelidade</span><i></i><span>Das 6h às 22h</span><i></i><span>Professores da região</span><i></i><span>#NoPulsoDoBairro</span><i></i><span>Seu ritmo</span><i></i><span>Nosso bairro</span><i></i><span>Sem fidelidade</span><i></i><span>Das 6h às 22h</span><i></i><span>Professores da região</span><i></i><span>#NoPulsoDoBairro</span><i></i></div></div>
 
 <!-- NÚMEROS: faixa na cor da marca -->
 <section class="bg-[#2F444B] text-white px-5">
@@ -184,17 +188,61 @@
   </div>
 </section>
 
-<!-- MONTE SEU TREINO: faixa escura com foto -->
-<section class="relative overflow-hidden text-white">
-  <img src="img/home/grupo.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
-  <div class="absolute inset-0 bg-gradient-to-r from-[#141A1C]/95 via-[#141A1C]/85 to-[#141A1C]/50"></div>
-  <div data-revela class="relative max-w-[1180px] mx-auto px-5 md:px-8 py-20 md:py-28 flex flex-col md:flex-row md:items-center justify-between gap-8">
-    <div class="max-w-xl">
-      <p class="rotulo-secao !text-[#F2A07A]">Novo</p>
-      <h2 class="titulo-secao mt-2">Seu treino, montado em segundos.</h2>
-      <p class="mt-4 text-[17px] md:text-[20px] leading-snug text-white/90">Conte seu objetivo, seu nível e quanto tempo você tem, e receba um plano para a sua semana.</p>
+<!-- NOSSA HISTÓRIA: linha do tempo (a linha enche ao rolar; os pontos batem como um coração) -->
+<section id="historia" class="historia relative overflow-hidden text-white">
+  <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="marca-dagua marca-dagua-esquerda">
+  <div class="relative max-w-[1180px] mx-auto px-5 md:px-8 py-20 md:py-28">
+    <p class="rotulo-secao !text-[#F2A07A]">Nossa história</p>
+    <h2 data-revela class="titulo-secao mt-2 max-w-3xl">Do bairro, para o bairro.</h2>
+    <div class="linha-tempo">
+      <span class="lt-eixo" aria-hidden="true"><span class="lt-progresso"></span></span>
+      <ol class="lt-lista">
+      <li class="lt-item">
+        <span class="lt-ponto" aria-hidden="true"></span>
+        <article class="lt-cartao" data-revela="esquerda">
+          <img src="img/home/alongamento.jpg" alt="Aula em grupo de exercícios no solo" loading="lazy">
+          <div>
+            <p class="lt-ano">2020</p>
+            <h3>Treino na praça</h3>
+            <p>No isolamento, dois professores do bairro começam aulas gratuitas ao ar livre. Em poucas semanas, 40 vizinhos aparecem toda manhã.</p>
+          </div>
+        </article>
+      </li>
+      <li class="lt-item">
+        <span class="lt-ponto" aria-hidden="true"></span>
+        <article class="lt-cartao" data-revela="direita">
+          <img src="img/home/recepcao.jpg" alt="Salão de treino da academia" loading="lazy">
+          <div>
+            <p class="lt-ano">2021</p>
+            <h3>As portas se abrem</h3>
+            <p>A primeira sala da Pulso abre na Rua das Palmeiras, com musculação e funcional e preço pensado para quem mora perto.</p>
+          </div>
+        </article>
+      </li>
+      <li class="lt-item">
+        <span class="lt-ponto" aria-hidden="true"></span>
+        <article class="lt-cartao" data-revela="esquerda">
+          <img src="img/home/grupo.jpg" alt="Aluno fazendo flexão com halteres" loading="lazy">
+          <div>
+            <p class="lt-ano">2023</p>
+            <h3>O bairro ensinando o bairro</h3>
+            <p>A equipe chega a 12 professores da própria região, com carga horária organizada e condições de trabalho decentes.</p>
+          </div>
+        </article>
+      </li>
+      <li class="lt-item">
+        <span class="lt-ponto" aria-hidden="true"></span>
+        <article class="lt-cartao" data-revela="direita">
+          <img src="img/home/app.webp" alt="Tela de agendamento de aulas no celular" loading="lazy">
+          <div>
+            <p class="lt-ano">2026</p>
+            <h3>A Pulso no seu bolso</h3>
+            <p>Agendamento de aulas, loja e plano no celular. Mais de 350 alunos treinando no ritmo deles.</p>
+          </div>
+        </article>
+      </li>
+      </ol>
     </div>
-    <a href="treino.html" class="botao-destaque self-start md:self-auto shrink-0">Montar meu treino</a>
   </div>
 </section>
 
@@ -209,8 +257,22 @@
   </div>
 </section>
 
+<!-- MONTE SEU TREINO: faixa escura com foto -->
+<section class="relative overflow-hidden text-white">
+  <img src="img/home/grupo.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy">
+  <div class="absolute inset-0 bg-gradient-to-r from-[#141A1C]/95 via-[#141A1C]/85 to-[#141A1C]/50"></div>
+  <div data-revela class="relative max-w-[1180px] mx-auto px-5 md:px-8 py-20 md:py-28 flex flex-col md:flex-row md:items-center justify-between gap-8">
+    <div class="max-w-xl">
+      <p class="rotulo-secao !text-[#F2A07A]">Novo</p>
+      <h2 class="titulo-secao mt-2">Seu treino, montado em segundos.</h2>
+      <p class="mt-4 text-[17px] md:text-[20px] leading-snug text-white/90">Conte seu objetivo, seu nível e quanto tempo você tem, e receba um plano para a sua semana.</p>
+    </div>
+    <a href="treino.html" class="botao-destaque self-start md:self-auto shrink-0">Montar meu treino</a>
+  </div>
+</section>
+
 <!-- ONDE ESTAMOS (mapa do Google; dados vêm de GET /api/academia) -->
-<section id="onde-estamos" class="pb-20 md:pb-28 px-5">
+<section id="onde-estamos" class="py-20 md:py-28 px-5">
   <div class="max-w-[1180px] mx-auto">
     <p class="rotulo-secao">Venha conhecer</p>
     <h2 class="titulo-secao mt-2 mb-8">Onde estamos</h2>
@@ -249,6 +311,7 @@
 <!-- CONTATO / RODAPÉ: escuro, com a logo branca -->
 <footer id="contato" class="rodape-escuro text-[14px] leading-relaxed px-5 pt-14 pb-8">
   <div class="max-w-[1180px] mx-auto">
+    <p class="hashtag-gigante" aria-hidden="true">#NoPulsoDoBairro</p>
     <div class="grid sm:grid-cols-3 gap-8 pb-10 border-b border-white/15">
       <div>
         <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-branca h-11 w-auto mb-5">
@@ -271,6 +334,8 @@
     <p class="pt-6 text-[13px]">© 2026 Pulso Academia. Projeto escolar da Etec Heliópolis. Desenvolvido por <a href="https://true-ember.netlify.app" target="_blank" rel="noopener" class="font-semibold text-white underline underline-offset-2">True Ember</a>. <a href="privacidade.html" class="text-white underline underline-offset-2">Política de Privacidade</a></p>
   </div>
 </footer>
+
+<a href="loja.html#planos" class="cta-fixo" id="ctaFixo">Matricule-se</a>
 
 <div id="toastContainer" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 items-end" aria-live="polite"></div>
 

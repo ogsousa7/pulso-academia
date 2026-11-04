@@ -24,17 +24,17 @@
 
 <body class="bg-offwhite text-grafite antialiased font-sans">
 
-<header class="nav-vidro fixed top-0 left-0 w-full z-40">
+<header data-hero class="nav-vidro fixed top-0 left-0 w-full z-40">
   <div class="max-w-[1180px] mx-auto px-5 md:px-8 h-[64px] flex items-center justify-between gap-4">
     <a href="index.html" class="flex items-center gap-3 shrink-0" aria-label="Pulso Academia, início">
       <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-tema logo-topo h-7 sm:h-8 md:h-9 w-auto">
     </a>
 
-    <nav class="hidden md:flex items-center gap-9 text-[14px]">
-      <a href="index.html#sobre" class="text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
-      <a href="loja.html" class="text-grafite/70 hover:text-grafite transition-colors">Planos e loja</a>
-      <a href="treino.html" class="text-grafite font-medium transition-colors" aria-current="page">Monte seu treino</a>
-      <a href="index.html#onde-estamos" class="text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
+    <nav class="hidden md:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html#sobre" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
+      <a href="loja.html" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Planos e loja</a>
+      <a href="treino.html" class="link-topo text-grafite font-semibold transition-colors" aria-current="page">Monte seu treino</a>
+      <a href="index.html#onde-estamos" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
     </nav>
 
     <div class="flex items-center gap-2">
@@ -53,40 +53,48 @@
   </div>
 </header>
 
-<main class="pt-[64px]">
-  <section class="px-5 pt-14 md:pt-20 pb-20">
-    <div class="max-w-[760px] mx-auto">
-      <p class="rotulo-secao entra">Grátis e na hora</p>
-      <h1 class="entra titulo-pagina mt-2">Monte seu treino</h1>
-      <p class="entra entra-2 mt-4 text-[19px] md:text-[21px] text-grafite/65 leading-snug">Cinco perguntas rápidas e você recebe um plano para a sua semana.</p>
+<main>
+  <section class="faixa-topo faixa-com-formulario text-white">
+    <img src="img/home/grupo.jpg" alt="" class="hero-foto absolute inset-0 w-full h-full object-cover" fetchpriority="high">
+    <div class="hero-veu absolute inset-0"></div>
+    <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="marca-dagua">
+    <div class="relative max-w-[760px] mx-auto px-5 md:px-0">
+      <p class="rotulo-secao entra !text-[#F2A07A]">Grátis e na hora</p>
+      <h1 class="entra titulo-pagina mt-2">Monte seu treino.</h1>
+      <svg class="pulso-linha mt-5 w-40 md:w-56 h-auto text-[#F2A07A]" viewBox="0 0 300 60" fill="none" aria-hidden="true"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p class="entra entra-2 mt-4 text-[18px] md:text-[22px] text-white/90 leading-snug">Cinco perguntas rápidas e você recebe um plano para a sua semana.</p>
+    </div>
+  </section>
 
-      <form id="formTreino" class="entra entra-3 mt-10 bg-superficie rounded-3xl p-6 md:p-8 flex flex-col gap-7">
+  <section class="px-5 pb-20">
+    <div class="max-w-[760px] mx-auto">
+      <form id="formTreino" class="formulario-treino entra entra-3 relative bg-superficie rounded-3xl p-6 md:p-9 flex flex-col gap-8">
         <fieldset>
-          <legend class="text-[17px] font-semibold mb-3">Qual é o seu objetivo?</legend>
+          <legend class="pergunta"><span class="passo">01</span>Qual é o seu objetivo?</legend>
           <div class="escolhas" data-campo="objetivo" data-opcoes="Ganhar massa muscular|Emagrecer|Ganhar força|Melhorar o condicionamento|Saúde e bem-estar" data-marcado="Ganhar massa muscular"></div>
         </fieldset>
         <fieldset>
-          <legend class="text-[17px] font-semibold mb-3">Qual é o seu nível?</legend>
+          <legend class="pergunta"><span class="passo">02</span>Qual é o seu nível?</legend>
           <div class="escolhas" data-campo="nivel" data-opcoes="Iniciante|Intermediário|Avançado" data-marcado="Iniciante"></div>
         </fieldset>
         <fieldset>
-          <legend class="text-[17px] font-semibold mb-3">Quantos dias por semana?</legend>
+          <legend class="pergunta"><span class="passo">03</span>Quantos dias por semana?</legend>
           <div class="escolhas" data-campo="dias" data-opcoes="2|3|4|5|6" data-marcado="3"></div>
         </fieldset>
         <fieldset>
-          <legend class="text-[17px] font-semibold mb-3">Quanto tempo em cada treino?</legend>
+          <legend class="pergunta"><span class="passo">04</span>Quanto tempo em cada treino?</legend>
           <div class="escolhas" data-campo="minutos" data-opcoes="30|45|60|90" data-sufixo=" min" data-marcado="45"></div>
         </fieldset>
         <fieldset>
-          <legend class="text-[17px] font-semibold mb-3">Onde você vai treinar?</legend>
+          <legend class="pergunta"><span class="passo">05</span>Onde você vai treinar?</legend>
           <div class="escolhas" data-campo="local" data-opcoes="Academia completa|Halteres e elásticos|Em casa, sem equipamento" data-marcado="Academia completa"></div>
         </fieldset>
         <div>
-          <label for="restricoes" class="text-[17px] font-semibold">Alguma dor ou restrição? <span class="font-normal text-grafite/65">(opcional)</span></label>
+          <label for="restricoes" class="pergunta"><span class="passo">06</span>Alguma dor ou restrição? <span class="font-normal text-grafite/65">(opcional)</span></label>
           <textarea id="restricoes" name="restricoes" rows="2" maxlength="200" placeholder="Ex.: dor no joelho direito" class="mt-3 w-full px-4 py-3 text-[17px] resize-none"></textarea>
           <p class="text-[13px] text-grafite/65 mt-2">Não escreva nome, documento ou outros dados pessoais: este texto é enviado ao serviço de IA do Google. <a href="privacidade.html" class="text-petroleo">Saiba mais</a>.</p>
         </div>
-        <button type="submit" id="btnMontar" class="py-3.5 rounded-full bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 active:scale-[0.99] transition">Montar meu treino</button>
+        <button type="submit" id="btnMontar" class="botao-destaque w-full">Montar meu treino</button>
       </form>
 
       <div id="carregando" class="hidden mt-10 bg-superficie rounded-3xl p-10 text-center" role="status">

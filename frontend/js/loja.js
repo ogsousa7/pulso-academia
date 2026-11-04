@@ -43,19 +43,18 @@ function renderPlanos(planos) {
       const meses = mesesDoPlano(plano.periodo);
       const economia = mensal && meses > 1 ? mensal.preco * meses - plano.preco : 0;
       const porMes = meses > 1 ? `ou ${formatarPreco(plano.preco / meses)} por mês` : 'sem fidelidade';
+      // Blocos de cor da marca: escuro, terracota (o destaque) e petróleo. Cores fixas: contraste igual nos dois temas.
+      const cor = destaque ? 'plano-destaque' : ['plano-escuro', 'plano-destaque', 'plano-marca'][i % 3];
       return `
-      <div class="cartao-sobe bg-superficie rounded-3xl p-8 flex flex-col ${destaque ? 'ring-2 ring-terracota' : ''}">
-        <p class="min-h-[24px]">${destaque ? '<span class="inline-block px-2.5 py-0.5 rounded-full bg-terracota text-white text-[12px] font-semibold">Mais escolhido</span>' : ''}</p>
-        <p class="text-[21px] font-semibold tracking-tight mt-1">${escapeHtml(plano.nome)}</p>
-        <p class="text-grafite/65 text-[15px] mt-2 leading-snug min-h-[44px]">${escapeHtml(plano.descricao || '')}</p>
-        <p class="text-[40px] font-semibold tracking-tight mt-6 leading-none">${formatarPreco(plano.preco)}</p>
-        <p class="text-grafite/65 text-[14px] mt-2">${escapeHtml(plano.periodo)} · ${porMes}</p>
-        <p class="text-oliva text-[13px] font-semibold mt-1 min-h-[20px]">${economia > 0 ? `Você economiza ${formatarPreco(economia)}` : ''}</p>
-        <button type="button" data-plano="${plano.id}"
-          class="mt-8 py-3 rounded-full ${destaque ? 'bg-petroleo text-white hover:bg-petroleo/90' : 'bg-tinta/[0.06] text-grafite hover:bg-tinta/10'} font-medium text-[15px] transition">
-          Assinar
-        </button>
-      </div>`;
+      <article class="plano ${cor}">
+        <p class="plano-selo">${destaque ? 'Mais escolhido' : escapeHtml(plano.periodo)}</p>
+        <h3 class="plano-nome">${escapeHtml(plano.nome)}</h3>
+        <p class="plano-desc">${escapeHtml(plano.descricao || '')}</p>
+        <p class="plano-preco">${formatarPreco(plano.preco)}</p>
+        <p class="plano-detalhe">${escapeHtml(plano.periodo)} · ${porMes}</p>
+        <p class="plano-economia">${economia > 0 ? `Você economiza ${formatarPreco(economia)}` : ''}</p>
+        <button type="button" data-plano="${plano.id}" class="plano-botao">Assinar</button>
+      </article>`;
     })
     .join('');
 }

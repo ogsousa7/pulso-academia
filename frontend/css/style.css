@@ -472,3 +472,98 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 :root[data-contraste="alto"] .rodape-escuro { color: #fff; }
 
 @media (prefers-reduced-motion: reduce) { .hero-foto { animation: none; } }
+
+/* =========================================================
+   Identidade Pulso: letreiro, marca d'água, linha do tempo,
+   planos em blocos de cor e páginas com abertura escura
+   ========================================================= */
+
+/* Marca d'água: o ícone da Pulso gigante, quase transparente. */
+.marca-dagua { position: absolute; right: -6%; bottom: -12%; width: min(62vw, 720px); height: auto; opacity: 0.07; pointer-events: none; user-select: none; }
+.marca-dagua-esquerda { left: -10%; right: auto; top: 6%; bottom: auto; opacity: 0.05; }
+
+/* Letreiro: frases da marca passando numa faixa terracota. */
+.letreiro { overflow: hidden; background: #A4532F; color: #fff; padding: 16px 0; }
+.letreiro-trilho { display: flex; align-items: center; width: max-content; animation: letreiro 34s linear infinite; }
+.letreiro span { padding: 0 22px; font-size: clamp(18px, 2.4vw, 26px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; white-space: nowrap; }
+.letreiro i { width: 10px; height: 10px; border-radius: 50%; background: #F9D3BF; flex: none; }
+@keyframes letreiro { to { transform: translateX(-50%); } }
+
+/* Páginas internas: a mesma abertura escura da home, mais baixa. */
+.faixa-topo { position: relative; overflow: hidden; background: #141A1C; padding: 132px 0 64px; }
+@media (min-width: 768px) { .faixa-topo { padding: 160px 0 88px; } }
+.faixa-com-formulario { padding-bottom: 120px; }
+@media (min-width: 768px) { .faixa-com-formulario { padding-bottom: 150px; } }
+.formulario-treino { margin-top: -84px; box-shadow: 0 30px 70px rgba(20, 26, 28, 0.18); }
+@media (min-width: 768px) { .formulario-treino { margin-top: -110px; } }
+.pergunta { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; font-size: 18px; font-weight: 800; }
+.passo { display: inline-grid; place-items: center; min-width: 34px; height: 34px; padding: 0 8px; border-radius: 10px; background: #A4532F; color: #fff; font-size: 13px; font-weight: 900; letter-spacing: 0.04em; }
+.escolha input:checked + span { background: #A4532F; color: #fff; }
+.dia-treino { border-top: 5px solid #A4532F; }
+
+/* Planos: blocos de cor da marca, nome em maiúsculas e preço grande. */
+.plano { position: relative; display: flex; flex-direction: column; padding: 32px; border-radius: 28px; color: #fff; overflow: hidden; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.plano::after { content: ""; position: absolute; right: -30px; bottom: -30px; width: 170px; height: 135px; background: url("../img/logo-icon-branco.png") center / contain no-repeat; opacity: 0.08; pointer-events: none; }
+.plano-escuro { background: #1F2629; }
+.plano-destaque { background: #A4532F; box-shadow: 0 24px 60px rgba(164, 83, 47, 0.35); }
+.plano-marca { background: #425B63; }
+@media (min-width: 768px) { .plano-destaque { transform: translateY(-14px); } }
+@media (hover: hover) { .plano:hover { transform: translateY(-6px); } .plano-destaque:hover { transform: translateY(-20px); } }
+.plano-selo { align-self: flex-start; padding: 5px 12px; border-radius: 999px; background: rgba(255, 255, 255, 0.16); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.plano-nome { margin-top: 22px; font-size: clamp(28px, 3vw, 36px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1; }
+.plano-desc { margin-top: 12px; min-height: 44px; font-size: 15px; line-height: 1.45; color: rgba(255, 255, 255, 0.88); }
+.plano-preco { margin-top: 26px; font-size: clamp(40px, 4.4vw, 52px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+.plano-detalhe { margin-top: 8px; font-size: 14px; color: rgba(255, 255, 255, 0.85); }
+.plano-economia { margin-top: 10px; min-height: 26px; align-self: flex-start; font-size: 13px; font-weight: 800; }
+.plano-economia:not(:empty) { padding: 4px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.16); }
+.plano-botao { position: relative; z-index: 1; margin-top: 28px; padding: 15px; border-radius: 999px; background: #fff; color: #1D1D1F; font-size: 15px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; transition: transform 0.2s ease; }
+.plano-botao:hover { transform: scale(1.02); }
+.plano-botao:active { transform: scale(0.98); }
+
+/* Nossa história: linha do tempo vertical. O eixo enche em terracota conforme a rolagem (ui.js). */
+.historia { background: #141A1C; }
+.linha-tempo { position: relative; margin-top: 56px; --progresso: 0; }
+.lt-lista { list-style: none; margin: 0; padding: 0; }
+.lt-eixo { position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; margin-left: -1.5px; border-radius: 3px; background: rgba(255, 255, 255, 0.14); }
+.lt-progresso { position: absolute; inset: 0 0 auto; height: calc(var(--progresso) * 100%); border-radius: 3px; background: linear-gradient(#F2A07A, #A4532F); }
+.lt-item { position: relative; display: flex; padding: 28px 0; }
+.lt-item:nth-of-type(odd) { justify-content: flex-start; }
+.lt-item:nth-of-type(even) { justify-content: flex-end; }
+.lt-ponto { position: absolute; left: 50%; top: 64px; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; background: #141A1C; box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.35); transition: box-shadow 0.4s ease, background-color 0.4s ease; z-index: 1; }
+.lt-item.ativo .lt-ponto { background: #F2A07A; box-shadow: inset 0 0 0 3px #F2A07A, 0 0 0 6px rgba(242, 160, 122, 0.25); animation: batimento 1.6s ease-in-out infinite; }
+@keyframes batimento { 0%, 40%, 100% { transform: scale(1); } 10% { transform: scale(1.3); } 20% { transform: scale(1.05); } 30% { transform: scale(1.22); } }
+.lt-cartao { width: calc(50% - 46px); display: grid; grid-template-columns: 150px 1fr; gap: 0; border-radius: 22px; overflow: hidden; background: #1F292C; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35); }
+.lt-item:nth-of-type(odd) .lt-cartao { border-right: 4px solid #A4532F; }
+.lt-item:nth-of-type(even) .lt-cartao { border-left: 4px solid #A4532F; }
+.lt-cartao img { width: 100%; height: 100%; min-height: 190px; object-fit: cover; object-position: top; }
+.lt-cartao > div { padding: 22px 24px 24px; }
+.lt-ano { font-size: clamp(40px, 4.6vw, 58px); font-weight: 900; line-height: 0.9; letter-spacing: -0.03em; color: #F2A07A; }
+.lt-cartao h3 { margin-top: 10px; font-size: 19px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.1; }
+.lt-cartao p:not(.lt-ano) { margin-top: 8px; font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, 0.82); }
+@media (max-width: 860px) {
+  .lt-eixo { left: 11px; }
+  .lt-ponto { left: 11px; top: 40px; }
+  .lt-item, .lt-item:nth-of-type(even) { justify-content: flex-end; padding: 18px 0; }
+  .lt-cartao { width: calc(100% - 40px); grid-template-columns: 1fr; }
+  .lt-cartao img { min-height: 0; aspect-ratio: 16 / 8; }
+  .lt-item:nth-of-type(odd) .lt-cartao { border-right: 0; border-left: 4px solid #A4532F; }
+}
+
+/* Entrada pelos lados (cartões da linha do tempo). */
+.revela[data-revela="esquerda"] { transform: translateX(-48px); }
+.revela[data-revela="direita"] { transform: translateX(48px); }
+@media (max-width: 860px) { .revela[data-revela="esquerda"], .revela[data-revela="direita"] { transform: translateY(24px); } }
+.revela.revelado[data-revela] { transform: none; }
+
+/* Hashtag gigante no rodapé. */
+.hashtag-gigante { margin-bottom: 40px; font-size: clamp(34px, 8.6vw, 116px); font-weight: 900; letter-spacing: -0.04em; line-height: 0.95; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.35); overflow-wrap: anywhere; }
+
+/* Matricule-se fixo no celular (home), depois que a abertura sai da tela. */
+.cta-fixo { position: fixed; left: 50%; white-space: nowrap; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 45; transform: translate(-50%, 140%); padding: 15px 34px; border-radius: 999px; background: #A4532F; color: #fff; font-size: 15px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 14px 34px rgba(164, 83, 47, 0.45); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.cta-fixo.visivel { transform: translate(-50%, 0); }
+@media (min-width: 768px) { .cta-fixo { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .letreiro-trilho { animation: none; }
+  .lt-item.ativo .lt-ponto { animation: none; }
+}

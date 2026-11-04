@@ -177,11 +177,51 @@ function initTopoHero() {
   marcar();
 }
 
+/** Linha do tempo: o eixo enche conforme a rolagem e cada marco "acende" quando passa do meio da tela. */
+function initLinhaDoTempo() {
+  const linha = document.querySelector('.linha-tempo');
+  if (!linha) return;
+  const itens = [...linha.querySelectorAll('.lt-item')];
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    linha.style.setProperty('--progresso', 1);
+    itens.forEach((i) => i.classList.add('ativo'));
+    return;
+  }
+  let agendado = false;
+  const atualizar = () => {
+    agendado = false;
+    const caixa = linha.getBoundingClientRect();
+    const meio = innerHeight * 0.55;
+    const progresso = Math.min(Math.max((meio - caixa.top) / caixa.height, 0), 1);
+    linha.style.setProperty('--progresso', progresso.toFixed(3));
+    itens.forEach((i) => i.classList.toggle('ativo', i.querySelector('.lt-ponto').getBoundingClientRect().top < meio));
+  };
+  window.addEventListener('scroll', () => { if (!agendado) { agendado = true; requestAnimationFrame(atualizar); } }, { passive: true });
+  atualizar();
+}
+
+/** Botão "Matricule-se" fixo no celular: aparece depois da abertura e some perto do rodapé. */
+function initCtaFixo() {
+  const botao = document.getElementById('ctaFixo');
+  const abertura = document.querySelector('.hero');
+  const rodape = document.querySelector('footer');
+  if (!botao || !abertura) return;
+  const marcar = () => {
+    const passouAbertura = abertura.getBoundingClientRect().bottom < 0;
+    const pertoDoRodape = rodape && rodape.getBoundingClientRect().top < innerHeight;
+    botao.classList.toggle('visivel', passouAbertura && !pertoDoRodape);
+  };
+  window.addEventListener('scroll', marcar, { passive: true });
+  marcar();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   atualizarBotaoEntrar();
   initMenuMobile();
   initTopoHero();
   iniciarAnimacoes();
+  initLinhaDoTempo();
+  initCtaFixo();
 });
 
 /* =========================================================

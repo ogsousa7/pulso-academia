@@ -26,18 +26,18 @@
 <body class="bg-offwhite text-grafite antialiased font-sans">
 
 <!-- HEADER: barra translúcida, só a logo (o menu da conta aparece no lugar do "Entrar" quando há login) -->
-<header class="nav-vidro fixed top-0 left-0 w-full z-40">
+<header data-hero class="nav-vidro fixed top-0 left-0 w-full z-40">
   <div class="max-w-[1180px] mx-auto px-5 md:px-8 h-[64px] flex items-center justify-between gap-4">
     <a href="index.html" class="flex items-center gap-3 shrink-0" aria-label="Pulso Academia, início">
       <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-tema logo-topo h-7 sm:h-8 md:h-9 w-auto">
     </a>
 
-    <nav class="hidden md:flex items-center gap-9 text-[14px]">
-      <a href="index.html#sobre" class="text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
-      <a href="loja.html" class="text-grafite font-medium transition-colors" aria-current="page">Planos e loja</a>
-      <a href="treino.html" class="text-grafite/70 hover:text-grafite transition-colors">Monte seu treino</a>
-      <a href="index.html#onde-estamos" class="text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
-      <a href="index.html#contato" class="text-grafite/70 hover:text-grafite transition-colors">Contato</a>
+    <nav class="hidden md:flex items-center gap-8 text-[14px] font-medium">
+      <a href="index.html#sobre" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
+      <a href="loja.html" class="link-topo text-grafite font-semibold transition-colors" aria-current="page">Planos e loja</a>
+      <a href="treino.html" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Monte seu treino</a>
+      <a href="index.html#onde-estamos" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
+      <a href="index.html#contato" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Contato</a>
     </nav>
 
     <div class="flex items-center gap-2">
@@ -57,22 +57,32 @@
   </div>
 </header>
 
-<main class="pt-[64px]">
-  <section class="px-5 pt-14 md:pt-20 pb-16">
-    <div class="max-w-[1180px] mx-auto">
-      <p class="rotulo-secao entra">Planos e produtos</p>
-      <h1 class="entra titulo-pagina mt-2">Loja</h1>
-      <p class="mt-4 text-[19px] md:text-2xl text-grafite/65 max-w-[620px] leading-snug">
+<main>
+  <section class="faixa-topo text-white">
+    <img src="img/home/ambiente.jpg" alt="" class="hero-foto absolute inset-0 w-full h-full object-cover" fetchpriority="high">
+    <div class="hero-veu absolute inset-0"></div>
+    <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="marca-dagua">
+    <div class="relative max-w-[1180px] mx-auto px-5 md:px-8">
+      <p class="rotulo-secao entra !text-[#F2A07A]">Planos e produtos</p>
+      <h1 class="entra titulo-pagina mt-2">Treine no seu ritmo.</h1>
+      <svg class="pulso-linha mt-5 w-40 md:w-56 h-auto text-[#F2A07A]" viewBox="0 0 300 60" fill="none" aria-hidden="true"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p class="entra entra-2 mt-4 text-[18px] md:text-[22px] text-white/90 max-w-[620px] leading-snug">
         Escolha seu plano, junte o que precisa pro treino e retire tudo na recepção.
       </p>
-
-      <p class="mt-8 inline-flex flex-wrap items-center gap-x-2 gap-y-1 px-4 py-2.5 rounded-2xl bg-terracota/[0.06] text-[15px]">
-        <span class="font-semibold text-terracota">Primeira compra?</span>
-        <span class="text-grafite/75">Use o cupom <strong class="font-semibold text-grafite">PULSO10</strong> e ganhe 10% de desconto.</span>
+      <p class="entra entra-3 mt-7 inline-flex flex-wrap items-center gap-x-2 gap-y-1 px-4 py-2.5 rounded-2xl bg-white/10 backdrop-blur text-[15px]">
+        <span class="font-extrabold uppercase tracking-[0.08em] text-[#F2A07A]">Primeira compra?</span>
+        <span class="text-white/90">Use o cupom <strong class="font-extrabold text-white">PULSO10</strong> e ganhe 10% de desconto.</span>
       </p>
+    </div>
+  </section>
+<!-- LETREIRO: frases da marca passando (decorativo; o conteúdo já está na página) -->
+<div class="letreiro" aria-hidden="true"><div class="letreiro-trilho"><span>Seu ritmo</span><i></i><span>Nosso bairro</span><i></i><span>Sem fidelidade</span><i></i><span>Das 6h às 22h</span><i></i><span>Professores da região</span><i></i><span>#NoPulsoDoBairro</span><i></i><span>Seu ritmo</span><i></i><span>Nosso bairro</span><i></i><span>Sem fidelidade</span><i></i><span>Das 6h às 22h</span><i></i><span>Professores da região</span><i></i><span>#NoPulsoDoBairro</span><i></i></div></div>
 
-      <h2 id="planos" class="text-[28px] md:text-[32px] font-bold tracking-tight mt-16 mb-6 scroll-mt-24">Planos</h2>
-      <div id="planosGrid" class="grid md:grid-cols-3 gap-4">
+  <section class="px-5 pt-16 md:pt-20 pb-16">
+    <div class="max-w-[1180px] mx-auto">
+      <p class="rotulo-secao">Planos</p>
+      <h2 id="planos" class="titulo-secao mt-2 mb-8 scroll-mt-24">Escolha o seu.</h2>
+      <div id="planosGrid" class="grid md:grid-cols-3 gap-4 md:gap-5 items-stretch">
         <div class="bg-superficie rounded-3xl h-72 animate-pulse"></div>
         <div class="bg-superficie rounded-3xl h-72 animate-pulse"></div>
         <div class="bg-superficie rounded-3xl h-72 animate-pulse"></div>
@@ -80,7 +90,8 @@
 
       <div class="mt-20 mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
         <div>
-          <h2 class="text-[28px] md:text-[32px] font-bold tracking-tight">Produtos</h2>
+          <p class="rotulo-secao">Loja</p>
+          <h2 class="titulo-secao mt-2">Leve pro treino.</h2>
           <p class="text-[15px] text-grafite/65 mt-1">Retirada na recepção, sem frete. <a href="#retirada" class="text-petroleo hover:underline">Ver no mapa</a></p>
         </div>
         <div id="filtrosProdutos" class="segmentado self-start md:self-auto" role="group" aria-label="Filtrar por categoria"></div>
@@ -94,7 +105,8 @@
 
       <!-- RETIRADA NA ACADEMIA (mapa do Google; dados vêm de GET /api/academia, via js/academia.js) -->
       <section id="retirada" class="scroll-mt-[72px] mt-20">
-        <h2 class="text-[28px] md:text-[32px] font-bold tracking-tight">Retire na academia</h2>
+        <p class="rotulo-secao">Sem frete</p>
+        <h2 class="titulo-secao mt-2">Retire na academia.</h2>
         <p class="text-[15px] text-grafite/65 mt-1 mb-6">Seus produtos ficam esperando na recepção.</p>
 
         <div class="grid lg:grid-cols-3 gap-4 items-stretch">

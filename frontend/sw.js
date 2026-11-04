@@ -7,7 +7,7 @@
    Para publicar uma versão nova do site, aumente VERSAO.
    ========================================================= */
 
-const VERSAO = 'pulso-v6'; // v6: visual novo (abertura escura, fundo areia, logo maior)
+const VERSAO = 'pulso-v7'; // v7: identidade da marca (letreiro, linha do tempo, planos em blocos de cor)
 const CACHE_CASCO = `${VERSAO}-casco`;
 const CACHE_EXTERNO = `${VERSAO}-externo`;
 
