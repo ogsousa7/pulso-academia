@@ -26,3 +26,4 @@ img/depoimentos/carlos.webp: https://images.unsplash.com/photo-1506277886164-e25
 img/home/loja.webp: https://images.unsplash.com/photo-1722925541142-5db2668ca492
 img/home/treino-faixa.webp: https://images.unsplash.com/photo-1599058917212-d750089bc07e
 img/home/treino-pagina.webp: https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3
+img/home/espaco.webp: https://images.unsplash.com/photo-1775993719568-290840203239

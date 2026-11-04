@@ -53,8 +53,8 @@ tailwind.config = {
         terracota: cor('terracota'),
         linha: cor('linha'),
       },
-      // Cantos retos (identidade da marca): nada passa de 6px; rounded-full fica só para círculos.
-      borderRadius: { md: '4px', lg: '4px', xl: '4px', '2xl': '6px', '3xl': '6px' },
+      // Cantos levemente arredondados (identidade da marca); rounded-full fica só para círculos.
+      borderRadius: { DEFAULT: '6px', md: '6px', lg: '8px', xl: '10px', '2xl': '14px', '3xl': '16px' },
       letterSpacing: { apertado: '-0.022em', titulo: '-0.035em' },
     },
   },

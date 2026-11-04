@@ -23,6 +23,9 @@
     if (email && academia.email) email.href = `mailto:${academia.email}`;
   }
 
+  // Endereço do mapa. Começa com o bairro e é trocado pelo endereço da API quando ela responde.
+  let enderecoMapa = `${ORIGEM_MAPAS}?q=${encodeURIComponent('Heliópolis, São Paulo')}&hl=pt-BR&z=15&output=embed`;
+
   function montarMapa(mapa) {
     const consulta = encodeURIComponent(mapa.consulta);
 
@@ -31,20 +34,32 @@
     const abrir = document.getElementById('linkAbrirMapa');
     if (abrir) abrir.href = `${ORIGEM_MAPAS}/search/?api=1&query=${consulta}`;
 
-    const alvo = document.getElementById('mapaAcademia');
-    if (!alvo) return;
-
-    const iframe = document.createElement('iframe');
-    iframe.title = 'Mapa com a localização da Pulso Academia';
-    iframe.loading = 'lazy';
-    iframe.referrerPolicy = 'no-referrer-when-downgrade'; // a chave da Embed API é validada pelo referrer
-    iframe.allowFullscreen = true;
-    iframe.className = 'absolute inset-0 w-full h-full border-0';
-    iframe.src = mapa.chave
+    enderecoMapa = mapa.chave
       ? `${ORIGEM_MAPAS}/embed/v1/place?key=${encodeURIComponent(mapa.chave)}&q=${consulta}&language=pt-BR&zoom=15`
       : `${ORIGEM_MAPAS}?q=${consulta}&hl=pt-BR&z=15&output=embed`;
+  }
 
-    alvo.replaceChildren(iframe);
+  // O mapa do Google é pesado: só é criado quando a pessoa abre o pop-up.
+  const dialogo = document.getElementById('dialogMapa');
+  function abrirMapa() {
+    const alvo = document.getElementById('mapaAcademia');
+    const atual = alvo.querySelector('iframe');
+    if (!atual || atual.src !== enderecoMapa) {
+      const iframe = document.createElement('iframe');
+      iframe.title = 'Mapa com a localização da Pulso Academia';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade'; // a chave da Embed API é validada pelo referrer
+      iframe.allowFullscreen = true;
+      iframe.className = 'absolute inset-0 w-full h-full border-0';
+      iframe.src = enderecoMapa;
+      alvo.replaceChildren(iframe);
+    }
+    dialogo.showModal();
+  }
+  if (dialogo) {
+    document.querySelectorAll('[data-abrir-mapa]').forEach((b) => b.addEventListener('click', abrirMapa));
+    dialogo.querySelector('[data-fechar-mapa]').addEventListener('click', () => dialogo.close());
+    // Clicar no fundo escuro também fecha.
+    dialogo.addEventListener('click', (e) => { if (e.target === dialogo) dialogo.close(); });
   }
 
   // Lê "6h – 22h" do texto do horário. Domingo: fechado (a academia não tem horário de domingo).
@@ -88,8 +103,6 @@
       mostrarStatus();
     })
     .catch(() => {
-      // API fora do ar: os textos padrão do HTML continuam e o mapa mostra um aviso.
-      const alvo = document.getElementById('mapaAcademia');
-      if (alvo) alvo.textContent = 'Não foi possível carregar o mapa agora.';
+      // API fora do ar: os textos padrão do HTML continuam e o mapa mostra o bairro.
     });
 })();

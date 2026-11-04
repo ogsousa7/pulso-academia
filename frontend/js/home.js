@@ -15,11 +15,9 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!galeria) return;
   const slides = [...galeria.querySelectorAll('.galeria-slide')];
   const barras = galeria.querySelector('.galeria-barras');
-  const botaoPausa = document.getElementById('galeriaPausa');
-  const ICONE_PAUSA = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
-  const ICONE_PLAY = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5Z"/></svg>';
   let atual = 0;
-  let pausadaPelaPessoa = semMovimento;
+  // Quem pediu menos movimento no sistema troca as fotos só pelas setas.
+  galeria.classList.toggle('pausada', semMovimento);
 
   barras.innerHTML = slides.map(() => '<span><i></i></span>').join('');
   document.getElementById('galeriaTotal').textContent = String(slides.length).padStart(2, '0');
@@ -39,12 +37,6 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Quando a barra da foto atual termina de encher, passa para a próxima.
   barras.addEventListener('animationend', () => mostrar(atual + 1));
 
-  function atualizarPausa() {
-    galeria.classList.toggle('pausada', pausadaPelaPessoa);
-    botaoPausa.innerHTML = pausadaPelaPessoa ? ICONE_PLAY : ICONE_PAUSA;
-    botaoPausa.setAttribute('aria-label', pausadaPelaPessoa ? 'Passar as fotos sozinhas' : 'Pausar as fotos');
-  }
-  botaoPausa.addEventListener('click', () => { pausadaPelaPessoa = !pausadaPelaPessoa; atualizarPausa(); });
   document.getElementById('galeriaAnterior').addEventListener('click', () => mostrar(atual - 1));
   document.getElementById('galeriaProxima').addEventListener('click', () => mostrar(atual + 1));
 
@@ -65,7 +57,6 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Fora da tela, a galeria espera (a barra não corre enquanto ninguém está vendo).
   new IntersectionObserver(([e]) => galeria.classList.toggle('fora-da-tela', !e.isIntersecting)).observe(galeria);
 
-  atualizarPausa();
   mostrar(0);
 })();
 

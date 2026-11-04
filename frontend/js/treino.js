@@ -11,14 +11,32 @@ const resultado = document.getElementById('resultado');
 const botaoMontar = document.getElementById('btnMontar');
 
 /* ---------- Opções em botões de escolha (rádios com aparência de etiqueta) ---------- */
+// data-estilo="cartao": nome + uma linha de explicação. data-estilo="numero": número grande + unidade.
 document.querySelectorAll('.escolhas').forEach((grupo) => {
-  const { campo, opcoes, marcado, sufixo = '' } = grupo.dataset;
-  grupo.innerHTML = opcoes.split('|').map((valor) => `
+  const { campo, opcoes, marcado, estilo, unidade = '', detalhes = '' } = grupo.dataset;
+  const explicacoes = detalhes.split('|');
+  grupo.innerHTML = opcoes.split('|').map((valor, i) => {
+    const conteudo = estilo === 'numero'
+      ? `<strong>${escapeHtml(valor)}</strong><small>${escapeHtml(unidade)}</small>`
+      : `<strong>${escapeHtml(valor)}</strong>${explicacoes[i] ? `<small>${escapeHtml(explicacoes[i])}</small>` : ''}`;
+    return `
     <label class="escolha">
       <input type="radio" name="${campo}" value="${escapeHtml(valor)}" class="sr-only" ${valor === marcado ? 'checked' : ''}>
-      <span>${escapeHtml(valor)}${escapeHtml(sufixo)}</span>
-    </label>`).join('');
+      <span>${conteudo}</span>
+    </label>`;
+  }).join('');
 });
+
+// Resumo ao lado do formulário: atualiza a cada escolha.
+function atualizarResumo() {
+  const dados = Object.fromEntries(new FormData(form));
+  document.querySelectorAll('[data-resumo]').forEach((dd) => {
+    const valor = dados[dd.dataset.resumo] || '';
+    dd.textContent = dd.dataset.formato ? dd.dataset.formato.replace('{}', valor) : valor;
+  });
+}
+form.addEventListener('change', atualizarResumo);
+atualizarResumo();
 
 function desenharPlano({ fonte, treino }) {
   const selo = fonte === 'ia'

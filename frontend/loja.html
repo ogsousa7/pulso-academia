@@ -40,10 +40,10 @@
 
     <nav class="hidden md:flex items-center gap-8 text-[14px] font-medium">
       <a href="index.html#sobre" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Sobre nós</a>
+      <a href="index.html#grade" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Aulas</a>
       <a href="loja.html" class="link-topo text-grafite font-semibold transition-colors" aria-current="page">Planos e loja</a>
       <a href="treino.html" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Monte seu treino</a>
       <a href="index.html#onde-estamos" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
-      <a href="index.html#contato" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Contato</a>
     </nav>
 
     <div class="flex items-center gap-2">
@@ -56,10 +56,10 @@
 
   <div id="mobileMenu" class="hidden md:hidden flex-col px-5 pb-3 text-[17px] font-semibold">
     <a href="index.html#sobre" class="py-3 border-b border-tinta/5 last:border-0">Sobre nós</a>
-    <a href="loja.html" class="py-3 border-b border-tinta/5 last:border-0">Planos e loja</a>
+    <a href="index.html#grade" class="py-3 border-b border-tinta/5 last:border-0">Aulas</a>
+    <a href="loja.html" class="py-3 border-b border-tinta/5 last:border-0" aria-current="page">Planos e loja</a>
     <a href="treino.html" class="py-3 border-b border-tinta/5 last:border-0">Monte seu treino</a>
     <a href="index.html#onde-estamos" class="py-3 border-b border-tinta/5 last:border-0">Onde estamos</a>
-    <a href="index.html#contato" class="py-3 border-b border-tinta/5 last:border-0">Contato</a>
   </div>
 </header>
 
@@ -115,21 +115,21 @@
         <p class="text-[15px] text-grafite/65 mt-1 mb-6">Seus produtos ficam esperando na recepção.</p>
 
         <div data-revela class="onde">
-        <div class="onde-mapa">
-          <div id="mapaAcademia" class="absolute inset-0 flex items-center justify-center text-white/70 text-sm">Carregando mapa…</div>
-        </div>
-        <aside class="onde-cartao">
-          <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-branca h-9 w-auto self-start">
+        <button type="button" class="onde-foto" data-abrir-mapa aria-haspopup="dialog">
+          <img src="img/home/espaco.webp" alt="Área de musculação da Pulso Academia" loading="lazy">
+          <span class="onde-chamada"><span class="onde-icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="2"/></svg></span><span><strong>Ver no mapa</strong><small>Toque para ver como chegar</small></span></span>
+        </button>
+        <div class="onde-cartao">
           <p class="onde-status" id="statusAcademia" hidden></p>
           <ul class="onde-info">
-          <li><span class="onde-icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="2"/></svg></span><div><p class="onde-rotulo">Endereço</p><p class="font-semibold" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p></div></li>
-          <li><span class="onde-icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><p class="onde-rotulo">Horário de retirada</p><p data-academia="horario_semana">Segunda a sexta: 6h – 22h</p><p data-academia="horario_sabado">Sábado: 8h – 14h</p><p>Domingo: fechado</p></div></li>
+            <li><span class="onde-icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="2"/></svg></span><div><p class="onde-rotulo">Endereço</p><p class="onde-forte" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p></div></li>
+            <li><span class="onde-icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><p class="onde-rotulo">Horário de retirada</p><p data-academia="horario_semana">Segunda a sexta: 6h – 22h</p><p data-academia="horario_sabado">Sábado: 8h – 14h</p><p>Domingo: fechado</p></div></li>
           </ul>
           <div class="mt-auto pt-2 flex flex-wrap items-center gap-x-7 gap-y-4">
             <a id="linkComoChegar" href="https://www.google.com/maps/dir/?api=1&destination=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer" class="botao-destaque">Como chegar</a>
-            <a id="linkAbrirMapa" href="https://www.google.com/maps/search/?api=1&query=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer" class="link-seta">Abrir no mapa <span aria-hidden="true">→</span></a>
+            <button type="button" class="link-forte" data-abrir-mapa aria-haspopup="dialog">Ver no mapa →</button>
           </div>
-        </aside>
+        </div>
       </div>
       </section>
     </div>
@@ -178,6 +178,22 @@
         <button type="button" id="pdAdicionar" class="flex-1 py-3.5 rounded bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition">Adicionar ao carrinho</button>
       </div>
     </div>
+  </div>
+</dialog>
+
+<!-- Mapa em pop-up: o iframe do Google só é criado quando a pessoa abre (academia.js) -->
+<dialog id="dialogMapa" class="folha folha-mapa" aria-labelledby="dialogMapaTitulo">
+  <div class="flex items-center justify-between gap-4 px-5 md:px-7 py-4">
+    <div>
+      <p class="rotulo-secao">Venha conhecer</p>
+      <h2 id="dialogMapaTitulo" class="text-[22px] md:text-[26px] font-black uppercase tracking-tight leading-none mt-1">Como chegar na Pulso</h2>
+    </div>
+    <button type="button" data-fechar-mapa aria-label="Fechar o mapa" class="w-10 h-10 shrink-0 flex items-center justify-center rounded-lg bg-tinta/[0.06] hover:bg-tinta/10"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="mapa-dialogo"><div id="mapaAcademia" class="absolute inset-0 flex items-center justify-center text-grafite/65 text-sm">Carregando mapa…</div></div>
+  <div class="flex flex-wrap items-center justify-between gap-4 px-5 md:px-7 py-4">
+    <p class="text-[15px] font-semibold" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p>
+    <a id="linkAbrirMapa" href="https://www.google.com/maps/search/?api=1&query=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer" class="link-forte">Abrir no Google Maps →</a>
   </div>
 </dialog>
 
