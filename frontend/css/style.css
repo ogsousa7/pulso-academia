@@ -837,7 +837,8 @@ dialog.folha-mapa::backdrop { background: rgba(8, 12, 13, 0.75); }
 @media (max-width: 760px) { .boas-vindas { min-height: 0; padding: 28px 22px; } .boas-vindas-pulso { display: none; } .boas-vindas-marca { width: 170px; right: -30px; } }
 .area-grade { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
 .area-lado { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 14px; }
-@media (max-width: 1023px) { .area-grade { grid-template-columns: minmax(0, 1fr); } .area-lado { position: static; order: -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } .area-lado .lado-promo { display: none; } }
+/* Celular e tablet: o resumo vem DEPOIS do conteúdo principal (agendar, agenda), que é a tarefa de quem abre a tela. */
+@media (max-width: 1023px) { .area-grade { grid-template-columns: minmax(0, 1fr); } .area-lado { position: static; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } .area-lado .lado-promo { display: none; } }
 .lado-cartao { position: relative; overflow: hidden; padding: 24px 22px; border-radius: 16px; background: rgb(var(--superficie)); }
 .lado-escuro { color: #fff; background: radial-gradient(120% 120% at 100% 100%, rgba(164, 83, 47, 0.5) 0%, rgba(164, 83, 47, 0) 60%), linear-gradient(135deg, #141A1C 0%, #23373D 100%); }
 .lado-marca { position: absolute; right: -26px; bottom: -30px; width: 150px; height: auto; opacity: 0.1; pointer-events: none; }

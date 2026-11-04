@@ -7,7 +7,7 @@
    Para publicar uma versão nova do site, aumente VERSAO.
    ========================================================= */
 
-const VERSAO = 'pulso-v13'; // v13: áreas logadas com resumo, comemoração ao agendar, revisão de contraste e celular
+const VERSAO = 'pulso-v14'; // v14: no celular o resumo das áreas logadas vem depois do conteúdo
 const CACHE_CASCO = `${VERSAO}-casco`;
 const CACHE_EXTERNO = `${VERSAO}-externo`;
 
