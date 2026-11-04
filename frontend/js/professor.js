@@ -30,7 +30,7 @@ function abrirAba(nome) {
   if (nome === 'disponibilidade') carregarDisponibilidade();
   history.replaceState(null, '', `#${nome}`);
 }
-document.querySelectorAll('.aba').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
+document.querySelectorAll('.aba, .aba-atalho').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
 
 /* ---------- Agenda ---------- */
 
@@ -48,6 +48,7 @@ async function carregarAgenda() {
     const { professor, agendamentos, de, ate } = await Api.profAgenda();
     el('subtitulo').textContent = `${professor.especialidade}. Aulas de ${formatarDataISO(de)} a ${formatarDataISO(ate)}.`;
     renderResumoProfessor(agendamentos);
+    renderLado(agendamentos);
     if (!agendamentos.length) {
       el('listaAgenda').innerHTML = '<div class="bg-superficie rounded-3xl p-8 text-center"><p class="text-[17px] font-semibold">Agenda livre</p><p class="text-grafite/65 text-[15px] mt-1">Nenhuma aula marcada nos próximos 14 dias.</p></div>';
       return;
@@ -101,6 +102,35 @@ el('listaAgenda').addEventListener('click', async (e) => {
     carregarAgenda();
   } catch (erro) { tratarErro(erro); botao.disabled = false; }
 });
+
+/* ---------- Coluna ao lado ---------- */
+
+const isoDe = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+function renderLado(agendamentos) {
+  const agora = new Date();
+  const horaAgora = `${String(agora.getHours()).padStart(2, '0')}:${String(agora.getMinutes()).padStart(2, '0')}`;
+  const proxima = agendamentos
+    .filter((a) => a.data > HOJE || (a.data === HOJE && a.hora >= horaAgora))
+    .sort((a, b) => `${a.data} ${a.hora}`.localeCompare(`${b.data} ${b.hora}`))[0];
+  el('ladoProximaAula').innerHTML = proxima
+    ? `<p class="lado-hora">${escapeHtml(proxima.hora)}</p>
+       <p class="text-[15px] font-semibold text-white">${escapeHtml(tituloDoDia(proxima.data))}</p>
+       <p class="text-[15px] text-white/75 mt-1">${escapeHtml(proxima.aluno_nome)} · ${escapeHtml(proxima.tipo_treino)}, ${escapeHtml(proxima.nivel.toLowerCase())}</p>`
+    : '<p class="mt-3 text-[17px] font-semibold text-white">Agenda livre</p><p class="text-[15px] text-white/70 mt-1">Nenhuma aula nos próximos dias.</p>';
+
+  // Barras: quantas aulas em cada um dos próximos 7 dias.
+  const dias = Array.from({ length: 7 }, (_, i) => { const d = new Date(); d.setDate(d.getDate() + i); return d; });
+  const contagem = dias.map((d) => agendamentos.filter((a) => a.data === isoDe(d)).length);
+  const maior = Math.max(1, ...contagem);
+  el('ladoSemana').innerHTML = dias.map((d, i) => `
+    <div class="semana-dia${i === 0 ? ' hoje' : ''}">
+      <span class="semana-num">${contagem[i] || ''}</span>
+      <span class="semana-barra" style="--h:${Math.max(6, (contagem[i] / maior) * 100)}%"></span>
+      <span class="semana-nome">${i === 0 ? 'Hoje' : DIAS[d.getDay()]}</span>
+    </div>`).join('');
+  el('ladoSemana').setAttribute('aria-label', `Aulas nos próximos 7 dias: ${dias.map((d, i) => `${i === 0 ? 'hoje' : DIAS_LONGOS[d.getDay()]} ${contagem[i]}`).join(', ')}`);
+}
 
 /* ---------- Disponibilidade ---------- */
 

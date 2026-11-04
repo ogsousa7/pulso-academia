@@ -86,11 +86,50 @@ el('listaHorarios').addEventListener('click', (e) => {
 el('agProfessor').addEventListener('change', carregarHorarios);
 el('agData').addEventListener('change', carregarHorarios);
 
+/** "2026-11-05" -> "quinta, 05/11" */
+function diaCurto(iso) {
+  const [a, m, d] = iso.split('-').map(Number);
+  const nome = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'][new Date(a, m - 1, d).getDay()];
+  return `${nome}, ${String(d).padStart(2, '0')}/${String(m).padStart(2, '0')}`;
+}
+
+/** Janela de comemoração depois de agendar: check desenhado, linha do pulso e confetes da marca. */
+function comemorarAgendamento({ data, hora, tipo, professor }) {
+  const janela = document.createElement('dialog');
+  janela.className = 'comemora';
+  const cores = ['#A4532F', '#F2A07A', '#425B63', '#5C6B3B', '#ffffff'];
+  const confetes = Array.from({ length: 26 }, (_, i) =>
+    `<i style="--x:${Math.round(Math.random() * 100)}%;--d:${(Math.random() * 0.6).toFixed(2)}s;--r:${Math.round(Math.random() * 360)}deg;--c:${cores[i % cores.length]}"></i>`).join('');
+  janela.innerHTML = `
+    <div class="comemora-confete" aria-hidden="true">${confetes}</div>
+    <svg class="comemora-check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="23"/><path d="M15 27l7 7 15-16"/></svg>
+    <p class="rotulo-secao !text-[#F2A07A] mt-6">Tudo certo</p>
+    <h2 class="comemora-titulo">Aula agendada!</h2>
+    <p class="comemora-detalhe">${escapeHtml(diaCurto(data))} às ${escapeHtml(hora)}<br>${escapeHtml(tipo)} com ${escapeHtml(professor)}</p>
+    <svg class="comemora-pulso" viewBox="0 0 300 60" fill="none" aria-hidden="true"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <button type="button" class="botao-destaque w-full mt-6">Ver minhas aulas</button>`;
+  document.body.appendChild(janela);
+  // Fecha pelo botão ou pela tecla Esc (evento "close"); o que vier primeiro.
+  let fechada = false;
+  const fechar = () => {
+    if (fechada) return;
+    fechada = true;
+    if (janela.open) janela.close();
+    janela.remove();
+    abrirAba('aulas');
+  };
+  janela.addEventListener('close', fechar);
+  janela.querySelector('button').addEventListener('click', fechar);
+  janela.showModal();
+}
+
 el('formAgendar').addEventListener('submit', async (evento) => {
   evento.preventDefault();
   if (!horarioEscolhido) return;
   const botao = el('btnAgendar');
   botao.disabled = true;
+  const opcaoProfessor = el('agProfessor').selectedOptions[0];
+  const agendado = { data: el('agData').value, hora: horarioEscolhido, tipo: el('agTipo').value, professor: opcaoProfessor ? opcaoProfessor.textContent : '' };
   try {
     await Api.alunoAgendar({
       professorId: Number(el('agProfessor').value),
@@ -99,24 +138,35 @@ el('formAgendar').addEventListener('submit', async (evento) => {
       data: el('agData').value,
       hora: horarioEscolhido,
     });
-    showToast('Aula agendada!', 'success');
-    abrirAba('aulas');
+    atualizarLado();
+    comemorarAgendamento(agendado);
   } catch (erro) {
     tratarErro(erro);
     carregarHorarios(); // o horário pode ter sido ocupado por outra pessoa
   }
 });
 
+// Só aparecem os professores da modalidade escolhida.
+let todosProfessores = [];
+function filtrarProfessores() {
+  const tipo = el('agTipo').value;
+  const daModalidade = todosProfessores.filter((p) => p.especialidade === tipo);
+  opcoesSelect(el('agProfessor'), daModalidade, (p) => p.nome, (p) => p.id);
+  if (!daModalidade.length) el('agProfessor').innerHTML = '<option value="">Nenhum professor nessa modalidade</option>';
+  carregarHorarios();
+}
+el('agTipo').addEventListener('change', filtrarProfessores);
+
 async function iniciarAgendar() {
   const o = await Api.alunoOpcoes();
   opcoesSelect(el('agTipo'), o.tiposTreino);
   opcoesSelect(el('agNivel'), o.niveis);
-  opcoesSelect(el('agProfessor'), o.professores, (p) => `${p.nome} — ${p.especialidade}`, (p) => p.id);
+  todosProfessores = o.professores;
   el('agData').min = o.dataMinima;
   el('agData').max = o.dataMaxima;
   el('agData').value = o.dataMinima;
   window.ANTECEDENCIA = o.antecedenciaCancelamentoHoras;
-  carregarHorarios();
+  filtrarProfessores();
 }
 
 /* ---------- Minhas aulas ---------- */
@@ -152,6 +202,7 @@ el('listaAulas').addEventListener('click', async (e) => {
     await Api.alunoCancelarAula(botao.dataset.cancelar);
     showToast('Aula cancelada.', 'success');
     carregarAulas();
+    atualizarLado();
   } catch (erro) { tratarErro(erro); }
 });
 
@@ -215,6 +266,44 @@ el('formCancelarPlano').addEventListener('submit', async (evento) => {
   } catch (erro) { tratarErro(erro); }
 });
 
+/* ---------- Coluna ao lado ---------- */
+
+async function atualizarLado() {
+  const caixaAula = el('ladoProximaAula');
+  const caixaPlano = el('ladoPlano');
+  if (!caixaAula) return;
+  try {
+    const { agendamentos } = await Api.alunoAgendamentos();
+    const agora = new Date();
+    const hojeISO = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`;
+    const horaAgora = `${String(agora.getHours()).padStart(2, '0')}:${String(agora.getMinutes()).padStart(2, '0')}`;
+    const proxima = agendamentos
+      .filter((a) => a.status !== 'Cancelado' && (a.data > hojeISO || (a.data === hojeISO && a.hora >= horaAgora)))
+      .sort((a, b) => `${a.data} ${a.hora}`.localeCompare(`${b.data} ${b.hora}`))[0];
+    caixaAula.innerHTML = proxima
+      ? `<p class="lado-hora">${escapeHtml(proxima.hora)}</p>
+         <p class="text-[15px] font-semibold text-white first-letter:uppercase">${escapeHtml(diaCurto(proxima.data))}</p>
+         <p class="text-[15px] text-white/75 mt-1">${escapeHtml(proxima.tipo_treino)} com ${escapeHtml(proxima.professor)}</p>`
+      : `<p class="mt-3 text-[17px] font-semibold text-white">Nenhuma aula marcada</p>
+         <button type="button" class="aba-atalho link-seta mt-4" data-aba="agendar">Agendar agora <span aria-hidden="true">→</span></button>`;
+    caixaAula.querySelector('.aba-atalho')?.addEventListener('click', () => abrirAba('agendar'));
+  } catch { caixaAula.innerHTML = '<p class="mt-3 text-white/70 text-[15px]">Não foi possível carregar.</p>'; }
+
+  if (!planoAtivo) {
+    caixaPlano.innerHTML = `<p class="mt-3 text-[17px] font-semibold">Sem plano ativo</p>
+      <p class="text-[14px] text-grafite/65 mt-1">Escolha um plano para agendar suas aulas.</p>
+      <a href="loja.html#planos" class="botao-destaque w-full mt-4">Ver planos</a>`;
+    return;
+  }
+  const [a, m, d] = planoAtivo.data_vencimento.split('-').map(Number);
+  const faltam = Math.max(0, Math.ceil((new Date(a, m - 1, d) - new Date()) / 86400000));
+  const total = { mensal: 30, trimestral: 90, anual: 365 }[String(planoAtivo.periodo || '').toLowerCase()] || Math.max(30, faltam);
+  caixaPlano.innerHTML = `<p class="mt-3 text-[22px] font-black uppercase tracking-tight leading-none">${escapeHtml(planoAtivo.plano_nome)}</p>
+    <p class="text-[14px] text-grafite/65 mt-2">Válido até ${formatarDataISO(planoAtivo.data_vencimento)}</p>
+    <div class="lado-progresso" role="img" aria-label="Faltam ${faltam} dias"><span style="--p:${Math.min(100, Math.round((faltam / total) * 100))}%"></span></div>
+    <p class="text-[13px] font-bold mt-2">${faltam === 1 ? 'Falta 1 dia' : `Faltam ${faltam} dias`}</p>`;
+}
+
 /* ---------- Pedidos ---------- */
 
 async function carregarPedidos() {
@@ -253,6 +342,7 @@ if (usuario) el('saudacao').textContent = `Olá, ${String(usuario.nome).split(' 
   try {
     await Promise.all([iniciarAgendar(), Api.alunoPlano().then((r) => { planoAtivo = r.plano; resumirPlano(); })]);
   } catch (erro) { tratarErro(erro); }
+  atualizarLado();
   const aba = location.hash.slice(1);
   abrirAba(['agendar', 'aulas', 'plano', 'pedidos'].includes(aba) ? aba : 'agendar');
 })();

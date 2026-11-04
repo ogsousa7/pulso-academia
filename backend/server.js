@@ -49,6 +49,8 @@ app.use((req, res, next) => {
   res.set('X-Content-Type-Options', 'nosniff');
   res.set('X-Frame-Options', 'DENY');
   res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  // No Render o site é sempre HTTPS: o navegador passa a recusar a versão sem cadeado.
+  if (process.env.RENDER) res.set('Strict-Transport-Security', 'max-age=15552000');
   next();
 });
 
@@ -82,7 +84,13 @@ app.use('/api/treino', treinoRoutes); // montador de treinos (público, com limi
    (npm start) e o front fala com a API na mesma origem — sem CORS.
 --------------------------------------------------------------------------- */
 
-app.use(express.static(FRONTEND_DIR));
+// Fotos e fontes quase nunca mudam: o navegador guarda por 7 dias (ao trocar uma foto, use um nome novo).
+// HTML, CSS e JS continuam sendo conferidos a cada visita.
+app.use(express.static(FRONTEND_DIR, {
+  setHeaders(res, caminho) {
+    if (/[\\/](img|fonts)[\\/]/.test(caminho)) res.set('Cache-Control', 'public, max-age=604800');
+  },
+}));
 
 /* ------------------------------ 404 padrão ------------------------------ */
 

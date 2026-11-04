@@ -418,7 +418,7 @@ function sincronizarAcademia() {
   ).run(
     'Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP',
     'contato@pulsoacademia.com.br',
-    '(11) 4002-8922',
+    '(11) 2063-4510',
     'Segunda a sexta: 6h – 22h',
     'Sábado: 8h – 14h',
     'Academia de bairro, acolhedora e acessível. Projeto acadêmico de Fábrica de Software, inspirado no ODS 8 da ONU (trabalho decente e crescimento econômico).'
@@ -447,7 +447,8 @@ function seedSeNecessario() {
     );
 
     // Senhas de demonstração — troque/remova antes de usar em produção real.
-    const senhaAdmin = bcrypt.hashSync('admin123', 10);
+    // No site no ar, defina SENHA_ADMIN no Render para a senha da recepção não ser a de demonstração.
+    const senhaAdmin = bcrypt.hashSync(process.env.SENHA_ADMIN || 'admin123', 10);
     const senhaAluno = bcrypt.hashSync('aluno123', 10);
 
     inserirUsuario.run('Recepção Pulso', 'admin@pulso.com', senhaAdmin, 'ADMIN');

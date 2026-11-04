@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Minha área — Pulso Academia</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="js/tw-config.js"></script>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/tailwind.css">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#F5F5F7">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
@@ -64,7 +64,7 @@
   </div>
 </header>
 
-<main class="max-w-[1180px] mx-auto px-5 md:px-8 pt-6 md:pt-10 pb-10 [&>section]:max-w-[880px]">
+<main class="max-w-[1180px] mx-auto px-5 md:px-8 pt-6 md:pt-10 pb-10">
   <div class="boas-vindas mb-6">
     <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="boas-vindas-marca">
     <svg class="boas-vindas-pulso" viewBox="0 0 300 60" fill="none" aria-hidden="true"><path d="M0 30h96l12-22 16 44 14-36 10 14h152" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -73,6 +73,8 @@
     <p class="relative text-white/80 text-[15px] mt-2" id="resumoPlano">Carregando seu plano...</p>
   </div>
 
+  <div class="area-grade">
+  <div class="min-w-0">
   <!-- Abas -->
   <nav class="segmentado hidden md:inline-flex mb-6" role="tablist" aria-label="Seções">
     <button role="tab" data-aba="agendar" class="aba">Agendar aula</button>
@@ -142,6 +144,25 @@
   <section id="painel-pedidos" class="painel hidden">
     <div id="listaPedidos" class="flex flex-col gap-3"></div>
   </section>
+  </div>
+
+  <!-- Coluna ao lado (no computador): próxima aula, plano e o montador de treinos -->
+  <aside class="area-lado" aria-label="Resumo da sua conta">
+    <div class="lado-cartao lado-escuro">
+      <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="lado-marca">
+      <p class="relative rotulo-secao !text-[#F2A07A]">Sua próxima aula</p>
+      <div class="relative" id="ladoProximaAula"><p class="mt-3 text-white/70 text-[15px]">Carregando…</p></div>
+    </div>
+    <div class="lado-cartao">
+      <p class="rotulo-secao">Seu plano</p>
+      <div id="ladoPlano"><p class="mt-3 text-grafite/65 text-[15px]">Carregando…</p></div>
+    </div>
+    <a href="treino.html" class="lado-promo">
+      <img src="img/home/treino-faixa.webp" srcset="img/home/treino-faixa-1280.webp 1280w, img/home/treino-faixa.webp 2400w" sizes="330px" alt="" loading="lazy">
+      <span class="relative"><small>Grátis</small><strong>Monte seu treino</strong><span>Um plano para a sua semana em segundos →</span></span>
+    </a>
+  </aside>
+  </div>
 </main>
 
 

@@ -1,5 +1,5 @@
 /* =========================================================
-   tw-config.js — tema do Tailwind compartilhado por TODAS as páginas.
+   tw-config.js — preferências de tema, contraste, texto e tela de abertura (todas as páginas).
    Carregado no <head>, logo depois do CDN do Tailwind.
 
    As cores NÃO são fixas: cada uma aponta para uma variável CSS
@@ -35,27 +35,5 @@
   } catch { /* navegador sem localStorage: segue o sistema */ }
 })();
 
-const cor = (variavel) => `rgb(var(--${variavel}) / <alpha-value>)`;
-
-tailwind.config = {
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', 'Inter', '"Segoe UI"', 'Roboto', 'sans-serif'],
-      },
-      colors: {
-        grafite: cor('grafite'),
-        offwhite: cor('offwhite'),
-        superficie: cor('superficie'),
-        tinta: cor('tinta'),
-        petroleo: cor('petroleo'),
-        oliva: cor('oliva'),
-        terracota: cor('terracota'),
-        linha: cor('linha'),
-      },
-      // Cantos levemente arredondados (identidade da marca); rounded-full fica só para círculos.
-      borderRadius: { DEFAULT: '6px', md: '6px', lg: '8px', xl: '10px', '2xl': '14px', '3xl': '16px' },
-      letterSpacing: { apertado: '-0.022em', titulo: '-0.035em' },
-    },
-  },
-};
+/* O tema do Tailwind (cores, cantos, fonte) agora fica em backend/tailwind.config.cjs
+   e o CSS sai pronto em css/tailwind.css (npm run css, na pasta backend). */

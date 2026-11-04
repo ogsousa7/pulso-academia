@@ -42,19 +42,16 @@ function renderPlanos(planos) {
       const destaque = i === 1; // plano do meio em destaque
       const meses = mesesDoPlano(plano.periodo);
       const economia = mensal && meses > 1 ? mensal.preco * meses - plano.preco : 0;
-      const porMes = meses > 1 ? `ou ${formatarPreco(plano.preco / meses)} por mês` : 'sem fidelidade';
+      const detalhe = meses > 1 ? `Total de ${formatarPreco(plano.preco)} (${escapeHtml(plano.periodo)})` : 'Sem fidelidade · cancele quando quiser';
       // Blocos de cor da marca: escuro, terracota (o destaque) e petróleo. Cores fixas: contraste igual nos dois temas.
       const cor = destaque ? 'plano-destaque' : ['plano-escuro', 'plano-destaque', 'plano-marca'][i % 3];
       return `
       <article class="plano ${cor}">
-        <div class="plano-topo">
-          <p class="plano-selo">${destaque ? 'Mais escolhido' : escapeHtml(plano.periodo)}</p>
-          <img src="img/logo-horizontal.png" alt="" class="plano-logo">
-        </div>
+        <p class="plano-selo">${destaque ? 'Mais escolhido' : escapeHtml(plano.periodo)}</p>
         <h3 class="plano-nome">${escapeHtml(plano.nome)}</h3>
         <p class="plano-desc">${escapeHtml(plano.descricao || '')}</p>
-        <p class="plano-preco">${formatarPreco(plano.preco)}</p>
-        <p class="plano-detalhe">${escapeHtml(plano.periodo)} · ${porMes}</p>
+        <p class="plano-preco">${formatarPreco(plano.preco / meses)}<small>/mês</small></p>
+        <p class="plano-detalhe">${detalhe}</p>
         <p class="plano-economia">${economia > 0 ? `Você economiza ${formatarPreco(economia)}` : ''}</p>
         <button type="button" data-plano="${plano.id}" class="plano-botao">Assinar</button>
       </article>`;

@@ -606,10 +606,9 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 .galeria-barras span { flex: 1; height: 4px; border-radius: 6px; background: rgba(255, 255, 255, 0.28); overflow: hidden; }
 .galeria-barras i { display: block; height: 100%; width: 100%; transform: scaleX(0); transform-origin: left; background: #fff; }
 .galeria-barras span.vista i { transform: scaleX(1); }
-.galeria-barras span.rodando i { animation: barra-galeria 6s linear forwards; }
+.galeria-barras span.rodando i { animation: barra-galeria 5s linear forwards; }
 @keyframes barra-galeria { to { transform: scaleX(1); } }
 .galeria.pausada .galeria-barras span.rodando i, .galeria.fora-da-tela .galeria-barras span.rodando i, .galeria:has(:focus-visible) .galeria-barras span.rodando i { animation-play-state: paused; }
-@media (hover: hover) { .galeria:hover .galeria-barras span.rodando i { animation-play-state: paused; } }
 .galeria-controles { position: absolute; z-index: 2; left: max(20px, calc((100vw - 1180px) / 2)); right: max(20px, calc((100vw - 1180px) / 2)); bottom: 40px; display: flex; align-items: center; justify-content: space-between; }
 .galeria-contador { font-size: 15px; font-weight: 800; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.85); }
 .galeria-contador span:first-child { font-size: 22px; color: #fff; }
@@ -827,3 +826,100 @@ dialog.folha-mapa::backdrop { background: rgba(8, 12, 13, 0.75); }
 .escolhas-numero .escolha input:checked + span { border-color: #A4532F; background: #A4532F; color: #fff; }
 .escolhas-numero .escolha input:checked + span small { color: rgba(255, 255, 255, 0.85); }
 @media (max-width: 640px) { .escolhas-cartao.escolhas-3 { grid-template-columns: minmax(0, 1fr); } .escolhas-numero strong { font-size: 24px; } }
+
+/* Áreas logadas: cartão de boas-vindas maior, com o símbolo grande; coluna de resumo ao lado no computador. */
+.boas-vindas { min-height: 200px; padding: 40px 40px; }
+.boas-vindas:not(.flex) { display: flex; flex-direction: column; justify-content: center; }
+.boas-vindas-marca { right: 4%; top: 50%; bottom: auto; width: clamp(180px, 26vw, 330px); transform: translateY(-50%); opacity: 0.11; }
+.boas-vindas-pulso { right: auto; left: 55%; top: 50%; width: min(26%, 260px); transform: translateY(-50%); opacity: 0.55; }
+/* No painel da recepção o botão fica à direita: a linha do pulso volta para o canto de cima. */
+.boas-vindas.flex .boas-vindas-pulso { left: auto; right: 28px; top: 22px; width: 120px; transform: none; }
+@media (max-width: 760px) { .boas-vindas { min-height: 0; padding: 28px 22px; } .boas-vindas-pulso { display: none; } .boas-vindas-marca { width: 170px; right: -30px; } }
+.area-grade { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: start; }
+.area-lado { position: sticky; top: 84px; display: flex; flex-direction: column; gap: 14px; }
+@media (max-width: 1023px) { .area-grade { grid-template-columns: minmax(0, 1fr); } .area-lado { position: static; order: -1; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); } .area-lado .lado-promo { display: none; } }
+.lado-cartao { position: relative; overflow: hidden; padding: 24px 22px; border-radius: 16px; background: rgb(var(--superficie)); }
+.lado-escuro { color: #fff; background: radial-gradient(120% 120% at 100% 100%, rgba(164, 83, 47, 0.5) 0%, rgba(164, 83, 47, 0) 60%), linear-gradient(135deg, #141A1C 0%, #23373D 100%); }
+.lado-marca { position: absolute; right: -26px; bottom: -30px; width: 150px; height: auto; opacity: 0.1; pointer-events: none; }
+.lado-hora { margin-top: 10px; font-size: 52px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.lado-progresso { margin-top: 14px; height: 8px; border-radius: 999px; background: rgb(var(--tinta) / 0.08); overflow: hidden; }
+.lado-progresso span { display: block; width: var(--p); height: 100%; border-radius: 999px; background: linear-gradient(90deg, #A4532F, #F2A07A); }
+.lado-promo { position: relative; display: block; min-height: 170px; overflow: hidden; border-radius: 16px; color: #fff; }
+.lado-promo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.lado-promo::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(10, 14, 16, 0.9), rgba(10, 14, 16, 0.25)); }
+.lado-promo > span { position: absolute; z-index: 2; left: 22px; right: 22px; bottom: 20px; }
+.lado-promo small { font-size: 12px; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: #F2A07A; }
+.lado-promo strong { display: block; margin-top: 4px; font-size: 24px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; line-height: 1; }
+.lado-promo span span { display: block; margin-top: 6px; font-size: 14px; color: rgba(255, 255, 255, 0.85); }
+.lado-promo:hover img { transform: scale(1.04); }
+.semana-barras { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; height: 130px; margin-top: 16px; }
+.semana-dia { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; min-width: 0; }
+.semana-barra { width: 100%; max-width: 26px; height: var(--h); border-radius: 6px; background: rgb(var(--petroleo) / 0.25); transform-origin: bottom; animation: barra-sobe 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.semana-dia.hoje .semana-barra { background: #A4532F; }
+.semana-num { font-size: 12px; font-weight: 800; min-height: 15px; }
+.semana-nome { font-size: 11px; font-weight: 700; color: rgb(var(--grafite) / 0.65); text-transform: uppercase; letter-spacing: 0.04em; }
+@keyframes barra-sobe { from { transform: scaleY(0); } to { transform: none; } }
+
+/* Comemoração ao agendar uma aula. */
+dialog.comemora { width: min(420px, calc(100vw / var(--escala) - 32px)); padding: 40px 32px 30px; border: 0; border-radius: 20px; overflow: hidden; text-align: center; color: #fff; background: radial-gradient(120% 100% at 50% 0%, rgba(164, 83, 47, 0.55) 0%, rgba(164, 83, 47, 0) 60%), linear-gradient(160deg, #141A1C 0%, #23373D 100%); box-shadow: 0 40px 100px rgba(0, 0, 0, 0.45); }
+dialog.comemora[open] { animation: comemora-entra 0.45s cubic-bezier(0.2, 1.2, 0.3, 1) both; }
+dialog.comemora::backdrop { background: rgba(8, 12, 13, 0.7); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+@keyframes comemora-entra { from { opacity: 0; transform: translateY(24px) scale(0.92); } to { opacity: 1; transform: none; } }
+.comemora-check { display: block; width: 92px; height: 92px; margin: 0 auto; }
+.comemora-check circle { fill: #A4532F; stroke: #F2A07A; stroke-width: 2; stroke-dasharray: 150; stroke-dashoffset: 150; animation: desenha 0.6s ease-out 0.15s forwards; }
+.comemora-check path { fill: none; stroke: #fff; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 40; stroke-dashoffset: 40; animation: desenha 0.4s ease-out 0.65s forwards; }
+@keyframes desenha { to { stroke-dashoffset: 0; } }
+.comemora-titulo { margin-top: 6px; font-size: 36px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1; }
+.comemora-detalhe { margin-top: 12px; font-size: 16px; line-height: 1.5; color: rgba(255, 255, 255, 0.85); }
+.comemora-detalhe::first-letter { text-transform: uppercase; }
+.comemora-pulso { display: block; width: 170px; margin: 18px auto 0; color: #F2A07A; }
+.comemora-pulso path { stroke-dasharray: 400; stroke-dashoffset: 400; animation: desenha 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.9s forwards; }
+.comemora-confete { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.comemora-confete i { position: absolute; top: -12px; left: var(--x); width: 8px; height: 14px; border-radius: 2px; background: var(--c); opacity: 0; transform: rotate(var(--r)); animation: confete 1.8s cubic-bezier(0.3, 0.6, 0.5, 1) var(--d) forwards; }
+@keyframes confete { 0% { opacity: 1; transform: translateY(0) rotate(var(--r)); } 100% { opacity: 0; transform: translateY(460px) rotate(calc(var(--r) + 540deg)); } }
+@media (prefers-reduced-motion: reduce) {
+  dialog.comemora[open], .comemora-confete i, .semana-barra { animation: none; }
+  .comemora-check circle, .comemora-check path, .comemora-pulso path { animation: none; stroke-dashoffset: 0; }
+}
+
+/* Texto terracota com contraste AA: mais escuro no tema claro (5:1 no bege), mais claro no escuro. */
+:root { --terracota-texto: #964826; }
+:root[data-tema="escuro"] { --terracota-texto: #EE9A72; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema="claro"]) { --terracota-texto: #EE9A72; } }
+.rotulo-secao, .onde-rotulo, .grade thead th small, .treino-cabecalho span, .link-forte, .faq a, .aviso-data { color: var(--terracota-texto); }
+.aviso-data { margin-bottom: 8px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
+#listaAvisos .aviso:only-child { grid-column: 1 / -1; }
+
+/* FAQ: o "+" vira só contorno (o terracota fica para os botões de ação). */
+.faq summary::after { background: transparent; color: rgb(var(--grafite)); box-shadow: inset 0 0 0 2px rgb(var(--grafite) / 0.25); }
+.faq details[open] summary::after { box-shadow: inset 0 0 0 2px var(--terracota-texto); color: var(--terracota-texto); }
+
+/* Planos: o número grande é o valor por mês; o total vem embaixo. */
+.plano-preco small { margin-left: 4px; font-size: 18px; font-weight: 800; letter-spacing: 0; opacity: 0.85; }
+
+/* Celular: grade de aulas em abas por dia (hoje já aberto); no computador continua a tabela. */
+.grade-dias, .grade-lista { display: none; }
+@media (max-width: 760px) {
+  .grade-rolagem, .grade-dica { display: none !important; }
+  .grade-dias { display: flex; gap: 6px; margin-top: 20px; overflow-x: auto; scrollbar-width: none; }
+  .grade-dias::-webkit-scrollbar { display: none; }
+  .grade-dias button { flex: 1; min-width: 0; padding: 10px 0; border-radius: 10px; background: rgb(var(--superficie)); font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.06em; }
+  .grade-dias button[aria-selected="true"] { background: rgb(var(--grafite)); color: rgb(var(--superficie)); }
+  .grade-dias button small { display: block; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; opacity: 0.75; }
+  .grade-lista { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; list-style: none; }
+  .grade-lista li { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 12px; border-left: 5px solid var(--cor); background: rgb(var(--superficie)); }
+  .grade-lista li.apagada { opacity: 0.3; }
+  .grade-lista time { font-size: 18px; font-weight: 900; font-variant-numeric: tabular-nums; }
+  .grade-lista strong { display: block; font-size: 15px; font-weight: 800; }
+  .grade-lista span { font-size: 14px; color: rgb(var(--grafite) / 0.65); }
+  .grade-lista .vazio { border-left-color: transparent; color: rgb(var(--grafite) / 0.65); }
+}
+
+/* Admin no celular: as tabelas viram cartões (a coluna Status não some mais para o lado). */
+@media (max-width: 640px) {
+  .tabela-cartoes { min-width: 0 !important; }
+  .tabela-cartoes thead { display: none; }
+  .tabela-cartoes tr { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 14px 20px; }
+  .tabela-cartoes td { padding: 0 !important; }
+  .tabela-cartoes td:first-child { width: 100%; font-weight: 800; color: rgb(var(--grafite)); }
+}

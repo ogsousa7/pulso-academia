@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entrar — Pulso Academia</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="js/tw-config.js"></script>
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/tailwind.css">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#425B63">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
@@ -33,10 +33,10 @@
 <div data-a11y-slot class="fixed top-4 right-4"></div>
 
 <main class="w-full max-w-sm">
-  <a href="index.html" class="flex flex-col items-center gap-4 mb-8" aria-label="Pulso Academia, voltar para o início">
+  <a href="index.html" class="flex justify-center mb-5" aria-label="Pulso Academia, voltar para o início">
     <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-tema h-12 w-auto">
-    <span class="text-[28px] font-bold tracking-tight leading-none text-center">Entre na sua conta</span>
   </a>
+  <h1 class="text-[28px] font-bold tracking-tight leading-none text-center mb-8">Entre na sua conta</h1>
 
   <div class="bg-superficie rounded-3xl p-6 sm:p-8">
 
@@ -58,17 +58,18 @@
         <input id="loginSenha" type="password" required placeholder="••••••••"
           class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-[17px] focus:outline-none focus:border-petroleo">
       </div>
+      <button type="button" id="btnEsqueci" aria-expanded="false" aria-controls="ajudaSenha" class="self-end -mt-2 text-[13px] font-semibold text-petroleo hover:underline">Esqueci minha senha</button>
+      <p id="ajudaSenha" class="hidden -mt-1 rounded-xl bg-offwhite p-3 text-[13px] text-grafite/75 leading-snug">Fale com a recepção da Pulso, pessoalmente ou pelo telefone (11) 2063-4510. A equipe confere seus dados e cria uma senha nova para você.</p>
       <button type="submit" id="loginSubmitBtn" class="mt-2 w-full py-3.5 rounded-xl bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition flex items-center justify-center gap-2">
         <span>Entrar</span>
       </button>
       <div class="bg-offwhite rounded-2xl p-4 text-[13px] text-grafite/65 leading-relaxed">
         <p class="font-semibold text-grafite mb-2">Contas de demonstração (toque para preencher)</p>
         <div class="flex flex-col gap-1.5">
-          <button type="button" data-demo="admin@pulso.com|admin123" class="text-left hover:text-petroleo"><span class="text-grafite font-medium">Recepção</span> · <span class="font-mono">admin@pulso.com</span></button>
           <button type="button" data-demo="marcos@pulso.com|prof123" class="text-left hover:text-petroleo"><span class="text-grafite font-medium">Professor</span> · <span class="font-mono">marcos@pulso.com</span></button>
           <button type="button" data-demo="camila@aluno.com|aluno123" class="text-left hover:text-petroleo"><span class="text-grafite font-medium">Aluna</span> · <span class="font-mono">camila@aluno.com</span></button>
         </div>
-        <p class="mt-2 text-[12px] text-grafite/65">Senhas: admin123, prof123 e aluno123.</p>
+        <p class="mt-2 text-[12px] text-grafite/65">Senhas: prof123 e aluno123. O acesso da recepção fica com a equipe.</p>
       </div>
     </form>
 

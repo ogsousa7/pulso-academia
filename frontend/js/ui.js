@@ -492,7 +492,22 @@ function carregarVLibras() {
   const s = document.createElement('script');
   s.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
   s.async = true;
-  s.onload = () => { try { new window.VLibras.Widget('https://vlibras.gov.br/app'); } catch { /* sem internet: segue sem Libras */ } };
+  s.onload = () => {
+    try { new window.VLibras.Widget('https://vlibras.gov.br/app'); } catch { return; /* sem internet: segue sem Libras */ }
+    // No celular o botão desce para não cobrir títulos nem o cupom. Ele mora num shadow DOM,
+    // então o estilo precisa ser colocado lá dentro (o CSS da página não alcança).
+    let tentativas = 0;
+    const ajustar = setInterval(() => {
+      const raiz = document.getElementById('vlibras-access-wrapper')?.shadowRoot;
+      if (raiz && !raiz.getElementById('pulso-posicao')) {
+        const estilo = document.createElement('style');
+        estilo.id = 'pulso-posicao';
+        estilo.textContent = '@media (max-width: 767px) { #vlibras-access { top: auto !important; bottom: calc(150px + env(safe-area-inset-bottom)) !important; } }';
+        raiz.appendChild(estilo);
+      }
+      if (raiz || ++tentativas > 40) clearInterval(ajustar);
+    }, 250);
+  };
   document.body.appendChild(s);
 }
 

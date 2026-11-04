@@ -67,6 +67,9 @@ export function agendar(req, res) {
   const professor = profId ? obterProfessor(profId) : null;
   if (!professor || !professor.ativo) return res.status(400).json({ erro: 'Escolha um professor válido.' });
   if (!TIPOS_TREINO.includes(tipoTreino)) return res.status(400).json({ erro: 'Escolha um tipo de treino válido.' });
+  if (professor.especialidade !== tipoTreino) {
+    return res.status(400).json({ erro: `${professor.nome} dá aulas de ${professor.especialidade}. Escolha um professor de ${tipoTreino}.` });
+  }
   if (!NIVEIS.includes(nivel)) return res.status(400).json({ erro: 'Escolha um nível válido.' });
   const erroData = erroDeData(data);
   if (erroData) return res.status(400).json({ erro: erroData });

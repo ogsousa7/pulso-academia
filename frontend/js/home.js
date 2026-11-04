@@ -95,7 +95,32 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hoje = new Date().getDay(); // 0 = domingo
   let filtro = 'Todas';
 
+  // Celular: abas por dia e a lista das aulas daquele dia (domingo abre a segunda).
+  let diaAberto = hoje >= 1 && hoje <= 6 ? hoje : 1;
+  const abas = document.createElement('div');
+  abas.className = 'grade-dias';
+  abas.setAttribute('role', 'tablist');
+  abas.setAttribute('aria-label', 'Dia da semana');
+  const lista = document.createElement('ul');
+  lista.className = 'grade-lista';
+  tabela.closest('.grade-rolagem').after(abas, lista);
+  abas.addEventListener('click', (e) => {
+    const botao = e.target.closest('[data-dia]');
+    if (!botao) return;
+    diaAberto = Number(botao.dataset.dia);
+    desenhar();
+  });
+
+  function desenharLista() {
+    abas.innerHTML = DIAS.map((d, i) => `<button type="button" role="tab" data-dia="${i + 1}" aria-selected="${i + 1 === diaAberto}">${d}${i + 1 === hoje ? '<small>hoje</small>' : ''}</button>`).join('');
+    const doDia = AULAS.filter((a) => a[0].includes(diaAberto)).sort((a, b) => a[1].localeCompare(b[1]));
+    lista.innerHTML = doDia.length
+      ? doDia.map((a) => `<li class="${filtro !== 'Todas' && a[2] !== filtro ? 'apagada' : ''}" style="--cor:${CORES[a[2]]}"><time>${a[1]}</time><div><strong>${a[2]}</strong><span>com ${a[3]}</span></div></li>`).join('')
+      : '<li class="vazio">Sem aulas em grupo nesse dia.</li>';
+  }
+
   function desenhar() {
+    desenharLista();
     tabela.innerHTML = `
       <thead><tr><th scope="col"><span class="sr-only">Horário</span></th>${DIAS.map((d, i) => `<th scope="col" class="${i + 1 === hoje ? 'hoje' : ''}">${d}${i + 1 === hoje ? '<small>hoje</small>' : ''}</th>`).join('')}</tr></thead>
       <tbody>${horas.map((h) => `
@@ -132,7 +157,7 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
     container.innerHTML = avisos.map((a) => `
       <div class="aviso">
-        <p class="text-[13px] font-bold uppercase tracking-[0.1em] text-terracota mb-2">${formatarDataHora(a.criado_em)}</p>
+        <p class="aviso-data">${formatarDataHora(a.criado_em)}</p>
         <p class="text-[17px] leading-snug">${escapeHtml(a.texto)}</p>
       </div>`).join('');
   } catch (erro) {

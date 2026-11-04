@@ -156,3 +156,11 @@ if (Auth.estaLogado()) {
 }
 
 iniciarLoginGoogle();
+
+// "Esqueci minha senha": sem e-mail automático no projeto, a recepção redefine a senha.
+document.getElementById('btnEsqueci')?.addEventListener('click', (e) => {
+  const ajuda = document.getElementById('ajudaSenha');
+  const abrir = ajuda.classList.contains('hidden');
+  ajuda.classList.toggle('hidden', !abrir);
+  e.currentTarget.setAttribute('aria-expanded', abrir);
+});

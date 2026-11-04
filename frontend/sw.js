@@ -7,13 +7,13 @@
    Para publicar uma versão nova do site, aumente VERSAO.
    ========================================================= */
 
-const VERSAO = 'pulso-v12'; // v12: fotos em alta, mapa em pop-up, treino redesenhado e cabeçalho padrão
+const VERSAO = 'pulso-v13'; // v13: áreas logadas com resumo, comemoração ao agendar, revisão de contraste e celular
 const CACHE_CASCO = `${VERSAO}-casco`;
 const CACHE_EXTERNO = `${VERSAO}-externo`;
 
 const CASCO = [
   'offline.html', 'index.html', 'loja.html', 'treino.html', 'login.html', 'checkout.html', 'aluno.html', 'professor.html', 'admin.html',
-  'css/style.css', 'fonts/inter.woff2',
+  'css/style.css', 'css/tailwind.css', 'fonts/inter.woff2',
   'js/tw-config.js', 'js/api.js', 'js/ui.js', 'js/home.js', 'js/cart.js', 'js/loja.js', 'js/treino.js', 'js/login.js', 'js/checkout.js', 'js/academia.js',
   'js/aluno.js', 'js/professor.js', 'js/admin.js', 'js/admin-cadastros.js', 'js/pwa.js',
   'img/logo-icon.png', 'img/logo-icon-branco.png', 'img/logo-horizontal.png',
@@ -21,7 +21,7 @@ const CASCO = [
 ];
 
 // Bibliotecas externas que as páginas usam: guardamos a cópia para o modo offline.
-const EXTERNOS = ['cdn.tailwindcss.com']; // a fonte é local (fonts/inter.woff2); o VLibras passa direto
+const EXTERNOS = []; // a fonte é local (fonts/inter.woff2); o VLibras passa direto
 
 self.addEventListener('install', (evento) => {
   evento.waitUntil(
