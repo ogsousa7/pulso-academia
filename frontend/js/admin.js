@@ -49,7 +49,7 @@ function renderAgendamentos(agendamentos) {
         <td class="px-6 py-3.5 font-medium">${escapeHtml(a.aluno_nome)}</td>
         <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(a.professor)}</td>
         <td class="px-6 py-3.5">
-          <span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${STATUS_ESTILOS[a.status] || ''}">${escapeHtml(a.status)}</span>
+          <span class="px-2.5 py-0.5 rounded text-[12px] font-semibold ${STATUS_ESTILOS[a.status] || ''}">${escapeHtml(a.status)}</span>
         </td>
       </tr>`
     )
@@ -98,7 +98,7 @@ function renderPedidos(pedidos) {
         <td class="px-6 py-3.5 font-medium">${escapeHtml(p.aluno_nome)}</td>
         <td class="px-6 py-3.5 text-grafite/70">${p.qtd_itens}</td>
         <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(NOME_METODO[p.metodo] || p.metodo)}${p.parcelas > 1 ? ` · ${p.parcelas}x` : ''}</td>
-        <td class="px-6 py-3.5"><span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${(ESTILO_PEDIDO[p.status] || ['', ''])[1]}">${escapeHtml((ESTILO_PEDIDO[p.status] || [p.status])[0])}</span></td>
+        <td class="px-6 py-3.5"><span class="px-2.5 py-0.5 rounded text-[12px] font-semibold ${(ESTILO_PEDIDO[p.status] || ['', ''])[1]}">${escapeHtml((ESTILO_PEDIDO[p.status] || [p.status])[0])}</span></td>
         <td class="px-6 py-3.5 text-right font-semibold">${formatarPreco(p.total)}</td>
       </tr>`
     )

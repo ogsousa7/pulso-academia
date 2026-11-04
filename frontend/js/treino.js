@@ -30,8 +30,8 @@ function desenharPlano({ fonte, treino }) {
       <span>Plano de treino</span>
     </div>
     <div class="flex flex-wrap items-center justify-between gap-3 mb-5 nao-imprimir">
-      <span class="px-3 py-1 rounded-full bg-oliva/10 text-oliva text-[13px] font-semibold">${selo}</span>
-      <button type="button" id="btnImprimir" class="px-4 py-2 rounded-full bg-tinta/[0.06] text-[14px] font-semibold hover:bg-tinta/10 transition">Imprimir</button>
+      <span class="px-3 py-1 rounded bg-oliva/10 text-oliva text-[13px] font-semibold">${selo}</span>
+      <button type="button" id="btnImprimir" class="px-4 py-2 rounded bg-tinta/[0.06] text-[14px] font-semibold hover:bg-tinta/10 transition">Imprimir</button>
     </div>
     <h2 class="titulo-secao">${escapeHtml(treino.titulo)}</h2>
     <p class="mt-2 text-[17px] text-grafite/65 leading-snug">${escapeHtml(treino.resumo)}</p>
@@ -69,7 +69,7 @@ function desenharPlano({ fonte, treino }) {
 
     <div class="mt-6 flex flex-wrap gap-3 nao-imprimir">
       <a href="aluno.html" class="botao-destaque">Agendar aula com um professor</a>
-      <button type="button" id="btnRefazer" class="px-6 py-3 rounded-full bg-tinta/[0.06] text-[15px] font-medium hover:bg-tinta/10 transition">Mudar as respostas</button>
+      <button type="button" id="btnRefazer" class="px-6 py-3 rounded bg-tinta/[0.06] text-[15px] font-medium hover:bg-tinta/10 transition">Mudar as respostas</button>
     </div>`;
 
   document.getElementById('btnImprimir').addEventListener('click', () => window.print());

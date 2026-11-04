@@ -105,7 +105,7 @@ const CarrinhoUI = {
     botao.id = 'btnCarrinho';
     botao.type = 'button';
     botao.setAttribute('aria-label', 'Abrir carrinho');
-    botao.className = 'relative w-9 h-9 rounded-full flex items-center justify-center text-grafite hover:bg-tinta/5 transition';
+    botao.className = 'relative w-9 h-9 rounded flex items-center justify-center text-grafite hover:bg-tinta/5 transition';
     botao.innerHTML = `
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <path d="M6 7h12l-1 13H7L6 7Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
@@ -124,7 +124,7 @@ const CarrinhoUI = {
         class="fixed top-0 right-0 h-full w-full max-w-md bg-superficie z-[80] shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
         <div class="flex items-center justify-between px-6 pt-6 pb-2 shrink-0">
           <h2 class="text-[28px] font-bold tracking-tight">Carrinho</h2>
-          <button id="cartFechar" type="button" aria-label="Fechar carrinho" class="w-8 h-8 flex items-center justify-center rounded-full bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10">
+          <button id="cartFechar" type="button" aria-label="Fechar carrinho" class="w-8 h-8 flex items-center justify-center rounded bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -198,9 +198,9 @@ const CarrinhoUI = {
         const controles = i.tipo === 'PLANO'
           ? `<p class="text-xs text-grafite/65 mt-2">Plano de assinatura</p>`
           : `<div class="flex items-center gap-1 mt-2">
-               <button type="button" data-acao="menos" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Diminuir quantidade de ${escapeHtml(i.nome)}" class="w-7 h-7 rounded-full bg-tinta/[0.06] hover:bg-tinta/10 font-semibold">−</button>
+               <button type="button" data-acao="menos" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Diminuir quantidade de ${escapeHtml(i.nome)}" class="w-7 h-7 rounded bg-tinta/[0.06] hover:bg-tinta/10 font-semibold">−</button>
                <span class="w-7 text-center text-sm font-semibold" aria-live="polite">${i.quantidade}</span>
-               <button type="button" data-acao="mais" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Aumentar quantidade de ${escapeHtml(i.nome)}" class="w-7 h-7 rounded-full bg-tinta/[0.06] hover:bg-tinta/10 font-semibold">+</button>
+               <button type="button" data-acao="mais" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Aumentar quantidade de ${escapeHtml(i.nome)}" class="w-7 h-7 rounded bg-tinta/[0.06] hover:bg-tinta/10 font-semibold">+</button>
              </div>`;
         return `
           <div class="flex gap-4">
@@ -211,7 +211,7 @@ const CarrinhoUI = {
               ${controles}
             </div>
             <button type="button" data-acao="remover" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Remover ${escapeHtml(i.nome)} do carrinho"
-              class="self-start w-8 h-8 flex items-center justify-center rounded-full text-grafite/65 hover:bg-grafite/5 hover:text-terracota">
+              class="self-start w-8 h-8 flex items-center justify-center rounded text-grafite/65 hover:bg-grafite/5 hover:text-terracota">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
             </button>
           </div>`;

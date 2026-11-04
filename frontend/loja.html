@@ -39,7 +39,7 @@
     </a>
 
     <nav class="hidden md:flex items-center gap-8 text-[14px] font-medium">
-      <a href="index.html#sobre" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Sobre</a>
+      <a href="index.html#sobre" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Sobre nós</a>
       <a href="loja.html" class="link-topo text-grafite font-semibold transition-colors" aria-current="page">Planos e loja</a>
       <a href="treino.html" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Monte seu treino</a>
       <a href="index.html#onde-estamos" class="link-topo text-grafite/70 hover:text-grafite transition-colors">Onde estamos</a>
@@ -47,15 +47,15 @@
     </nav>
 
     <div class="flex items-center gap-2">
-      <button id="btnEntrar" class="px-4 py-2 rounded-full bg-grafite text-superficie text-[14px] font-medium hover:bg-grafite/85 transition">Entrar</button>
-      <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-tinta/5">
+      <button id="btnEntrar" class="px-4 py-2 rounded bg-grafite text-superficie text-[14px] font-medium hover:bg-grafite/85 transition">Entrar</button>
+      <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-10 h-10 flex items-center justify-center rounded hover:bg-tinta/5">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
 
   <div id="mobileMenu" class="hidden md:hidden flex-col px-5 pb-3 text-[17px] font-semibold">
-    <a href="index.html#sobre" class="py-3 border-b border-tinta/5 last:border-0">Sobre</a>
+    <a href="index.html#sobre" class="py-3 border-b border-tinta/5 last:border-0">Sobre nós</a>
     <a href="loja.html" class="py-3 border-b border-tinta/5 last:border-0">Planos e loja</a>
     <a href="treino.html" class="py-3 border-b border-tinta/5 last:border-0">Monte seu treino</a>
     <a href="index.html#onde-estamos" class="py-3 border-b border-tinta/5 last:border-0">Onde estamos</a>
@@ -114,29 +114,23 @@
         <h2 class="titulo-secao mt-2">Retire na academia.</h2>
         <p class="text-[15px] text-grafite/65 mt-1 mb-6">Seus produtos ficam esperando na recepção.</p>
 
-        <div class="grid lg:grid-cols-3 gap-4 items-stretch">
-          <div class="lg:col-span-2 relative rounded-3xl overflow-hidden bg-superficie min-h-[300px] md:min-h-[400px]">
-            <div id="mapaAcademia" class="absolute inset-0 flex items-center justify-center text-grafite/65 text-sm">Carregando mapa…</div>
-          </div>
-
-          <div class="bg-superficie rounded-3xl p-7 md:p-8 flex flex-col gap-6">
-            <div>
-              <p class="text-[13px] text-grafite/65 mb-1">Endereço</p>
-              <p class="text-[17px] font-semibold leading-snug" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p>
-            </div>
-            <div>
-              <p class="text-[13px] text-grafite/65 mb-1">Horário de retirada</p>
-              <p class="text-[15px]" data-academia="horario_semana">Segunda a sexta: 6h – 22h</p>
-              <p class="text-[15px]" data-academia="horario_sabado">Sábado: 8h – 14h</p>
-            </div>
-            <div class="flex flex-col gap-2 mt-auto">
-              <a id="linkComoChegar" href="https://www.google.com/maps/dir/?api=1&destination=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer"
-                class="text-center py-3 rounded-full bg-petroleo text-white text-[15px] font-medium hover:bg-petroleo/90 transition">Como chegar</a>
-              <a id="linkAbrirMapa" href="https://www.google.com/maps/search/?api=1&query=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer"
-                class="text-center py-3 text-[15px] font-medium text-petroleo hover:underline">Abrir no Google Maps</a>
-            </div>
-          </div>
+        <div data-revela class="onde">
+        <div class="onde-mapa">
+          <div id="mapaAcademia" class="absolute inset-0 flex items-center justify-center text-white/70 text-sm">Carregando mapa…</div>
         </div>
+        <aside class="onde-cartao">
+          <img src="img/logo-horizontal.png" alt="Pulso Academia" class="logo-branca h-9 w-auto self-start">
+          <p class="onde-status" id="statusAcademia" hidden></p>
+          <ul class="onde-info">
+          <li><span class="onde-icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="2"/></svg></span><div><p class="onde-rotulo">Endereço</p><p class="font-semibold" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p></div></li>
+          <li><span class="onde-icone"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><p class="onde-rotulo">Horário de retirada</p><p data-academia="horario_semana">Segunda a sexta: 6h – 22h</p><p data-academia="horario_sabado">Sábado: 8h – 14h</p><p>Domingo: fechado</p></div></li>
+          </ul>
+          <div class="mt-auto pt-2 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <a id="linkComoChegar" href="https://www.google.com/maps/dir/?api=1&destination=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer" class="botao-destaque">Como chegar</a>
+            <a id="linkAbrirMapa" href="https://www.google.com/maps/search/?api=1&query=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer" class="link-seta">Abrir no mapa <span aria-hidden="true">→</span></a>
+          </div>
+        </aside>
+      </div>
       </section>
     </div>
   </section>
@@ -155,14 +149,14 @@
   <div class="grid md:grid-cols-2">
     <div class="relative bg-offwhite aspect-square md:aspect-auto md:min-h-[520px]">
       <img id="pdFoto" alt="" class="absolute inset-0 w-full h-full object-cover">
-      <button type="button" data-fechar aria-label="Fechar" class="absolute top-4 right-4 md:hidden w-9 h-9 rounded-full bg-superficie/85 backdrop-blur flex items-center justify-center">
+      <button type="button" data-fechar aria-label="Fechar" class="absolute top-4 right-4 md:hidden w-9 h-9 rounded bg-superficie/85 backdrop-blur flex items-center justify-center">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
       </button>
     </div>
     <div class="p-6 md:p-9 flex flex-col">
       <div class="flex items-start justify-between gap-4">
         <p id="pdCategoria" class="text-[13px] font-semibold text-petroleo"></p>
-        <button type="button" data-fechar aria-label="Fechar" class="hidden md:flex w-8 h-8 rounded-full bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10 items-center justify-center shrink-0">
+        <button type="button" data-fechar aria-label="Fechar" class="hidden md:flex w-8 h-8 rounded bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10 items-center justify-center shrink-0">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
         </button>
       </div>
@@ -176,12 +170,12 @@
         Retire grátis na recepção da academia.
       </div>
       <div class="mt-auto pt-7 flex items-center gap-3">
-        <div class="flex items-center bg-offwhite rounded-full p-1" role="group" aria-label="Quantidade">
-          <button type="button" id="pdMenos" aria-label="Diminuir quantidade" class="w-9 h-9 rounded-full hover:bg-tinta/[0.06] text-[18px] font-semibold">−</button>
+        <div class="flex items-center bg-offwhite rounded p-1" role="group" aria-label="Quantidade">
+          <button type="button" id="pdMenos" aria-label="Diminuir quantidade" class="w-9 h-9 rounded hover:bg-tinta/[0.06] text-[18px] font-semibold">−</button>
           <span id="pdQtd" class="w-8 text-center text-[17px] font-semibold tabular-nums" aria-live="polite">1</span>
-          <button type="button" id="pdMais" aria-label="Aumentar quantidade" class="w-9 h-9 rounded-full hover:bg-tinta/[0.06] text-[18px] font-semibold">+</button>
+          <button type="button" id="pdMais" aria-label="Aumentar quantidade" class="w-9 h-9 rounded hover:bg-tinta/[0.06] text-[18px] font-semibold">+</button>
         </div>
-        <button type="button" id="pdAdicionar" class="flex-1 py-3.5 rounded-full bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition">Adicionar ao carrinho</button>
+        <button type="button" id="pdAdicionar" class="flex-1 py-3.5 rounded bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition">Adicionar ao carrinho</button>
       </div>
     </div>
   </div>

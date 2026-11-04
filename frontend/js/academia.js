@@ -47,10 +47,45 @@
     alvo.replaceChildren(iframe);
   }
 
+  // Lê "6h – 22h" do texto do horário. Domingo: fechado (a academia não tem horário de domingo).
+  const DIAS = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  function faixaDoDia(dia) {
+    if (dia === 0) return null;
+    const campo = dia === 6 ? 'horario_sabado' : 'horario_semana';
+    const texto = document.querySelector(`[data-academia="${campo}"]`)?.textContent || '';
+    const m = /(\d{1,2})h\s*[–-]\s*(\d{1,2})h/.exec(texto);
+    return m ? [Number(m[1]), Number(m[2])] : null;
+  }
+
+  function mostrarStatus() {
+    const el = document.getElementById('statusAcademia');
+    if (!el) return;
+    const agora = new Date();
+    const dia = agora.getDay();
+    const hora = agora.getHours() + agora.getMinutes() / 60;
+    const hoje = faixaDoDia(dia);
+    if (hoje && hora >= hoje[0] && hora < hoje[1]) {
+      el.dataset.aberto = 'sim';
+      el.textContent = `Aberto agora · fecha às ${hoje[1]}h`;
+    } else {
+      el.dataset.aberto = 'nao';
+      let quando = '';
+      for (let i = 0; i < 7 && !quando; i += 1) {
+        const faixa = faixaDoDia((dia + i) % 7);
+        if (!faixa || (i === 0 && hora >= faixa[0])) continue;
+        quando = i === 0 ? `abre às ${faixa[0]}h` : i === 1 ? `abre amanhã às ${faixa[0]}h` : `abre ${DIAS[(dia + i) % 7]} às ${faixa[0]}h`;
+      }
+      el.textContent = quando ? `Fechado agora · ${quando}` : 'Fechado agora';
+    }
+    el.hidden = false;
+  }
+
+  mostrarStatus();
   Api.obterAcademia()
     .then(({ academia, mapa }) => {
       preencherTextos(academia);
       montarMapa(mapa);
+      mostrarStatus();
     })
     .catch(() => {
       // API fora do ar: os textos padrão do HTML continuam e o mapa mostra um aviso.

@@ -103,9 +103,9 @@ function linhaItem(i) {
   const controles = i.tipo === 'PLANO'
     ? `<p class="text-xs text-grafite/65 mt-1">Plano de assinatura</p>`
     : `<div class="flex items-center gap-1 mt-1">
-         <button type="button" data-acao="menos" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Diminuir quantidade de ${escapeHtml(i.nome)}" class="w-6 h-6 rounded-full bg-tinta/[0.06] hover:bg-tinta/10 text-sm font-bold">−</button>
+         <button type="button" data-acao="menos" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Diminuir quantidade de ${escapeHtml(i.nome)}" class="w-6 h-6 rounded bg-tinta/[0.06] hover:bg-tinta/10 text-sm font-bold">−</button>
          <span class="w-6 text-center text-sm font-semibold">${i.quantidade}</span>
-         <button type="button" data-acao="mais" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Aumentar quantidade de ${escapeHtml(i.nome)}" class="w-6 h-6 rounded-full bg-tinta/[0.06] hover:bg-tinta/10 text-sm font-bold">+</button>
+         <button type="button" data-acao="mais" data-tipo="${i.tipo}" data-id="${i.id}" aria-label="Aumentar quantidade de ${escapeHtml(i.nome)}" class="w-6 h-6 rounded bg-tinta/[0.06] hover:bg-tinta/10 text-sm font-bold">+</button>
        </div>`;
   return `
     <div class="flex gap-3 py-3 border-b border-tinta/[0.06] last:border-0">
@@ -156,7 +156,7 @@ function renderRecebimento(itens) {
   if (produtos.length) {
     linhas.push(`
       <div class="flex gap-4 px-5 py-4">
-        <span class="w-10 h-10 rounded-full bg-petroleo/10 text-petroleo flex items-center justify-center shrink-0">
+        <span class="w-10 h-10 rounded bg-petroleo/10 text-petroleo flex items-center justify-center shrink-0">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5V20H3v-9.5Z"/><path d="M9.5 20v-5h5v5"/></svg>
         </span>
         <div class="min-w-0">
@@ -170,7 +170,7 @@ function renderRecebimento(itens) {
   if (plano) {
     linhas.push(`
       <div class="flex gap-4 px-5 py-4">
-        <span class="w-10 h-10 rounded-full bg-oliva/10 text-oliva flex items-center justify-center shrink-0">
+        <span class="w-10 h-10 rounded bg-oliva/10 text-oliva flex items-center justify-center shrink-0">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 9.5h17M8 3v4M16 3v4M9 14.5l2 2 4-4"/></svg>
         </span>
         <div class="min-w-0">
@@ -224,7 +224,7 @@ function etapas(atual) {
           : n;
         return `
           <li class="flex items-center gap-2 ${agora ? 'text-grafite font-semibold' : feito ? 'text-petroleo font-medium' : 'text-grafite/65'}" ${agora ? 'aria-current="step"' : ''}>
-            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[12px] font-semibold ${agora ? 'bg-grafite text-superficie' : feito ? 'bg-petroleo/15 text-petroleo' : 'bg-tinta/[0.06]'}">${bolinha}</span>
+            <span class="w-6 h-6 rounded flex items-center justify-center text-[12px] font-semibold ${agora ? 'bg-grafite text-superficie' : feito ? 'bg-petroleo/15 text-petroleo' : 'bg-tinta/[0.06]'}">${bolinha}</span>
             ${nome}
           </li>
           ${n < nomes.length ? '<li aria-hidden="true" class="flex-1 max-w-[64px] h-px bg-tinta/10"></li>' : ''}`;
@@ -241,7 +241,7 @@ function renderVazio() {
     <div class="bg-superficie rounded-3xl p-10 text-center max-w-lg mx-auto">
       <p class="font-bold text-[21px] mb-1">Seu carrinho está vazio</p>
       <p class="text-grafite/65 text-sm mb-6">Escolha um plano ou um produto na loja para continuar.</p>
-      <a href="loja.html" class="inline-block px-6 py-3 rounded-full bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">Ir para a loja</a>
+      <a href="loja.html" class="inline-block px-6 py-3 rounded bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">Ir para a loja</a>
     </div>`;
 }
 
@@ -250,12 +250,12 @@ function renderExpirado(pedido) {
   emFormulario = false;
   raiz.innerHTML = `
     <div class="bg-superficie rounded-3xl p-8 max-w-lg">
-      <div class="w-12 h-12 rounded-full bg-terracota/15 flex items-center justify-center mb-4">
+      <div class="w-12 h-12 rounded bg-terracota/15 flex items-center justify-center mb-4">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#C47A52" stroke-width="2"/><path d="M12 7v5l3 2" stroke="#C47A52" stroke-width="2" stroke-linecap="round"/></svg>
       </div>
       <h2 class="text-xl font-bold mb-1">Pedido #${pedido.id} expirado</h2>
       <p class="text-grafite/65 text-sm mb-6">O prazo para pagar com ${escapeHtml(NOME_METODO[pedido.metodo] || pedido.metodo)} terminou. Seus itens continuam no carrinho — é só gerar um novo pagamento.</p>
-      <a href="checkout.html" class="inline-block px-6 py-3 rounded-full bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">Voltar ao pagamento</a>
+      <a href="checkout.html" class="inline-block px-6 py-3 rounded bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">Voltar ao pagamento</a>
     </div>`;
 }
 
@@ -297,7 +297,7 @@ function renderConfirmado(pedido) {
     ${etapas(4)}
     <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_400px] gap-6 lg:gap-8 items-start">
       <section class="bg-superficie rounded-3xl p-6 md:p-10 text-center">
-        <div class="w-16 h-16 rounded-full bg-oliva/15 flex items-center justify-center mx-auto mb-5">
+        <div class="w-16 h-16 rounded bg-oliva/15 flex items-center justify-center mx-auto mb-5">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#6F7F4C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <h2 class="text-[28px] md:text-[34px] font-bold tracking-tight">Pagamento confirmado</h2>
@@ -306,9 +306,9 @@ function renderConfirmado(pedido) {
           ${proximos.map((t) => `<li class="flex gap-3"><svg class="shrink-0 mt-0.5 text-petroleo" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4L19 7"/></svg><span>${t}</span></li>`).join('')}
         </ul>
         <div class="flex flex-wrap justify-center gap-3 mt-8 print:hidden">
-          <a href="${pedido.vencimento ? 'aluno.html' : 'index.html'}" class="px-6 py-3 rounded-full bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">${pedido.vencimento ? 'Ir para minha área' : 'Voltar ao início'}</a>
-          <a href="loja.html" class="px-6 py-3 rounded-full bg-tinta/[0.06] text-[15px] font-medium hover:bg-tinta/10 transition">Continuar na loja</a>
-          <button type="button" onclick="window.print()" class="px-6 py-3 rounded-full text-[15px] font-medium text-petroleo hover:underline">Imprimir comprovante</button>
+          <a href="${pedido.vencimento ? 'aluno.html' : 'index.html'}" class="px-6 py-3 rounded bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">${pedido.vencimento ? 'Ir para minha área' : 'Voltar ao início'}</a>
+          <a href="loja.html" class="px-6 py-3 rounded bg-tinta/[0.06] text-[15px] font-medium hover:bg-tinta/10 transition">Continuar na loja</a>
+          <button type="button" onclick="window.print()" class="px-6 py-3 rounded text-[15px] font-medium text-petroleo hover:underline">Imprimir comprovante</button>
         </div>
       </section>
 
@@ -330,7 +330,7 @@ function renderConfirmado(pedido) {
 /* ------------------------- Aguardando Pix / boleto ------------------------- */
 
 const botaoCopiar = (alvoId, texto) => `
-  <button type="button" data-copiar="${alvoId}" class="shrink-0 px-4 py-2 rounded-full bg-tinta/[0.06] text-sm font-semibold hover:bg-tinta/10 transition">${texto}</button>`;
+  <button type="button" data-copiar="${alvoId}" class="shrink-0 px-4 py-2 rounded bg-tinta/[0.06] text-sm font-semibold hover:bg-tinta/10 transition">${texto}</button>`;
 
 /** Barras decorativas a partir dos dígitos (não é um código de barras válido de propósito). */
 function desenharBarras(digitos) {
@@ -401,13 +401,13 @@ function renderAguardando(pedido) {
         <div class="bg-superficie rounded-3xl p-6">
           <h3 class="font-bold mb-3">Como pagar</h3>
           <ol class="flex flex-col gap-3 text-sm text-grafite/70">
-            ${passos.map((p, n) => `<li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-petroleo/10 text-petroleo text-xs font-bold flex items-center justify-center shrink-0">${n + 1}</span><span>${p}</span></li>`).join('')}
+            ${passos.map((p, n) => `<li class="flex gap-3"><span class="w-6 h-6 rounded bg-petroleo/10 text-petroleo text-xs font-bold flex items-center justify-center shrink-0">${n + 1}</span><span>${p}</span></li>`).join('')}
           </ol>
         </div>
         <div class="bg-superficie/60 border border-dashed border-linha rounded-3xl p-6">
           <p class="text-[13px] font-semibold text-grafite/65 mb-1">Ambiente de demonstração</p>
           <p class="text-sm text-grafite/70 mb-4">Nenhum banco participa deste pagamento. Use o botão para simular o aviso de “pago” que o banco enviaria.</p>
-          <button id="btnSimularPagamento" type="button" class="w-full py-3 rounded-full bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">Simular pagamento</button>
+          <button id="btnSimularPagamento" type="button" class="w-full py-3 rounded bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">Simular pagamento</button>
         </div>
       </aside>
     </div>`;
@@ -484,12 +484,12 @@ function renderFormulario() {
   const opcoes = ['PIX', 'CARTAO', 'BOLETO'].map((m) => `
     <label class="flex items-center gap-4 px-5 py-4 cursor-pointer has-[:checked]:bg-petroleo/[0.05]">
       <input type="radio" name="metodo" value="${m}" class="peer sr-only" ${m === metodo ? 'checked' : ''}>
-      <span class="w-10 h-10 rounded-full bg-offwhite text-grafite/70 flex items-center justify-center shrink-0 peer-checked:bg-petroleo peer-checked:text-white transition">${ICONES_METODO[m]}</span>
+      <span class="w-10 h-10 rounded bg-offwhite text-grafite/70 flex items-center justify-center shrink-0 peer-checked:bg-petroleo peer-checked:text-white transition">${ICONES_METODO[m]}</span>
       <span class="flex-1 min-w-0">
         <span class="block text-[16px] font-semibold">${NOME_METODO[m]}</span>
         <span class="block text-[13px] text-grafite/65">${SUBTITULO_METODO[m]}</span>
       </span>
-      ${m === 'PIX' ? '<span class="hidden sm:inline px-2.5 py-0.5 rounded-full bg-oliva/10 text-oliva text-[12px] font-semibold">Mais rápido</span>' : ''}
+      ${m === 'PIX' ? '<span class="hidden sm:inline px-2.5 py-0.5 rounded bg-oliva/10 text-oliva text-[12px] font-semibold">Mais rápido</span>' : ''}
       <span class="w-5 h-5 rounded-full ring-2 ring-tinta/15 flex items-center justify-center shrink-0 peer-checked:ring-petroleo peer-checked:[&>span]:scale-100" aria-hidden="true"><span class="w-2.5 h-2.5 rounded-full bg-petroleo scale-0 transition-transform"></span></span>
     </label>`).join('');
 

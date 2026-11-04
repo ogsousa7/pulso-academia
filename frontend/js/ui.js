@@ -391,7 +391,7 @@ function montarAcessibilidade() {
   botao.id = 'btnAcessibilidade';
   botao.setAttribute('aria-label', 'Acessibilidade: tema, tamanho do texto, contraste e leitura em voz alta');
   botao.setAttribute('aria-haspopup', 'dialog');
-  botao.className = 'w-9 h-9 rounded-full flex items-center justify-center text-grafite hover:bg-tinta/5 transition';
+  botao.className = 'w-9 h-9 rounded flex items-center justify-center text-grafite hover:bg-tinta/5 transition';
   botao.innerHTML = A11Y_ICONE;
   if (slot) slot.appendChild(botao);
   else ancora.parentElement.insertBefore(botao, ancora);
@@ -400,14 +400,14 @@ function montarAcessibilidade() {
   const opcaoTema = (valor, rotulo) => `
     <label class="flex-1">
       <input type="radio" name="a11yTema" value="${valor}" class="peer sr-only" ${tema === valor ? 'checked' : ''}>
-      <span class="block text-center py-2 rounded-[9px] text-[14px] font-semibold cursor-pointer peer-checked:bg-superficie peer-checked:shadow peer-focus-visible:ring-2 peer-focus-visible:ring-petroleo">${rotulo}</span>
+      <span class="block text-center py-2 rounded text-[14px] font-semibold cursor-pointer peer-checked:bg-superficie peer-checked:shadow peer-focus-visible:ring-2 peer-focus-visible:ring-petroleo">${rotulo}</span>
     </label>`;
   document.body.insertAdjacentHTML('beforeend', `
     <dialog id="painelA11y" class="folha folha-pequena p-0" aria-labelledby="a11yTitulo">
       <div class="p-6">
         <div class="flex items-center justify-between gap-4">
           <h2 id="a11yTitulo" class="text-[24px] font-bold tracking-tight">Acessibilidade</h2>
-          <button type="button" data-fechar-a11y aria-label="Fechar" class="w-8 h-8 rounded-full bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10 flex items-center justify-center">
+          <button type="button" data-fechar-a11y aria-label="Fechar" class="w-8 h-8 rounded bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10 flex items-center justify-center">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
           </button>
         </div>
@@ -442,7 +442,7 @@ function montarAcessibilidade() {
             <p class="text-[15px] font-semibold">Ouvir esta página</p>
             <p class="text-[13px] text-grafite/65">O navegador lê o conteúdo em voz alta.</p>
           </div>
-          <button type="button" id="a11yOuvir" class="shrink-0 px-4 py-2 rounded-full bg-petroleo text-white text-[14px] font-semibold hover:brightness-110">Ouvir</button>
+          <button type="button" id="a11yOuvir" class="shrink-0 px-4 py-2 rounded bg-petroleo text-white text-[14px] font-semibold hover:brightness-110">Ouvir</button>
         </div>
 
         <ul class="mt-6 pt-5 border-t border-tinta/[0.08] flex flex-col gap-2.5 text-[13px] text-grafite/65">

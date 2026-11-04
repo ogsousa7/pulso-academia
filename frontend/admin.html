@@ -54,8 +54,8 @@
     </nav>
 
     <div class="flex items-center gap-2">
-      <button id="btnEntrar" class="px-4 py-2 rounded-full bg-grafite text-superficie text-[14px] font-medium hover:bg-grafite/85 transition">Entrar</button>
-      <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-tinta/5">
+      <button id="btnEntrar" class="px-4 py-2 rounded bg-grafite text-superficie text-[14px] font-medium hover:bg-grafite/85 transition">Entrar</button>
+      <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden w-10 h-10 flex items-center justify-center rounded hover:bg-tinta/5">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 8h16M4 16h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
       </button>
     </div>
@@ -163,10 +163,10 @@
     <div class="px-6 pt-5 pb-3 flex flex-wrap items-center justify-between gap-3">
       <h2 class="text-[19px] font-semibold tracking-tight">Pedidos e pagamentos da loja</h2>
       <div class="flex gap-2">
-        <select id="filtroPedStatus" aria-label="Filtrar por status" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie">
+        <select id="filtroPedStatus" aria-label="Filtrar por status" class="border border-grafite/15 rounded px-3 py-2 text-xs bg-superficie">
           <option value="">Todos os status</option><option value="PAGO">Pago</option><option value="PENDENTE">Pendente</option><option value="EXPIRADO">Expirado</option>
         </select>
-        <select id="filtroPedMetodo" aria-label="Filtrar por forma de pagamento" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie">
+        <select id="filtroPedMetodo" aria-label="Filtrar por forma de pagamento" class="border border-grafite/15 rounded px-3 py-2 text-xs bg-superficie">
           <option value="">Todas as formas</option><option value="CARTAO">Cartão</option><option value="PIX">Pix</option><option value="BOLETO">Boleto</option>
         </select>
       </div>
@@ -197,10 +197,10 @@
     <section class="bg-superficie rounded-3xl overflow-hidden">
       <div class="px-6 pt-5 pb-3 flex flex-wrap items-center gap-3">
         <h2 class="font-bold mr-auto">Todos os agendamentos</h2>
-        <input id="fData" type="date" aria-label="Data" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie">
+        <input id="fData" type="date" aria-label="Data" class="border border-grafite/15 rounded px-3 py-2 text-xs bg-superficie">
         <label class="text-xs flex items-center gap-1"><input id="fTodas" type="checkbox"> todas as datas</label>
-        <select id="fStatus" aria-label="Status" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie"></select>
-        <select id="fProfessor" aria-label="Professor" class="border border-grafite/15 rounded-full px-3 py-2 text-xs bg-superficie"></select>
+        <select id="fStatus" aria-label="Status" class="border border-grafite/15 rounded px-3 py-2 text-xs bg-superficie"></select>
+        <select id="fProfessor" aria-label="Professor" class="border border-grafite/15 rounded px-3 py-2 text-xs bg-superficie"></select>
       </div>
       <div class="overflow-x-auto">
         <table class="w-full text-sm min-w-[640px]">
@@ -262,7 +262,7 @@
         <textarea id="acDescricao" name="descricao" rows="3" maxlength="500" required class="w-full mt-1 border border-grafite/15 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-petroleo resize-none"></textarea>
       </div>
       <div class="md:col-span-2">
-        <button type="submit" id="acSalvar" class="px-6 py-3 rounded-full bg-petroleo text-white text-sm font-semibold hover:brightness-110 transition">Salvar informações</button>
+        <button type="submit" id="acSalvar" class="px-6 py-3 rounded bg-petroleo text-white text-sm font-semibold hover:brightness-110 transition">Salvar informações</button>
       </div>
     </form>
   </section>
@@ -272,7 +272,7 @@
 <!-- MODAL: CADASTRO GENÉRICO (planos, alunos, professores) -->
 <div id="cadModal" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-[60] hidden items-center justify-center px-4">
   <div class="bg-superficie rounded-3xl w-full max-w-md p-6 md:p-8 relative max-h-[90vh] overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="cadTitulo">
-    <button id="cadFechar" aria-label="Fechar" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10">
+    <button id="cadFechar" aria-label="Fechar" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
     </button>
     <p id="cadTitulo" class="text-xl font-bold mb-5"></p>
@@ -283,7 +283,7 @@
 <!-- MODAL: NOVO AGENDAMENTO -->
 <div id="agendamentoModal" class="fixed inset-0 bg-black/30 backdrop-blur-sm z-[60] hidden items-center justify-center px-6">
   <div class="bg-superficie rounded-3xl w-full max-w-sm p-8 relative" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
-    <button id="modalFechar" aria-label="Fechar" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10">
+    <button id="modalFechar" aria-label="Fechar" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded bg-tinta/[0.06] text-grafite/65 hover:bg-tinta/10">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
     </button>
     <p id="modalTitulo" class="text-[24px] font-bold tracking-tight mb-1">Novo agendamento</p>

@@ -63,14 +63,14 @@ async function carregarAgenda() {
             <div class="px-5 py-3.5 flex items-center justify-between gap-3">
               <div class="flex items-center gap-4 min-w-0">
                 <span class="text-[17px] font-semibold tabular-nums w-14 shrink-0">${escapeHtml(a.hora)}</span>
-                <span class="w-[3px] self-stretch rounded-full bg-petroleo/70"></span>
+                <span class="w-[3px] self-stretch rounded bg-petroleo/70"></span>
                 <div class="min-w-0">
                   <p class="text-[17px] font-medium truncate">${escapeHtml(a.aluno_nome)}</p>
                   <p class="text-[14px] text-grafite/65">${escapeHtml(a.tipo_treino)}, ${escapeHtml(a.nivel.toLowerCase())}</p>
                 </div>
               </div>
               <div class="flex flex-col sm:flex-row items-end sm:items-center gap-2 shrink-0">
-                <span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${ESTILO_AULA[a.status] || ''}">${escapeHtml(a.status)}</span>
+                <span class="px-2.5 py-0.5 rounded text-[12px] font-semibold ${ESTILO_AULA[a.status] || ''}">${escapeHtml(a.status)}</span>
                 ${data === HOJE ? `<button type="button" data-aula="${a.id}" data-status="${a.status === 'Confirmado' ? 'Em andamento' : 'Confirmado'}"
                   class="text-[13px] font-semibold ${a.status === 'Confirmado' ? 'text-petroleo' : 'text-grafite/65'} hover:underline">${a.status === 'Confirmado' ? 'Iniciar aula' : 'Desfazer'}</button>` : ''}
               </div>

@@ -33,7 +33,7 @@
     convite.innerHTML = `
       <img src="img/icons/icon-192.png" alt="" class="w-11 h-11 rounded-xl">
       <p class="text-sm flex-1"><strong>Instale o app da Pulso</strong><br><span class="text-grafite/65">${texto}</span></p>
-      ${comBotao ? '<button data-instalar class="px-4 py-2 rounded-full bg-petroleo text-white text-sm font-semibold">Instalar</button>' : ''}
+      ${comBotao ? '<button data-instalar class="px-4 py-2 rounded bg-petroleo text-white text-sm font-semibold">Instalar</button>' : ''}
       <button data-fechar aria-label="Fechar" class="text-grafite/65 text-xl leading-none px-1">×</button>`;
     document.body.appendChild(convite);
     convite.querySelector('[data-fechar]').onclick = () => {

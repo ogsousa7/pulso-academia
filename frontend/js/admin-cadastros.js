@@ -30,8 +30,8 @@ function abrirAba(nome) {
 document.querySelectorAll('.aba').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
 
 const SIM_NAO = (v) => (v
-  ? '<span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold bg-oliva/10 text-oliva">Ativo</span>'
-  : '<span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold bg-terracota/10 text-terracota">Inativo</span>');
+  ? '<span class="px-2.5 py-0.5 rounded text-[12px] font-semibold bg-oliva/10 text-oliva">Ativo</span>'
+  : '<span class="px-2.5 py-0.5 rounded text-[12px] font-semibold bg-terracota/10 text-terracota">Inativo</span>');
 
 /* ---------- Cadastros genéricos (planos, alunos, professores) ---------- */
 
@@ -126,8 +126,8 @@ for (const cfg of Object.values(CADASTROS)) {
           <h2 class="text-[19px] font-semibold tracking-tight">${cfg.plural}</h2>
           <div class="flex items-center gap-2">
             ${cfg.busca ? `<input type="search" data-busca placeholder="${cfg.buscaDica || 'Buscar por nome ou e-mail'}" aria-label="Buscar"
-              class="border border-grafite/15 rounded-full px-4 py-2 text-xs focus:outline-none focus:border-petroleo">` : ''}
-            <button data-novo class="px-4 py-2 rounded-full bg-petroleo text-white text-[14px] font-medium hover:brightness-110 transition">Novo ${cfg.singular}</button>
+              class="border border-grafite/15 rounded px-4 py-2 text-xs focus:outline-none focus:border-petroleo">` : ''}
+            <button data-novo class="px-4 py-2 rounded bg-petroleo text-white text-[14px] font-medium hover:brightness-110 transition">Novo ${cfg.singular}</button>
           </div>
         </div>
         <div class="overflow-x-auto"><table class="w-full text-sm min-w-[520px]">
@@ -195,7 +195,7 @@ function abrirCadastro(cfg, item) {
           <p class="text-[13px] font-medium text-grafite/65">${c.rotulo}</p>
           <div class="flex items-center gap-4 mt-1">
             <img id="cadFotoPrevia" src="${escapeHtml(v || 'img/logo-icon.png')}" alt="" onerror="fotoReserva(this)" class="w-20 h-20 rounded-2xl object-cover bg-offwhite shrink-0">
-            <label class="px-4 py-2 rounded-full bg-tinta/[0.06] text-[14px] font-semibold cursor-pointer hover:bg-tinta/10 focus-within:ring-2 focus-within:ring-petroleo transition">
+            <label class="px-4 py-2 rounded bg-tinta/[0.06] text-[14px] font-semibold cursor-pointer hover:bg-tinta/10 focus-within:ring-2 focus-within:ring-petroleo transition">
               Escolher foto<input id="cadFotoArquivo" type="file" accept="image/*" class="sr-only">
             </label>
           </div>
@@ -321,7 +321,7 @@ async function carregarAgendamentos() {
           <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(a.professor)}</td>
           <td class="px-6 py-3.5 text-grafite/70">${escapeHtml(a.tipo_treino)}, ${escapeHtml(a.nivel.toLowerCase())}</td>
           <td class="px-6 py-3.5">
-            <select data-aula="${a.id}" aria-label="Status da aula" class="border border-grafite/15 rounded-full px-3 py-1.5 text-xs font-semibold bg-superficie">
+            <select data-aula="${a.id}" aria-label="Status da aula" class="border border-grafite/15 rounded px-3 py-1.5 text-xs font-semibold bg-superficie">
               ${opcoesAdmin.statusAgendamento.map((s) => `<option ${s === a.status ? 'selected' : ''}>${s}</option>`).join('')}
             </select>
           </td>
@@ -369,14 +369,14 @@ async function carregarSolicitacoes() {
         <div class="bg-superficie rounded-3xl p-5 md:p-6">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
             <div><p class="text-[17px] font-semibold">${escapeHtml(s.aluno_nome)}</p><p class="text-grafite/65 text-[13px]">${escapeHtml(s.plano_nome)}, pedido em ${formatarDataHora(s.criado_em)}</p></div>
-            <span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${ROTULO_SOL[s.status][1]}">${ROTULO_SOL[s.status][0]}</span>
+            <span class="px-2.5 py-0.5 rounded text-[12px] font-semibold ${ROTULO_SOL[s.status][1]}">${ROTULO_SOL[s.status][0]}</span>
           </div>
           <p class="text-sm text-grafite/70">“${escapeHtml(s.motivo)}”</p>
           ${s.status === 'PENDENTE' ? `
             <div class="mt-4 flex flex-wrap gap-2" data-sol="${s.id}">
-              <input data-resposta placeholder="Resposta ao aluno (opcional)" maxlength="300" class="flex-1 min-w-[200px] border border-grafite/15 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-petroleo">
-              <button data-decisao="APROVADA" class="px-5 py-2 rounded-full bg-petroleo text-white text-sm font-semibold hover:brightness-110">Aprovar</button>
-              <button data-decisao="RECUSADA" class="px-5 py-2 rounded-full bg-terracota/10 text-terracota text-sm font-semibold hover:bg-terracota/15">Recusar</button>
+              <input data-resposta placeholder="Resposta ao aluno (opcional)" maxlength="300" class="flex-1 min-w-[200px] border border-grafite/15 rounded px-4 py-2 text-sm focus:outline-none focus:border-petroleo">
+              <button data-decisao="APROVADA" class="px-5 py-2 rounded bg-petroleo text-white text-sm font-semibold hover:brightness-110">Aprovar</button>
+              <button data-decisao="RECUSADA" class="px-5 py-2 rounded bg-terracota/10 text-terracota text-sm font-semibold hover:bg-terracota/15">Recusar</button>
             </div>` : (s.resposta ? `<p class="text-sm mt-2">Resposta: ${escapeHtml(s.resposta)}</p>` : '')}
         </div>`).join('')
       : '<div class="bg-superficie rounded-3xl p-8 text-center text-grafite/65 text-[15px]">Nenhum pedido de cancelamento.</div>';

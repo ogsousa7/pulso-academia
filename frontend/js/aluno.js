@@ -137,7 +137,7 @@ async function carregarAulas() {
           <p class="text-[14px] text-grafite/65 mt-0.5">${escapeHtml(a.tipo_treino)}, ${escapeHtml(a.nivel.toLowerCase())}, com ${escapeHtml(a.professor)}</p>
         </div>
         <div class="flex flex-col sm:flex-row items-end sm:items-center gap-2 shrink-0">
-          <span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${ESTILO_AULA[a.status] || ''}">${escapeHtml(a.status)}</span>
+          <span class="px-2.5 py-0.5 rounded text-[12px] font-semibold ${ESTILO_AULA[a.status] || ''}">${escapeHtml(a.status)}</span>
           ${a.podeCancelar ? `<button data-cancelar="${a.id}" class="text-[14px] font-medium text-terracota hover:underline">Cancelar</button>` : ''}
         </div>
       </div>`).join('')}</div>
@@ -171,7 +171,7 @@ async function carregarPlano() {
     const aviso = solicitacao ? ROTULO_SOLICITACAO[solicitacao.status] : null;
     const respostaHtml = solicitacao
       ? `<div class="mt-4 rounded-2xl bg-offwhite p-4 text-[15px]">
-           <span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${aviso[1]}">${aviso[0]}</span>
+           <span class="px-2.5 py-0.5 rounded text-[12px] font-semibold ${aviso[1]}">${aviso[0]}</span>
            <p class="text-grafite/65 mt-2">Seu motivo: “${escapeHtml(solicitacao.motivo)}”</p>
            ${solicitacao.resposta ? `<p class="mt-1">Resposta da recepção: ${escapeHtml(solicitacao.resposta)}</p>` : ''}
          </div>` : '';
@@ -180,7 +180,7 @@ async function carregarPlano() {
       el('cartaoPlano').innerHTML = `
         <p class="font-bold mb-1">Você não tem um plano ativo.</p>
         <p class="text-sm text-grafite/65 mb-4">Escolha um plano na loja para poder agendar suas aulas.</p>
-        <a href="loja.html#planos" class="inline-block px-6 py-3 rounded-full bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">Ver planos</a>
+        <a href="loja.html#planos" class="inline-block px-6 py-3 rounded bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">Ver planos</a>
         ${respostaHtml}`;
       form.classList.add('hidden');
     } else {
@@ -236,7 +236,7 @@ async function carregarPedidos() {
         </div>
         <div class="flex flex-col items-end gap-1.5 shrink-0">
           <span class="text-[17px] font-semibold">${formatarPreco(p.total)}</span>
-          <span class="px-2.5 py-0.5 rounded-full text-[12px] font-semibold ${cor}">${escapeHtml(rotulo)}</span>
+          <span class="px-2.5 py-0.5 rounded text-[12px] font-semibold ${cor}">${escapeHtml(rotulo)}</span>
         </div>
       </div>`;
     }).join('')}</div>`;

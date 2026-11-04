@@ -102,7 +102,7 @@ function renderProdutos() {
         <div class="px-4 md:px-5 pb-4 md:pb-5 mt-auto pt-3 md:pt-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2.5">
           <p class="text-[15px] md:text-[17px] font-medium">${formatarPreco(p.preco)}</p>
           <button type="button" data-produto="${p.id}" aria-label="Adicionar ${escapeHtml(p.nome)} ao carrinho"
-            class="w-full md:w-auto px-4 py-2 md:py-1.5 rounded-full bg-petroleo text-white text-[13px] font-medium hover:bg-petroleo/90 transition">
+            class="w-full md:w-auto px-4 py-2 md:py-1.5 rounded bg-petroleo text-white text-[13px] font-medium hover:bg-petroleo/90 transition">
             Adicionar
           </button>
         </div>
