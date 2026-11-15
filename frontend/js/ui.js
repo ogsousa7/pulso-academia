@@ -527,6 +527,27 @@ function montarWhatsApp() {
   document.body.appendChild(a);
 }
 
+/* ---------- Faixa de promoção no topo (páginas públicas) ----------
+   Cupom em js/config.js. Fechou? Não aparece de novo, até trocar o cupom. */
+function montarFaixaPromo() {
+  const promo = window.PULSO_CONFIG && window.PULSO_CONFIG.promocao;
+  const topo = document.querySelector('header');
+  if (!promo || !topo || !document.body.hasAttribute('data-whatsapp')) return;
+  try { if (localStorage.getItem('pulso_promo_fechada') === promo.cupom) return; } catch { /* sem armazenamento: mostra */ }
+  const faixa = document.createElement('div');
+  faixa.className = 'faixa-promo';
+  faixa.setAttribute('role', 'region');
+  faixa.setAttribute('aria-label', 'Promoção');
+  faixa.innerHTML = `
+    <p><span class="faixa-promo-selo">Cupom</span> Use <strong>${escapeHtml(promo.cupom)}</strong> e ganhe ${escapeHtml(promo.texto)}. <a href="loja.html#produtos">Ver a loja <span aria-hidden="true">→</span></a></p>
+    <button type="button" aria-label="Fechar a promoção"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button>`;
+  faixa.querySelector('button').addEventListener('click', () => {
+    faixa.remove();
+    try { localStorage.setItem('pulso_promo_fechada', promo.cupom); } catch { /* só fecha */ }
+  });
+  topo.prepend(faixa);
+}
+
 /* Abas que rolam para o lado: marca quando ainda há abas escondidas à direita (o CSS mostra um degradê). */
 function marcarAbasRolaveis() {
   document.querySelectorAll('.segmentado').forEach((barra) => {
@@ -542,4 +563,5 @@ document.addEventListener('DOMContentLoaded', () => {
   carregarVLibras();
   marcarAbasRolaveis();
   montarWhatsApp();
+  montarFaixaPromo();
 });

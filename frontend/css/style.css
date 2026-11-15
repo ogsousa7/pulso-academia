@@ -840,6 +840,17 @@ dialog.folha-detalhe { overflow: auto; }
 @media (max-width: 900px) { .estrutura { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .estrutura { grid-template-columns: minmax(0, 1fr); } .estrutura li { padding: 18px; } }
 
+/* Faixa de promoção no topo */
+.faixa-promo { position: relative; display: flex; align-items: center; justify-content: center; min-height: 36px; padding: 7px 48px; background: #A4532F; color: #fff; font-size: 13px; line-height: 1.35; text-align: center; }
+.faixa-promo p { margin: 0; }
+.faixa-promo strong { font-weight: 900; letter-spacing: .06em; }
+.faixa-promo a { margin-left: 6px; color: #fff; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.faixa-promo-selo { display: inline-block; margin-right: 6px; padding: 2px 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.18); font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.faixa-promo button { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 6px; color: #fff; }
+.faixa-promo button:hover { background: rgba(255, 255, 255, 0.15); }
+html:has(.faixa-promo) { scroll-padding-top: 116px; }
+@media (max-width: 480px) { .faixa-promo { padding: 7px 44px 7px 12px; font-size: 12px; } .faixa-promo-selo { display: none; } }
+
 /* Carrinho vazio (checkout) */
 .carrinho-vazio { max-width: 560px; margin: 0 auto; padding: 48px 28px; border-radius: 16px; text-align: center; background: rgb(var(--superficie)); }
 .carrinho-vazio-icone { display: inline-grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: rgba(164, 83, 47, 0.12); color: #A4532F; }

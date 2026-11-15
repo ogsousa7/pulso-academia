@@ -33,6 +33,6 @@ window.PULSO_CONFIG = {
   // Faixa de promoção no topo (o cupom existe de verdade no servidor: backend/src/constants.js)
   promocao: {
     cupom: 'PULSO10',
-    texto: '10% de desconto na primeira compra da loja',
+    texto: '10% de desconto na primeira compra',
   },
 };
