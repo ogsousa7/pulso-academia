@@ -67,14 +67,19 @@
       <button type="submit" id="loginSubmitBtn" class="mt-2 w-full py-3.5 rounded-xl bg-petroleo text-white text-[17px] font-semibold hover:brightness-110 transition flex items-center justify-center gap-2">
         <span>Entrar</span>
       </button>
-      <div class="bg-offwhite rounded-2xl p-4 text-[13px] text-grafite/65 leading-relaxed">
-        <p class="font-semibold text-grafite mb-2">Contas de demonstração (toque para preencher)</p>
+      <details class="modo-demo">
+        <summary>
+          <span><strong>Modo demonstração</strong><small>Contas prontas para testar o site no evento</small></span>
+        </summary>
+        <div class="modo-demo-corpo text-[13px] text-grafite/65 leading-relaxed">
+          <p class="mb-2">Toque em uma conta para preencher o login:</p>
         <div class="flex flex-col gap-1.5">
           <button type="button" data-demo="marcos@pulso.com|prof123" class="text-left hover:text-petroleo"><span class="text-grafite font-medium">Professor</span> · <span class="font-mono">marcos@pulso.com</span></button>
           <button type="button" data-demo="camila@aluno.com|aluno123" class="text-left hover:text-petroleo"><span class="text-grafite font-medium">Aluna</span> · <span class="font-mono">camila@aluno.com</span></button>
         </div>
         <p class="mt-2 text-[12px] text-grafite/65">Senhas: prof123 e aluno123. O acesso da recepção fica com a equipe.</p>
-      </div>
+        </div>
+      </details>
     </form>
 
     <!-- FORM: CADASTRO -->

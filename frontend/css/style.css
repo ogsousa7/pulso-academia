@@ -867,6 +867,16 @@ html:has(.faixa-promo) { scroll-padding-top: 116px; }
 @media (max-width: 900px) { .rodape-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rodape-grade > div:first-child { grid-column: 1 / -1; } }
 @media (max-width: 480px) { .rodape-grade { grid-template-columns: minmax(0, 1fr); } }
 
+/* Login: contas de demonstração recolhidas em "Modo demonstração" */
+.modo-demo { border-radius: 14px; background: rgb(var(--offwhite)); }
+.modo-demo summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; cursor: pointer; list-style: none; }
+.modo-demo summary::-webkit-details-marker { display: none; }
+.modo-demo summary strong { display: block; font-size: 14px; color: rgb(var(--grafite)); }
+.modo-demo summary small { display: block; font-size: 12px; color: rgb(var(--grafite) / 0.65); }
+.modo-demo summary::after { content: "+"; flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; box-shadow: inset 0 0 0 2px rgb(var(--grafite) / 0.2); font-size: 18px; transition: transform .25s ease; }
+.modo-demo[open] summary::after { transform: rotate(45deg); }
+.modo-demo-corpo { padding: 0 16px 16px; }
+
 /* Carrinho vazio (checkout) */
 .carrinho-vazio { max-width: 560px; margin: 0 auto; padding: 48px 28px; border-radius: 16px; text-align: center; background: rgb(var(--superficie)); }
 .carrinho-vazio-icone { display: inline-grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: rgba(164, 83, 47, 0.12); color: #A4532F; }
