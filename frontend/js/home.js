@@ -221,10 +221,10 @@ const NOMES_DIAS = ['', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
   const dialogo = document.getElementById('dialogDetalhe');
   if (!dialogo) return;
   const MODALIDADES = {
-    Musculação: { foto: 'img/modalidades/musculacao-800.webp', texto: 'Treino com pesos e máquinas para ganhar força, massa muscular e definição. O professor monta a sua ficha e corrige a execução de perto.', paraQuem: 'Quem quer força e definição, ou começar do zero com segurança', intensidade: 'Do leve ao intenso, no seu ritmo' },
-    Funcional: { foto: 'img/modalidades/funcional-800.webp', texto: 'Circuitos com o peso do corpo, elásticos e kettlebells que trabalham o corpo todo. Aula em grupo, dinâmica e diferente a cada dia.', paraQuem: 'Quem gosta de movimento e de treinar em turma', intensidade: 'Moderada a alta' },
-    Cardio: { foto: 'img/modalidades/cardio-800.webp', texto: 'Esteira, bike e treinos intervalados para ganhar fôlego, gastar energia e cuidar do coração.', paraQuem: 'Quem quer emagrecer, ter mais disposição ou voltar a se exercitar', intensidade: 'Você escolhe o ritmo' },
-    Alongamento: { foto: 'img/modalidades/alongamento-800.webp', texto: 'Mobilidade, postura e respiração. Alivia a tensão do dia, melhora a flexibilidade e ajuda a prevenir dores.', paraQuem: 'Todas as idades, inclusive quem está começando', intensidade: 'Leve' },
+    Musculação: { alt: 'Aluno fazendo rosca de bíceps com barra na área de musculação', foto: 'img/modalidades/musculacao-800.webp', texto: 'Treino com pesos e máquinas para ganhar força, massa muscular e definição. O professor monta a sua ficha e corrige a execução de perto.', paraQuem: 'Quem quer força e definição, ou começar do zero com segurança', intensidade: 'Do leve ao intenso, no seu ritmo' },
+    Funcional: { alt: 'Dois alunos treinando com cordas navais numa sala de funcional', foto: 'img/modalidades/funcional-800.webp', texto: 'Circuitos com o peso do corpo, elásticos e kettlebells que trabalham o corpo todo. Aula em grupo, dinâmica e diferente a cada dia.', paraQuem: 'Quem gosta de movimento e de treinar em turma', intensidade: 'Moderada a alta' },
+    Cardio: { alt: 'Aluno correndo na esteira', foto: 'img/modalidades/cardio-800.webp', texto: 'Esteira, bike e treinos intervalados para ganhar fôlego, gastar energia e cuidar do coração.', paraQuem: 'Quem quer emagrecer, ter mais disposição ou voltar a se exercitar', intensidade: 'Você escolhe o ritmo' },
+    Alongamento: { alt: 'Turma alongando os braços numa aula em grupo', foto: 'img/modalidades/alongamento-800.webp', texto: 'Mobilidade, postura e respiração. Alivia a tensão do dia, melhora a flexibilidade e ajuda a prevenir dores.', paraQuem: 'Todas as idades, inclusive quem está começando', intensidade: 'Leve' },
   };
   const el = (id) => document.getElementById(id);
 
@@ -232,7 +232,7 @@ const NOMES_DIAS = ['', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     const info = MODALIDADES[modalidade];
     const aulas = GRADE_AULAS.filter((a) => a[2] === modalidade && (!professor || a[3] === professor));
     el('detalheFoto').src = foto || info.foto;
-    el('detalheFoto').alt = alt || '';
+    el('detalheFoto').alt = alt || info.alt;
     el('detalheRotulo').textContent = professor ? `Professor${/a$/.test(professor.split(' ')[0]) ? 'a' : ''} de ${modalidade}` : 'Modalidade';
     el('detalheTitulo').textContent = professor || modalidade;
     el('detalheTexto').textContent = professor
