@@ -21,6 +21,7 @@ import alunoRoutes from './src/routes/aluno.routes.js';
 import professorRoutes from './src/routes/professor.routes.js';
 import adminRoutes from './src/routes/admin.routes.js';
 import treinoRoutes from './src/routes/treino.routes.js';
+import aulaExperimentalRoutes from './src/routes/aulaExperimental.routes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const FRONTEND_DIR = path.resolve(__dirname, '../frontend');
@@ -78,6 +79,7 @@ app.use('/api/aluno', alunoRoutes);         // agendamento e plano do aluno (rol
 app.use('/api/professor', professorRoutes); // agenda e disponibilidade (role PROFESSOR)
 app.use('/api/admin', adminRoutes); // tudo da recepção: JWT + role ADMIN em todas as rotas
 app.use('/api/treino', treinoRoutes); // montador de treinos (público, com limite de usos)
+app.use('/api/aula-experimental', aulaExperimentalRoutes); // pedido de aula grátis (público, com limite)
 
 /* ---------------------------- Frontend estático -------------------------
    O mesmo servidor entrega as páginas HTML/JS/CSS. Assim basta UM comando

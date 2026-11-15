@@ -189,6 +189,17 @@ db.exec(`
     descricao       TEXT NOT NULL,
     mapa_consulta   TEXT NOT NULL DEFAULT 'Heliópolis, São Paulo - SP, Brasil'
   );
+
+  -- Pedidos de aula experimental grátis (formulário da página inicial).
+  CREATE TABLE IF NOT EXISTS aulas_experimentais (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome        TEXT NOT NULL,
+    whatsapp    TEXT NOT NULL,
+    modalidade  TEXT NOT NULL,
+    horario     TEXT NOT NULL,
+    status      TEXT NOT NULL DEFAULT 'NOVO' CHECK (status IN ('NOVO', 'CONTATADO')),
+    criado_em   TEXT NOT NULL DEFAULT (datetime('now'))
+  );
 `);
 
 /* ------------------------------ MIGRAÇÕES -----------------------------

@@ -92,6 +92,7 @@
     <button role="tab" data-aba="alunos" class="aba">Alunos</button>
     <button role="tab" data-aba="professores" class="aba">Professores</button>
     <button role="tab" data-aba="solicitacoes" class="aba">Solicitações <span id="badgeSolicitacoes" class="hidden ml-1 min-w-[18px] px-1.5 py-px rounded-full bg-terracota text-white text-[11px] tabular-nums"></span></button>
+    <button role="tab" data-aba="experimentais" class="aba">Aulas grátis <span id="badgeExperimentais" class="hidden ml-1 min-w-[18px] px-1.5 py-px rounded-full bg-terracota text-white text-[11px] tabular-nums"></span></button>
     <button role="tab" data-aba="pagamentos" class="aba">Pagamentos</button>
     <button role="tab" data-aba="academia" class="aba">Academia</button>
   </nav>
@@ -224,6 +225,12 @@
   <div id="painel-solicitacoes" class="painel hidden">
     <h2 class="font-bold mb-4">Pedidos de cancelamento de plano</h2>
     <div id="listaSolicitacoes" class="flex flex-col gap-3"></div>
+  </div>
+
+  <div id="painel-experimentais" class="painel hidden">
+    <h2 class="font-bold mb-1">Pedidos de aula experimental</h2>
+    <p class="text-grafite/65 text-sm mb-4">Vêm do formulário "Agendar aula grátis" da página inicial. Chame a pessoa no WhatsApp e marque como contatada.</p>
+    <div id="listaExperimentais" class="flex flex-col gap-3"></div>
   </div>
 
   <div id="painel-academia" class="painel hidden">

@@ -83,6 +83,79 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 })();
 
+/* ---------- Aula experimental: valida no navegador (o servidor confere de novo) ---------- */
+(function aulaExperimental() {
+  const form = document.getElementById('formExperimental');
+  if (!form) return;
+  const status = document.getElementById('expStatus');
+  const botao = document.getElementById('expEnviar');
+  const ERROS = { nome: 'expNomeErro', whatsapp: 'expWhatsErro', modalidade: 'expModalidadeErro', horario: 'expHorarioErro' };
+
+  // Máscara do WhatsApp: (11) 91234-5678
+  form.whatsapp.addEventListener('input', () => {
+    const d = form.whatsapp.value.replace(/\D/g, '').slice(0, 11);
+    form.whatsapp.value = d.length > 6 ? `(${d.slice(0, 2)}) ${d.slice(2, d.length - 4)}-${d.slice(-4)}` : d.length > 2 ? `(${d.slice(0, 2)}) ${d.slice(2)}` : d;
+  });
+
+  function validar() {
+    const erros = {};
+    const nome = form.nome.value.trim().replace(/\s+/g, ' ');
+    if (nome.length < 3 || !/^[\p{L}][\p{L}' .-]*$/u.test(nome)) erros.nome = 'Escreva seu nome (só letras, pelo menos 3).';
+    if (!/^[1-9]{2}9?\d{8}$/.test(form.whatsapp.value.replace(/\D/g, ''))) erros.whatsapp = 'Informe o WhatsApp com DDD, ex.: (11) 91234-5678.';
+    if (!form.modalidade.value) erros.modalidade = 'Escolha uma modalidade.';
+    if (!form.horario.value) erros.horario = 'Escolha o melhor horário.';
+    return erros;
+  }
+
+  function mostrarErros(erros) {
+    Object.entries(ERROS).forEach(([campo, idErro]) => {
+      const msg = erros[campo] || '';
+      document.getElementById(idErro).textContent = msg;
+      form[campo].setAttribute('aria-invalid', msg ? 'true' : 'false');
+    });
+  }
+
+  // Ao corrigir um campo, a mensagem dele some.
+  form.addEventListener('input', (e) => {
+    if (e.target.getAttribute('aria-invalid') === 'true' && !validar()[e.target.name]) mostrarErros({ ...validar(), [e.target.name]: '' });
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const erros = validar();
+    mostrarErros(erros);
+    if (Object.keys(erros).length) {
+      status.className = 'experimental-status erro';
+      status.textContent = 'Confira os campos destacados.';
+      form[Object.keys(erros)[0]].focus();
+      return;
+    }
+    botao.disabled = true;
+    botao.textContent = 'Enviando…';
+    status.className = 'experimental-status';
+    status.textContent = '';
+    try {
+      const { mensagem } = await Api.criarAulaExperimental({
+        nome: form.nome.value, whatsapp: form.whatsapp.value, modalidade: form.modalidade.value, horario: form.horario.value,
+      });
+      const primeiroNome = escapeHtml(form.nome.value.trim().split(' ')[0]);
+      form.innerHTML = `
+        <div class="experimental-ok" role="status" tabindex="-1">
+          <span class="experimental-ok-icone" aria-hidden="true"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4L19 7"/></svg></span>
+          <h3 class="text-[26px] font-black uppercase tracking-tight leading-none mt-4">Pronto, ${primeiroNome}!</h3>
+          <p class="mt-3 text-[16px] text-grafite/75">${escapeHtml(mensagem)}</p>
+        </div>`;
+      form.querySelector('.experimental-ok').focus();
+    } catch (erro) {
+      if (erro.campos) mostrarErros(erro.campos);
+      status.className = 'experimental-status erro';
+      status.textContent = erro.status === 429 ? 'Muitos pedidos seguidos. Tente de novo daqui a pouco ou fale com a gente no WhatsApp.' : erro.message;
+      botao.disabled = false;
+      botao.textContent = 'Quero minha aula grátis';
+    }
+  });
+})();
+
 /* ---------- 3. Grade de aulas em grupo ---------- */
 (function iniciarGrade() {
   const tabela = document.getElementById('gradeTabela');

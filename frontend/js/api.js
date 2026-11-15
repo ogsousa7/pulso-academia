@@ -126,7 +126,10 @@ async function apiFetch(caminho, opcoes = {}) {
 
   if (!resposta.ok) {
     const mensagem = (corpo && corpo.erro) || `Erro ${resposta.status} ao acessar a API.`;
-    throw new Error(mensagem);
+    const erro = new Error(mensagem);
+    if (corpo && corpo.campos) erro.campos = corpo.campos; // mensagens por campo (ex.: aula experimental)
+    erro.status = resposta.status;
+    throw erro;
   }
 
   return corpo;
@@ -162,6 +165,11 @@ const Api = {
   obterPedido: (id) => apiFetch(`/pedidos/${id}`),
   pagarPedido: (id) => apiFetch(`/pedidos/${id}/pagar`, { method: 'POST' }), // só no modo demonstração
   meusPedidos: () => apiFetch('/pedidos/meus'),
+
+  // Aula experimental grátis (público) e a lista da recepção
+  criarAulaExperimental: (dados) => apiFetch('/aula-experimental', { method: 'POST', body: JSON.stringify(dados) }),
+  admAulasExperimentais: () => apiFetch('/admin/aulas-experimentais'),
+  admStatusExperimental: (id, status) => apiFetch(`/admin/aulas-experimentais/${id}`, { method: 'PATCH', body: JSON.stringify({ status }) }),
 
   // Montador de treinos (público)
   montarTreino: (dados) => apiFetch('/treino', { method: 'POST', body: JSON.stringify(dados) }),

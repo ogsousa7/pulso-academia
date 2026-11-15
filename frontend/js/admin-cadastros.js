@@ -8,7 +8,7 @@
 
 const $ = (id) => document.getElementById(id);
 let opcoesAdmin = null;
-const ABAS = ['geral', 'agendamentos', 'planos', 'produtos', 'alunos', 'professores', 'solicitacoes', 'pagamentos', 'academia'];
+const ABAS = ['geral', 'agendamentos', 'planos', 'produtos', 'alunos', 'professores', 'solicitacoes', 'experimentais', 'pagamentos', 'academia'];
 
 /* ---------- Abas ---------- */
 
@@ -22,7 +22,7 @@ function abrirAba(nome) {
     geral: () => carregarTudo(), agendamentos: carregarAgendamentos, planos: () => CADASTROS.planos.carregar(),
     produtos: () => CADASTROS.produtos.carregar(),
     alunos: () => CADASTROS.alunos.carregar(), professores: () => CADASTROS.professores.carregar(),
-    solicitacoes: carregarSolicitacoes, pagamentos: carregarPagamentos,
+    solicitacoes: carregarSolicitacoes, experimentais: carregarExperimentais, pagamentos: carregarPagamentos,
   };
   if (carregar[nome]) carregar[nome]();
   history.replaceState(null, '', `#${nome}`);
@@ -384,6 +384,54 @@ async function carregarSolicitacoes() {
   } catch (erro) { tratarErro(erro); }
 }
 
+/* ---------- Aulas experimentais (pedidos da página inicial) ---------- */
+
+function whatsFormatado(n) {
+  return n.length === 11 ? `(${n.slice(0, 2)}) ${n.slice(2, 7)}-${n.slice(7)}` : `(${n.slice(0, 2)}) ${n.slice(2, 6)}-${n.slice(6)}`;
+}
+
+function atualizarBadgeExperimentais(pedidos) {
+  const novos = pedidos.filter((p) => p.status === 'NOVO').length;
+  $('badgeExperimentais').textContent = novos;
+  $('badgeExperimentais').classList.toggle('hidden', novos === 0);
+}
+
+async function carregarExperimentais() {
+  try {
+    const { pedidos } = await Api.admAulasExperimentais();
+    atualizarBadgeExperimentais(pedidos);
+    $('listaExperimentais').innerHTML = pedidos.length
+      ? pedidos.map((p) => {
+        const novo = p.status === 'NOVO';
+        const texto = encodeURIComponent(`Olá, ${p.nome.split(' ')[0]}! Aqui é da Pulso Academia, sobre a sua aula experimental de ${p.modalidade}.`);
+        return `
+        <div class="bg-superficie rounded-2xl p-5 md:p-6 flex flex-wrap items-center justify-between gap-4 ${novo ? '' : 'opacity-70'}">
+          <div class="min-w-0">
+            <p class="text-[17px] font-semibold">${escapeHtml(p.nome)}</p>
+            <p class="text-grafite/65 text-[14px]">${escapeHtml(p.modalidade)} · ${escapeHtml(p.horario)} · pedido em ${formatarDataHora(p.criado_em)}</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded text-[12px] font-semibold ${novo ? 'bg-terracota/10 text-terracota' : 'bg-oliva/10 text-oliva'}">${novo ? 'Novo' : 'Contatado'}</span>
+            <a href="https://wa.me/55${escapeHtml(p.whatsapp)}?text=${texto}" target="_blank" rel="noopener" class="px-4 py-2 rounded bg-tinta/[0.06] text-sm font-semibold hover:bg-tinta/10">WhatsApp ${escapeHtml(whatsFormatado(p.whatsapp))}</a>
+            <button type="button" data-exp="${p.id}" data-status="${novo ? 'CONTATADO' : 'NOVO'}" class="px-4 py-2 rounded ${novo ? 'bg-petroleo text-white' : 'bg-tinta/[0.06]'} text-sm font-semibold hover:brightness-110">${novo ? 'Marcar como contatado' : 'Voltar para novo'}</button>
+          </div>
+        </div>`;
+      }).join('')
+      : '<div class="bg-superficie rounded-3xl p-8 text-center text-grafite/65 text-[15px]">Nenhum pedido de aula experimental ainda.</div>';
+  } catch (erro) { tratarErro(erro); }
+}
+
+$('listaExperimentais').addEventListener('click', async (e) => {
+  const botao = e.target.closest('[data-exp]');
+  if (!botao) return;
+  botao.disabled = true;
+  try {
+    await Api.admStatusExperimental(botao.dataset.exp, botao.dataset.status);
+    showToast(botao.dataset.status === 'CONTATADO' ? 'Marcado como contatado.' : 'Voltou para a lista de novos.', 'success');
+    carregarExperimentais();
+  } catch (erro) { tratarErro(erro); botao.disabled = false; }
+});
+
 function atualizarBadge(solicitacoes) {
   const pendentes = solicitacoes.filter((s) => s.status === 'PENDENTE').length;
   const badge = $('badgeSolicitacoes');
@@ -429,6 +477,7 @@ async function carregarPagamentos() {
     await carregarProfessoresNosSelects();
     const { solicitacoes } = await Api.admListar('solicitacoes', '?status=PENDENTE');
     atualizarBadge(solicitacoes);
+    Api.admAulasExperimentais().then(({ pedidos }) => atualizarBadgeExperimentais(pedidos)).catch(() => {});
   } catch (erro) { tratarErro(erro); }
   const aba = location.hash.slice(1);
   abrirAba(ABAS.includes(aba) ? aba : 'geral');

@@ -162,6 +162,63 @@
   </div>
 </section>
 
+<!-- AULA EXPERIMENTAL: formulário curto; o pedido aparece no painel da recepção (aba "Aulas grátis") -->
+<section id="aula-experimental" class="experimental relative overflow-hidden text-white scroll-mt-16" aria-labelledby="tituloExperimental">
+  <img src="img/logo-icon-branco.png" alt="" aria-hidden="true" class="experimental-marca">
+  <div class="relative max-w-[1180px] mx-auto px-5 md:px-8 py-20 md:py-28 grid lg:grid-cols-[minmax(0,1fr)_440px] gap-10 lg:gap-16 items-center">
+    <div>
+      <p class="rotulo-secao !text-[#F2A07A]">Aula experimental</p>
+      <h2 id="tituloExperimental" data-revela class="titulo-secao mt-2">Sua primeira aula é por nossa conta.</h2>
+      <p class="mt-5 text-[17px] md:text-[20px] leading-snug text-white/85 max-w-xl">Deixe seu contato e o melhor horário. A recepção chama você no WhatsApp para marcar o dia.</p>
+      <ul class="experimental-lista">
+        <li>Sem compromisso e sem cartão</li>
+        <li>Com um professor do seu lado</li>
+        <li>Leve só roupa confortável e água</li>
+      </ul>
+    </div>
+    <form id="formExperimental" class="experimental-form" novalidate>
+      <h3 class="text-[24px] font-black uppercase tracking-tight leading-none">Agendar aula grátis</h3>
+      <div class="campo">
+        <label for="expNome">Nome</label>
+        <input id="expNome" name="nome" autocomplete="name" required minlength="3" maxlength="80" placeholder="Seu nome" aria-describedby="expNomeErro">
+        <p class="campo-erro" id="expNomeErro"></p>
+      </div>
+      <div class="campo">
+        <label for="expWhats">WhatsApp</label>
+        <input id="expWhats" name="whatsapp" type="tel" inputmode="numeric" autocomplete="tel-national" required placeholder="(11) 91234-5678" aria-describedby="expWhatsErro">
+        <p class="campo-erro" id="expWhatsErro"></p>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="campo">
+          <label for="expModalidade">Modalidade</label>
+          <select id="expModalidade" name="modalidade" required aria-describedby="expModalidadeErro">
+            <option value="">Escolha</option>
+            <option>Musculação</option>
+            <option>Funcional</option>
+            <option>Cardio</option>
+            <option>Alongamento</option>
+          </select>
+          <p class="campo-erro" id="expModalidadeErro"></p>
+        </div>
+        <div class="campo">
+          <label for="expHorario">Melhor horário</label>
+          <select id="expHorario" name="horario" required aria-describedby="expHorarioErro">
+            <option value="">Escolha</option>
+            <option>Manhã (6h às 12h)</option>
+            <option>Tarde (12h às 18h)</option>
+            <option>Noite (18h às 22h)</option>
+            <option>Sábado (8h às 14h)</option>
+          </select>
+          <p class="campo-erro" id="expHorarioErro"></p>
+        </div>
+      </div>
+      <button type="submit" class="botao-destaque w-full" id="expEnviar">Quero minha aula grátis</button>
+      <p id="expStatus" class="experimental-status" role="status" aria-live="polite"></p>
+      <p class="text-[12px] text-grafite/65 leading-snug">Usamos seus dados só para combinar a aula. <a href="privacidade.html" class="underline underline-offset-2">Política de privacidade</a>.</p>
+    </form>
+  </div>
+</section>
+
 <!-- GALERIA: tela cheia, estilo stories (barras de progresso, contador, passa sozinha) -->
 <section class="galeria" id="galeria" aria-roledescription="carrossel" aria-label="Fotos da Pulso">
   <div class="galeria-slides">

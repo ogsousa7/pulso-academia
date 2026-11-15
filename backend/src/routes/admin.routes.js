@@ -13,6 +13,7 @@ import * as cad from '../controllers/adminCadastrosController.js';
 import { criar as criarAviso } from '../controllers/avisosController.js';
 import { listarParaAdmin as listarPedidos } from '../controllers/pedidosController.js';
 import { atualizar as atualizarAcademia } from '../controllers/academiaController.js';
+import * as experimental from '../controllers/aulaExperimentalController.js';
 
 const router = Router();
 router.use(authenticateToken, requireAdmin);
@@ -46,5 +47,8 @@ router.post('/solicitacoes/:id/resolver', cad.resolverSolicitacao);
 router.post('/avisos', criarAviso); // a leitura (GET /api/avisos) é pública, em loja.routes.js
 router.get('/pedidos', listarPedidos);
 router.put('/academia', atualizarAcademia);
+
+router.get('/aulas-experimentais', experimental.listar);
+router.patch('/aulas-experimentais/:id', experimental.atualizarStatus);
 
 export default router;
