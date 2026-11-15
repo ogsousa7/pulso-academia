@@ -798,6 +798,13 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 .experimental-ok-icone { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; background: #2FA866; color: #fff; }
 @media (max-width: 560px) { .experimental-form { padding: 22px 18px; } }
 
+/* Botão flutuante do WhatsApp: canto de baixo à esquerda (o VLibras fica à direita; o "Matricule-se" do celular, no centro). */
+.whatsapp-flutuante { position: fixed; left: max(16px, env(safe-area-inset-left, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 46; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #128C4A; color: #fff; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28); transition: transform .2s ease, box-shadow .2s ease; }
+.whatsapp-flutuante:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32); }
+.whatsapp-flutuante:focus-visible { outline: 3px solid var(--foco); outline-offset: 3px; }
+@media (max-width: 400px) { .whatsapp-flutuante { width: 50px; height: 50px; } }
+@media print { .whatsapp-flutuante { display: none; } }
+
 /* Carrinho vazio (checkout) */
 .carrinho-vazio { max-width: 560px; margin: 0 auto; padding: 48px 28px; border-radius: 16px; text-align: center; background: rgb(var(--superficie)); }
 .carrinho-vazio-icone { display: inline-grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: rgba(164, 83, 47, 0.12); color: #A4532F; }

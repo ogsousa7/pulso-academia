@@ -511,6 +511,22 @@ function carregarVLibras() {
   document.body.appendChild(s);
 }
 
+/* ---------- Botão flutuante do WhatsApp (páginas públicas: <body data-whatsapp>) ----------
+   Fica no canto de baixo à ESQUERDA: à direita estão o VLibras e as mensagens; no centro, o "Matricule-se" do celular.
+   Número e mensagem em js/config.js (fictícios). */
+function montarWhatsApp() {
+  const cfg = window.PULSO_CONFIG && window.PULSO_CONFIG.whatsapp;
+  if (!cfg || !document.body.hasAttribute('data-whatsapp')) return;
+  const a = document.createElement('a');
+  a.className = 'whatsapp-flutuante';
+  a.href = `https://wa.me/${cfg.numero}?text=${encodeURIComponent(cfg.mensagem)}`;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.setAttribute('aria-label', 'Falar com a Pulso no WhatsApp (abre em outra aba)');
+  a.innerHTML = '<svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path fill="currentColor" d="M16.04 3C9.4 3 4 8.36 4 14.97c0 2.11.56 4.17 1.62 5.98L4 29l8.25-2.15a12.1 12.1 0 0 0 3.79.6h.01C22.68 27.45 28 22.08 28 15.47 28 8.86 22.68 3 16.04 3Zm0 22.4h-.01a10 10 0 0 1-5.1-1.4l-.37-.22-4.9 1.27 1.3-4.76-.24-.39a9.83 9.83 0 0 1-1.52-5.26c0-5.48 4.5-9.95 10.05-9.95 5.53 0 10.02 4.47 10.02 9.95 0 5.49-4.5 9.96-10.03 9.96Zm5.5-7.45c-.3-.15-1.78-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.95 1.17-.18.2-.35.22-.65.07-.3-.15-1.27-.46-2.42-1.48-.9-.79-1.5-1.77-1.67-2.07-.18-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.58c-.2 0-.52.07-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.07 2.9 1.22 3.1.15.2 2.11 3.2 5.1 4.49.72.3 1.28.49 1.71.63.72.23 1.37.2 1.89.12.58-.09 1.78-.72 2.03-1.42.25-.7.25-1.3.18-1.42-.08-.13-.28-.2-.58-.35Z"/></svg><span class="sr-only">WhatsApp</span>';
+  document.body.appendChild(a);
+}
+
 /* Abas que rolam para o lado: marca quando ainda há abas escondidas à direita (o CSS mostra um degradê). */
 function marcarAbasRolaveis() {
   document.querySelectorAll('.segmentado').forEach((barra) => {
@@ -525,4 +541,5 @@ document.addEventListener('DOMContentLoaded', () => {
   montarAcessibilidade();
   carregarVLibras();
   marcarAbasRolaveis();
+  montarWhatsApp();
 });
