@@ -3,7 +3,7 @@
    Busca os dados reais do backend (Api.listarPlanos/listarProdutos),
    mostra fotos, filtro por categoria e botões que enviam ao carrinho.
    Depende de: Api (api.js), escapeHtml/formatarPreco/showToast (ui.js),
-   Carrinho/CarrinhoUI (cart.js).
+   Carrinho/CarrinhoUI (cart.js), Planos (planos.js).
    ========================================================= */
 
 const NOMES_CATEGORIA = {
@@ -16,48 +16,7 @@ let planosCarregados = [];
 let produtosCarregados = [];
 let categoriaAtiva = 'todos';
 
-/** Meses de cada plano (mesma regra do servidor), para calcular a economia. */
-function mesesDoPlano(periodo) {
-  const p = periodo.toLowerCase();
-  if (p.includes('trimestre')) return 3;
-  if (p.includes('ano')) return 12;
-  return 1;
-}
-
-/* ------------------------------- Planos ------------------------------- */
-
-function renderPlanos(planos) {
-  const grid = document.getElementById('planosGrid');
-
-  if (planos.length === 0) {
-    grid.innerHTML = `<p class="text-grafite/65 text-sm col-span-3">Nenhum plano cadastrado no momento.</p>`;
-    return;
-  }
-
-  // Preço mensal de referência = o do plano mais curto, para mostrar quanto o aluno economiza.
-  const mensal = planos.find((p) => mesesDoPlano(p.periodo) === 1);
-
-  grid.innerHTML = planos
-    .map((plano, i) => {
-      const destaque = i === 1; // plano do meio em destaque
-      const meses = mesesDoPlano(plano.periodo);
-      const economia = mensal && meses > 1 ? mensal.preco * meses - plano.preco : 0;
-      const detalhe = meses > 1 ? `Total de ${formatarPreco(plano.preco)} (${escapeHtml(plano.periodo)})` : 'Sem fidelidade · cancele quando quiser';
-      // Blocos de cor da marca: escuro, terracota (o destaque) e petróleo. Cores fixas: contraste igual nos dois temas.
-      const cor = destaque ? 'plano-destaque' : ['plano-escuro', 'plano-destaque', 'plano-marca'][i % 3];
-      return `
-      <article class="plano ${cor}">
-        <p class="plano-selo">${destaque ? 'Mais escolhido' : escapeHtml(plano.periodo)}</p>
-        <h3 class="plano-nome">${escapeHtml(plano.nome)}</h3>
-        <p class="plano-desc">${escapeHtml(plano.descricao || '')}</p>
-        <p class="plano-preco">${formatarPreco(plano.preco / meses)}<small>/mês</small></p>
-        <p class="plano-detalhe">${detalhe}</p>
-        <p class="plano-economia">${economia > 0 ? `Você economiza ${formatarPreco(economia)}` : ''}</p>
-        <button type="button" data-plano="${plano.id}" class="plano-botao">Assinar</button>
-      </article>`;
-    })
-    .join('');
-}
+/* Planos: os cartões são montados por js/planos.js (o mesmo código da página inicial). */
 
 /* ------------------------------ Produtos ------------------------------ */
 
@@ -163,14 +122,7 @@ if (dialogo) {
 /* -------------------------------- Eventos ------------------------------- */
 
 function configurarEventos() {
-  document.getElementById('planosGrid').addEventListener('click', (e) => {
-    const botao = e.target.closest('[data-plano]');
-    if (!botao) return;
-    const plano = planosCarregados.find((p) => p.id === Number(botao.dataset.plano));
-    if (!plano) return;
-    Carrinho.adicionar({ tipo: 'PLANO', id: plano.id, nome: plano.nome, preco: plano.preco });
-    CarrinhoUI.abrir(); // abre o carrinho já com o botão "Ir para o pagamento"
-  });
+  Planos.ligar(document.getElementById('planosGrid'), () => planosCarregados);
 
   document.getElementById('produtosGrid').addEventListener('click', (e) => {
     const ver = e.target.closest('[data-ver]');
@@ -200,7 +152,7 @@ async function init() {
     const [{ planos }, { produtos }] = await Promise.all([Api.listarPlanos(), Api.listarProdutos()]);
     planosCarregados = planos;
     produtosCarregados = produtos;
-    renderPlanos(planos);
+    Planos.montar(document.getElementById('planosGrid'), planos);
     renderFiltros();
     renderProdutos();
   } catch (erro) {

@@ -143,6 +143,25 @@
   </div>
 </section>
 
+<!-- PLANOS: os mesmos da loja (vêm de GET /api/planos; nenhum preço escrito aqui) -->
+<section id="planos" class="py-20 md:py-28 px-5 fundo-areia" aria-labelledby="tituloPlanos">
+  <div class="max-w-[1180px] mx-auto">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="rotulo-secao">Planos</p>
+        <h2 id="tituloPlanos" data-revela class="titulo-secao mt-2">Escolha o seu ritmo.</h2>
+      </div>
+      <a href="loja.html#planos" class="link-forte">Ver tudo na loja →</a>
+    </div>
+    <div id="planosGrid" class="grid md:grid-cols-3 gap-4 md:gap-5 items-stretch mt-10" aria-live="polite">
+        <div class="bg-superficie rounded-3xl h-80 animate-pulse"></div>
+        <div class="bg-superficie rounded-3xl h-80 animate-pulse"></div>
+        <div class="bg-superficie rounded-3xl h-80 animate-pulse"></div>
+    </div>
+    <p class="mt-6 text-[14px] text-grafite/65">Pague com Pix, cartão ou boleto. O plano é ativado assim que o pagamento é confirmado.</p>
+  </div>
+</section>
+
 <!-- GALERIA: tela cheia, estilo stories (barras de progresso, contador, passa sozinha) -->
 <section class="galeria" id="galeria" aria-roledescription="carrossel" aria-label="Fotos da Pulso">
   <div class="galeria-slides">
@@ -428,6 +447,7 @@
 <script src="js/ui.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/academia.js"></script>
+<script src="js/planos.js"></script>
 <script src="js/home.js"></script>
 <script src="js/pwa.js"></script>
 </body>

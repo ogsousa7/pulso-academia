@@ -70,6 +70,19 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   });
 })();
 
+/* ---------- Planos (os mesmos da loja, montados por planos.js) ---------- */
+(async function carregarPlanos() {
+  const grid = document.getElementById('planosGrid');
+  if (!grid || typeof Planos === 'undefined') return;
+  try {
+    const { planos } = await Api.listarPlanos();
+    Planos.montar(grid, planos);
+    Planos.ligar(grid, () => planos);
+  } catch {
+    grid.innerHTML = '<p class="text-grafite/65 text-sm col-span-3">Não foi possível carregar os planos agora. <a href="loja.html#planos" class="link-forte">Ver na loja</a></p>';
+  }
+})();
+
 /* ---------- 3. Grade de aulas em grupo ---------- */
 (function iniciarGrade() {
   const tabela = document.getElementById('gradeTabela');
