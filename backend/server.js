@@ -10,6 +10,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'node:path';
+import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 import './src/db/index.js'; // garante schema + seed ANTES de aceitar requisições
@@ -86,11 +87,44 @@ app.use('/api/aula-experimental', aulaExperimentalRoutes); // pedido de aula gr�
    (npm start) e o front fala com a API na mesma origem — sem CORS.
 --------------------------------------------------------------------------- */
 
-// Fotos e fontes quase nunca mudam: o navegador guarda por 7 dias (ao trocar uma foto, use um nome novo).
-// HTML, CSS e JS continuam sendo conferidos a cada visita.
+/* Cache com versão:
+   - As páginas HTML saem com "?v=<versão>" em cada CSS/JS. A versão muda a cada deploy (é o commit
+     que o Render informa em RENDER_GIT_COMMIT), então CSS/JS com ?v= podem ficar 1 ano no navegador:
+     quando o código muda, o endereço muda junto.
+   - HTML: no-cache (o navegador sempre confere se há versão nova).
+   - Fotos e fontes: 30 dias (ao trocar uma foto, use um nome novo). */
+const VERSAO_ARQUIVOS = (process.env.RENDER_GIT_COMMIT || Date.now().toString(36)).slice(0, 10);
+const htmlEmCache = new Map(); // no Render o HTML só muda no próximo deploy: lê cada página uma vez
+
+function htmlComVersao(arquivo) {
+  if (process.env.RENDER && htmlEmCache.has(arquivo)) return htmlEmCache.get(arquivo);
+  const caminho = path.join(FRONTEND_DIR, arquivo);
+  if (!fs.existsSync(caminho)) return null;
+  const html = fs.readFileSync(caminho, 'utf8')
+    .replace(/(<(?:script|link)\b[^>]*?\s(?:src|href)=")((?:css|js)\/[^"?#]+\.(?:css|js))"/g, `$1$2?v=${VERSAO_ARQUIVOS}"`);
+  if (process.env.RENDER) htmlEmCache.set(arquivo, html);
+  return html;
+}
+
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const arquivo = req.path === '/' ? 'index.html' : req.path.slice(1);
+  if (!/^[\w-]+\.html$/.test(arquivo)) return next(); // só páginas da raiz (nada de ../)
+  const html = htmlComVersao(arquivo);
+  if (html === null) return next();
+  res.set('Cache-Control', 'no-cache');
+  res.type('html').send(html);
+});
+
 app.use(express.static(FRONTEND_DIR, {
   setHeaders(res, caminho) {
-    if (/[\\/](img|fonts)[\\/]/.test(caminho)) res.set('Cache-Control', 'public, max-age=604800');
+    if (/[\\/](css|js)[\\/]/.test(caminho)) {
+      res.set('Cache-Control', res.req.query.v ? 'public, max-age=31536000, immutable' : 'no-cache');
+    } else if (/[\\/](img|fonts)[\\/]/.test(caminho)) {
+      res.set('Cache-Control', 'public, max-age=2592000');
+    } else {
+      res.set('Cache-Control', 'no-cache'); // sw.js, manifest.json, robots.txt...
+    }
   },
 }));
 
