@@ -26,13 +26,16 @@
   // Endereço do mapa. Começa com o bairro e é trocado pelo endereço da API quando ela responde.
   let enderecoMapa = `${ORIGEM_MAPAS}?q=${encodeURIComponent('Heliópolis, São Paulo')}&hl=pt-BR&z=15&output=embed`;
 
-  function montarMapa(mapa) {
+  function montarMapa(mapa, endereco) {
     const consulta = encodeURIComponent(mapa.consulta);
+    // "Como chegar" e "Abrir no Google Maps" usam o endereço completo cadastrado (rua, número, bairro e cidade).
+    // "Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP" -> "Rua das Palmeiras, 245, Heliópolis, São Paulo/SP"
+    const destino = encodeURIComponent(endereco ? endereco.replace(/\s*[—–]\s*/g, ', ') : mapa.consulta);
 
     const comoChegar = document.getElementById('linkComoChegar');
-    if (comoChegar) comoChegar.href = `${ORIGEM_MAPAS}/dir/?api=1&destination=${consulta}`;
+    if (comoChegar) comoChegar.href = `${ORIGEM_MAPAS}/dir/?api=1&destination=${destino}`;
     const abrir = document.getElementById('linkAbrirMapa');
-    if (abrir) abrir.href = `${ORIGEM_MAPAS}/search/?api=1&query=${consulta}`;
+    if (abrir) abrir.href = `${ORIGEM_MAPAS}/search/?api=1&query=${destino}`;
 
     enderecoMapa = mapa.chave
       ? `${ORIGEM_MAPAS}/embed/v1/place?key=${encodeURIComponent(mapa.chave)}&q=${consulta}&language=pt-BR&zoom=15`
@@ -99,7 +102,7 @@
   Api.obterAcademia()
     .then(({ academia, mapa }) => {
       preencherTextos(academia);
-      montarMapa(mapa);
+      montarMapa(mapa, academia.endereco);
       mostrarStatus();
     })
     .catch(() => {
