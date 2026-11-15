@@ -154,7 +154,8 @@ function animarContagem(el) {
 
 /** Divide os títulos grandes em palavras, para cada uma subir de dentro de uma "janela". */
 function dividirTitulos() {
-  document.querySelectorAll('.titulo-secao, .titulo-pagina, .titulo-hero').forEach((titulo) => {
+  // O título da abertura (.titulo-hero) fica de fora: ele precisa estar legível logo (só um fade rápido, .entra).
+  document.querySelectorAll('.titulo-secao, .titulo-pagina').forEach((titulo) => {
     if (titulo.dataset.dividido) return;
     titulo.dataset.dividido = '1';
     const textos = [];
@@ -244,7 +245,7 @@ function initTelaAbertura() {
   if (!tela) return;
   if (!document.documentElement.dataset.splash) { tela.remove(); return; }
   // Depois da cortina: tira a tela e o atraso das animações (senão os títulos esperariam ao rolar).
-  setTimeout(() => { tela.remove(); delete document.documentElement.dataset.splash; }, 900);
+  setTimeout(() => { tela.remove(); delete document.documentElement.dataset.splash; }, 700);
 }
 
 /** Topo da home (data-hero): transparente sobre a foto; ao rolar, vira a barra translúcida. */
