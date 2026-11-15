@@ -7,14 +7,14 @@
    Para publicar uma versão nova do site, aumente VERSAO.
    ========================================================= */
 
-const VERSAO = 'pulso-v15'; // v15: app instalado volta ao início, próximos dias no agendamento, revisão de acessibilidade e páginas 404/offline/privacidade
+const VERSAO = 'pulso-v16'; // v16: planos e aula grátis na home, WhatsApp, detalhes das modalidades, rodapé, termos, CSP
 const CACHE_CASCO = `${VERSAO}-casco`;
 const CACHE_EXTERNO = `${VERSAO}-externo`;
 
 const CASCO = [
-  'offline.html', 'index.html', 'loja.html', 'treino.html', 'login.html', 'checkout.html', 'aluno.html', 'professor.html', 'admin.html',
+  'offline.html', 'index.html', 'loja.html', 'treino.html', 'login.html', 'termos.html', 'privacidade.html', 'checkout.html', 'aluno.html', 'professor.html', 'admin.html',
   'css/style.css', 'css/tailwind.css', 'fonts/inter.woff2',
-  'js/tw-config.js', 'js/api.js', 'js/ui.js', 'js/home.js', 'js/cart.js', 'js/loja.js', 'js/treino.js', 'js/login.js', 'js/checkout.js', 'js/academia.js',
+  'js/tw-config.js', 'js/config.js', 'js/planos.js', 'js/api.js', 'js/ui.js', 'js/home.js', 'js/cart.js', 'js/loja.js', 'js/treino.js', 'js/login.js', 'js/checkout.js', 'js/academia.js',
   'js/aluno.js', 'js/professor.js', 'js/admin.js', 'js/admin-cadastros.js', 'js/pwa.js',
   'img/logo-icon.png', 'img/logo-icon-branco.png', 'img/logo-horizontal.png',
   'img/icons/icon-192.png', 'manifest.json',
