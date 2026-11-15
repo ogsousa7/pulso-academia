@@ -78,7 +78,7 @@ function desenharDias() {
   caixa.innerHTML = dias.map((iso, i) => {
     const [a, m, d] = iso.split('-').map(Number);
     const semana = NOMES[new Date(a, m - 1, d).getDay()];
-    return `<button type="button" data-dia="${iso}" aria-pressed="false" aria-label="${escapeHtml(diaCurto(iso))}"><small>${i === 0 ? 'hoje' : semana}</small><strong>${String(d).padStart(2, '0')}</strong></button>`;
+    return `<button type="button" data-dia="${iso}" aria-pressed="false"><small>${i === 0 ? 'hoje' : semana}</small><strong>${String(d).padStart(2, '0')}</strong><span class="sr-only">, ${escapeHtml(diaCurto(iso))}</span></button>`;
   }).join('');
   marcarDia();
 }

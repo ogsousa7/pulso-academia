@@ -845,7 +845,7 @@ dialog.folha-detalhe { overflow: auto; }
 .faixa-promo p { margin: 0; }
 .faixa-promo strong { font-weight: 900; letter-spacing: .06em; }
 .faixa-promo a { margin-left: 6px; color: #fff; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
-.faixa-promo-selo { display: inline-block; margin-right: 6px; padding: 2px 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.18); font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.faixa-promo-selo { display: inline-block; margin-right: 6px; padding: 2px 8px; border-radius: 4px; background: rgba(0, 0, 0, 0.22); font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
 .faixa-promo button { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 6px; color: #fff; }
 .faixa-promo button:hover { background: rgba(255, 255, 255, 0.15); }
 html:has(.faixa-promo) { scroll-padding-top: 116px; }
