@@ -548,6 +548,21 @@ function montarFaixaPromo() {
   topo.prepend(faixa);
 }
 
+/* ---------- Dados do js/config.js no rodapé (redes e CNPJ, fictícios) ---------- */
+function aplicarConfig() {
+  const cfg = window.PULSO_CONFIG;
+  if (!cfg) return;
+  document.querySelectorAll('[data-rede]').forEach((a) => {
+    const url = cfg.redes && cfg.redes[a.dataset.rede];
+    if (url) { a.href = url; a.hidden = false; }
+  });
+  document.querySelectorAll('[data-config="cnpj"]').forEach((el) => {
+    if (!cfg.empresa) return;
+    el.textContent = `${cfg.ficticio ? 'CNPJ fictício (projeto escolar)' : 'CNPJ'}: ${cfg.empresa.cnpj}`;
+    el.hidden = false;
+  });
+}
+
 /* Abas que rolam para o lado: marca quando ainda há abas escondidas à direita (o CSS mostra um degradê). */
 function marcarAbasRolaveis() {
   document.querySelectorAll('.segmentado').forEach((barra) => {
@@ -564,4 +579,5 @@ document.addEventListener('DOMContentLoaded', () => {
   marcarAbasRolaveis();
   montarWhatsApp();
   montarFaixaPromo();
+  aplicarConfig();
 });

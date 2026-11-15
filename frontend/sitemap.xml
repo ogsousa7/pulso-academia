@@ -4,5 +4,6 @@
   <url><loc>https://pulso-academia.onrender.com/loja.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://pulso-academia.onrender.com/treino.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://pulso-academia.onrender.com/login.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://pulso-academia.onrender.com/termos.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
   <url><loc>https://pulso-academia.onrender.com/privacidade.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
 </urlset>

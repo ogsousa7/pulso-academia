@@ -851,6 +851,22 @@ dialog.folha-detalhe { overflow: auto; }
 html:has(.faixa-promo) { scroll-padding-top: 116px; }
 @media (max-width: 480px) { .faixa-promo { padding: 7px 44px 7px 12px; font-size: 12px; } .faixa-promo-selo { display: none; } }
 
+/* Rodapé completo (páginas públicas) */
+.rodape-grade { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)); gap: 32px; padding-bottom: 40px; border-bottom: 1px solid rgba(255, 255, 255, 0.15); }
+.rodape-titulo { margin-bottom: 12px; font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #fff; }
+.rodape-links { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+.rodape-links a, .rodape-legal a { color: rgba(255, 255, 255, 0.85); text-decoration: none; }
+.rodape-links a:hover, .rodape-legal a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.rodape-redes { display: flex; gap: 10px; margin-top: 22px; }
+.rodape-redes a { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; background: rgba(255, 255, 255, 0.08); color: #fff; transition: background-color .2s ease; }
+.rodape-redes a:hover { background: #A4532F; }
+.rodape-redes a[hidden] { display: none; }
+.rodape-legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; padding-top: 22px; font-size: 13px; }
+.rodape-legal-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.rodape-legal a { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 900px) { .rodape-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rodape-grade > div:first-child { grid-column: 1 / -1; } }
+@media (max-width: 480px) { .rodape-grade { grid-template-columns: minmax(0, 1fr); } }
+
 /* Carrinho vazio (checkout) */
 .carrinho-vazio { max-width: 560px; margin: 0 auto; padding: 48px 28px; border-radius: 16px; text-align: center; background: rgb(var(--superficie)); }
 .carrinho-vazio-icone { display: inline-grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: rgba(164, 83, 47, 0.12); color: #A4532F; }
