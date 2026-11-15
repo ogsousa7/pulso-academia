@@ -31,6 +31,7 @@ function abrirAba(nome) {
   history.replaceState(null, '', `#${nome}`);
 }
 document.querySelectorAll('.aba, .aba-atalho').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
+window.addEventListener('hashchange', () => { const a = location.hash.slice(1); if (['agenda', 'disponibilidade'].includes(a)) abrirAba(a); });
 
 /* ---------- Agenda ---------- */
 
@@ -136,7 +137,7 @@ function renderLado(agendamentos) {
 
 function desenharGrade() {
   const tabela = el('gradeHorarios');
-  const cabecalho = DIAS.map((d, i) => `<th class="px-1 pb-2"><button type="button" data-coluna="${i}" class="w-12 py-1 rounded-lg text-[12px] font-semibold text-grafite/65 hover:bg-tinta/5">${d}</button></th>`).join('');
+  const cabecalho = DIAS.map((d, i) => `<th class="px-1 pb-2"><button type="button" data-coluna="${i}" class="w-12 py-2 rounded-lg text-[12px] font-semibold text-grafite/65 hover:bg-tinta/5">${d}</button></th>`).join('');
   const linhas = horasPossiveis.map((h) => `
     <tr>
       <td class="pr-3 text-[13px] font-medium text-grafite/65">${h}</td>
@@ -193,4 +194,5 @@ el('btnSalvarDisp').addEventListener('click', async () => {
 const usuario = Auth.getUsuario();
 if (usuario) el('saudacao').textContent = `Olá, ${String(usuario.nome).split(' ')[0]}!`;
 const aba = location.hash.slice(1);
+if (aba === 'disponibilidade') carregarAgenda(); // a agenda alimenta a coluna de resumo
 abrirAba(['agenda', 'disponibilidade'].includes(aba) ? aba : 'agenda');

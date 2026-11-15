@@ -8,34 +8,41 @@
 <meta name="theme-color" content="#425B63">
 <link rel="icon" href="favicon.ico" sizes="any">
 <style>
-  body { margin: 0; padding: 48px 20px 64px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-         background: #F5F5F7; color: #1D1D1F; line-height: 1.6; }
-  main { max-width: 680px; margin: 0 auto; }
-  .logo img { height: 40px; }
-  h1 { font-size: 34px; letter-spacing: -0.02em; line-height: 1.15; margin: 28px 0 6px; }
-  h2 { font-size: 20px; letter-spacing: -0.01em; margin: 32px 0 8px; }
-  p, li { color: rgba(29,29,31,.8); }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F5F0E8; color: #1D1D1F; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  .topo { padding: 40px 20px 72px; color: #fff; background: radial-gradient(90% 120% at 100% 100%, rgba(164, 83, 47, .5), transparent 60%), linear-gradient(135deg, #141A1C 0%, #23373D 100%); }
+  .topo > div, main { max-width: 720px; margin: 0 auto; }
+  .logo img { height: 36px; filter: brightness(0) invert(1); }
+  .rotulo { margin: 36px 0 0; font-size: 13px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #F2A07A; }
+  h1 { font-size: clamp(34px, 7vw, 52px); font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; line-height: 1; margin: 10px 0 12px; }
+  .data { color: rgba(255, 255, 255, .78); margin: 0; }
+  main { margin-top: -40px; padding: 36px 32px 44px; border-radius: 16px; background: #FFFCF7; box-shadow: 0 30px 70px rgba(20, 26, 28, .12); }
+  h2 { font-size: 21px; letter-spacing: -.01em; margin: 34px 0 8px; padding-left: 14px; border-left: 4px solid #A4532F; }
+  p, li { color: rgba(29, 29, 31, .82); }
   ul { padding-left: 22px; }
-  .data { color: rgba(29,29,31,.65); margin: 0; }
-  a { color: #2F5560; }
-  .voltar { display: inline-block; margin-top: 36px; background: #425B63; color: #fff; text-decoration: none;
-            border-radius: 999px; padding: 12px 24px; font-weight: 600; }
+  a { color: #964826; font-weight: 600; }
+  .voltar { display: inline-flex; align-items: center; min-height: 48px; margin-top: 36px; padding: 0 26px; border-radius: 6px; background: #A4532F; color: #fff; text-decoration: none; font-weight: 900; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; }
+  .rodape { max-width: 720px; margin: 28px auto 48px; padding: 0 20px; font-size: 13px; color: rgba(29, 29, 31, .65); }
+  @media (max-width: 560px) { main { margin: -40px 12px 0; padding: 28px 20px 36px; } }
   @media (prefers-color-scheme: dark) {
     body { background: #000; color: #F5F5F7; }
-    p, li { color: rgba(245,245,247,.82); }
-    .data { color: rgba(245,245,247,.68); }
-    a { color: #9CC3CE; }
-    .logo img { filter: brightness(0) invert(.93); }
-    .voltar { background: #4F7480; color: #fff; }
+    main { background: #1C1C1E; box-shadow: none; }
+    p, li { color: rgba(245, 245, 247, .84); }
+    a { color: #EE9A72; }
+    .rodape { color: rgba(245, 245, 247, .65); }
   }
 </style>
 </head>
 <body>
+<header class="topo">
+  <div>
+    <a class="logo" href="index.html" aria-label="Pulso Academia, voltar para o início"><img src="img/logo-horizontal.png" alt="Pulso Academia"></a>
+    <p class="rotulo">Seus dados</p>
+    <h1>Política de Privacidade</h1>
+    <p class="data">Atualizada em 31 de outubro de 2026</p>
+  </div>
+</header>
 <main>
-  <a class="logo" href="index.html" aria-label="Pulso Academia, voltar para o início"><img src="img/logo-horizontal.png" alt="Pulso Academia"></a>
-
-  <h1>Política de Privacidade</h1>
-  <p class="data">Atualizada em 31 de outubro de 2026</p>
 
   <p>A Pulso Academia é um projeto acadêmico da Fábrica de Software da Etec Heliópolis, desenvolvido pela
      <a href="https://true-ember.netlify.app" target="_blank" rel="noopener">True Ember</a>.

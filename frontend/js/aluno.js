@@ -40,12 +40,65 @@ function abrirAba(nome) {
   history.replaceState(null, '', `#${nome}`);
 }
 document.querySelectorAll('.aba').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
+window.addEventListener('hashchange', () => { const a = location.hash.slice(1); if (['agendar', 'aulas', 'plano', 'pedidos'].includes(a)) abrirAba(a); });
 
 /* ---------- Agendar ---------- */
 
 function opcoesSelect(select, itens, rotulo = (x) => x, valor = (x) => x) {
   select.innerHTML = itens.map((i) => `<option value="${escapeHtml(valor(i))}">${escapeHtml(rotulo(i))}</option>`).join('');
 }
+
+/** "2026-11-15" -> "2026-11-16" (sem passar por fuso). */
+function diaSeguinte(iso) {
+  const [a, m, d] = iso.split('-').map(Number);
+  const x = new Date(a, m - 1, d + 1);
+  return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`;
+}
+
+/** Procura, a partir do dia seguinte, o primeiro dia em que o professor tem horário livre. */
+async function proximoDiaLivre(professorId, aPartirDe) {
+  let dia = aPartirDe;
+  for (let i = 0; i < 14; i += 1) {
+    dia = diaSeguinte(dia);
+    if (el('agData').max && dia > el('agData').max) return null;
+    const { horarios } = await Api.alunoHorarios(professorId, dia);
+    if (horarios.length) return dia;
+  }
+  return null;
+}
+
+/* Faixa com os próximos 14 dias (atalho para o campo de data, que continua valendo para datas mais longe). */
+function desenharDias() {
+  const caixa = el('agDias');
+  if (!caixa || !el('agData').min) return;
+  const NOMES = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+  let dia = el('agData').min;
+  const dias = [];
+  for (let i = 0; i < 14 && (!el('agData').max || dia <= el('agData').max); i += 1) { dias.push(dia); dia = diaSeguinte(dia); }
+  caixa.innerHTML = dias.map((iso, i) => {
+    const [a, m, d] = iso.split('-').map(Number);
+    const semana = NOMES[new Date(a, m - 1, d).getDay()];
+    return `<button type="button" data-dia="${iso}" aria-pressed="false" aria-label="${escapeHtml(diaCurto(iso))}"><small>${i === 0 ? 'hoje' : semana}</small><strong>${String(d).padStart(2, '0')}</strong></button>`;
+  }).join('');
+  marcarDia();
+}
+function marcarDia() {
+  el('agDias')?.querySelectorAll('[data-dia]').forEach((b) => {
+    const escolhido = b.dataset.dia === el('agData').value;
+    b.setAttribute('aria-pressed', escolhido);
+    // Centraliza o dia escolhido só dentro da faixa (sem rolar a página).
+    if (escolhido) b.parentElement.scrollLeft = b.offsetLeft - (b.parentElement.clientWidth - b.offsetWidth) / 2;
+  });
+}
+el('agDias')?.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-dia]');
+  if (!b) return;
+  el('agData').value = b.dataset.dia;
+  carregarHorarios();
+});
+
+// Na primeira busca, se o dia de hoje não tiver horário (domingo, por exemplo), já pula para o próximo dia livre.
+let pularDiaVazio = true;
 
 async function carregarHorarios() {
   horarioEscolhido = null;
@@ -55,13 +108,26 @@ async function carregarHorarios() {
   const lista = el('listaHorarios');
   if (!professorId || !data) return;
 
+  marcarDia();
   lista.innerHTML = '<p class="text-sm text-grafite/65">Buscando horários...</p>';
   try {
     const { horarios } = await Api.alunoHorarios(professorId, data);
     if (!horarios.length) {
-      lista.innerHTML = '<p class="text-sm text-grafite/65">Sem horários livres nesse dia. Tente outra data ou outro professor.</p>';
+      if (pularDiaVazio) {
+        pularDiaVazio = false;
+        const proximo = await proximoDiaLivre(professorId, data);
+        if (proximo) {
+          el('agData').value = proximo;
+          await carregarHorarios();
+          lista.insertAdjacentHTML('afterbegin', `<p class="w-full text-[13px] text-grafite/65 mb-1">Sem horário livre no dia escolhido. Mostrando o próximo dia com vaga: <strong class="text-grafite first-letter:uppercase">${escapeHtml(diaCurto(proximo))}</strong>.</p>`);
+          return;
+        }
+      }
+      lista.innerHTML = `<p class="w-full text-sm text-grafite/65">Sem horários livres nesse dia.</p>
+        <button type="button" data-proximo class="mt-1 px-4 py-2.5 rounded-xl bg-tinta/[0.06] text-[15px] font-semibold hover:bg-tinta/10 transition">Ver o próximo dia com vaga →</button>`;
       return;
     }
+    pularDiaVazio = false;
     lista.innerHTML = horarios
       .map((h) => `<button type="button" data-hora="${h}" class="chip-hora px-4 py-2.5 rounded-xl bg-offwhite text-[15px] font-semibold tabular-nums hover:bg-tinta/[0.07] transition">${h}</button>`)
       .join('');
@@ -70,7 +136,13 @@ async function carregarHorarios() {
   }
 }
 
-el('listaHorarios').addEventListener('click', (e) => {
+el('listaHorarios').addEventListener('click', async (e) => {
+  if (e.target.closest('[data-proximo]')) {
+    const proximo = await proximoDiaLivre(el('agProfessor').value, el('agData').value);
+    if (proximo) { el('agData').value = proximo; carregarHorarios(); }
+    else el('listaHorarios').innerHTML = '<p class="text-sm text-grafite/65">Esse professor não tem vaga nos próximos dias. Tente outro professor.</p>';
+    return;
+  }
   const botao = e.target.closest('.chip-hora');
   if (!botao) return;
   horarioEscolhido = botao.dataset.hora;
@@ -165,6 +237,7 @@ async function iniciarAgendar() {
   el('agData').min = o.dataMinima;
   el('agData').max = o.dataMaxima;
   el('agData').value = o.dataMinima;
+  desenharDias();
   window.ANTECEDENCIA = o.antecedenciaCancelamentoHoras;
   filtrarProfessores();
 }

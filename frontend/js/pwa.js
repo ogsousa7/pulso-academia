@@ -13,8 +13,10 @@
 
   const instalado = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-  // App aberto pelo ícone da tela inicial: quem já está logado cai direto na sua área.
-  if (instalado && /(^|\/)(index\.html)?$/.test(location.pathname) && typeof Auth !== 'undefined' && Auth.estaLogado()) {
+  // App aberto pelo ícone da tela inicial (start_url = index.html?origem=pwa): quem já está logado cai direto
+  // na sua área. Só na abertura: tocar em "Início do site" ou na logo continua levando para a página inicial.
+  const abertoPeloIcone = new URLSearchParams(location.search).get('origem') === 'pwa';
+  if (instalado && abertoPeloIcone && typeof Auth !== 'undefined' && Auth.estaLogado()) {
     location.replace(Auth.paginaInicial(Auth.getUsuario()));
     return;
   }

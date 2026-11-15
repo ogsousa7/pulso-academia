@@ -28,6 +28,7 @@ function abrirAba(nome) {
   history.replaceState(null, '', `#${nome}`);
 }
 document.querySelectorAll('.aba').forEach((b) => b.addEventListener('click', () => abrirAba(b.dataset.aba)));
+window.addEventListener('hashchange', () => { const a = location.hash.slice(1); if (ABAS.includes(a)) abrirAba(a); });
 
 const SIM_NAO = (v) => (v
   ? '<span class="px-2.5 py-0.5 rounded text-[12px] font-semibold bg-oliva/10 text-oliva">Ativo</span>'

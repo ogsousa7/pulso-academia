@@ -86,13 +86,13 @@ function renderProdutos() {
     .map(
       (p) => `
       <article class="cartao-sobe bg-superficie rounded-3xl overflow-hidden flex flex-col group">
-        <button type="button" data-ver="${p.id}" class="block text-left" aria-label="Ver detalhes de ${escapeHtml(p.nome)}">
+        <button type="button" data-ver="${p.id}" class="block text-left">
           <span class="block overflow-hidden">
-            <img src="${escapeHtml(p.imagem)}" alt="${escapeHtml(p.nome)}" loading="lazy" onerror="fotoReserva(this)"
+            <img src="${escapeHtml(p.imagem)}" alt="" loading="lazy" onerror="fotoReserva(this)"
               class="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-[1.03]">
           </span>
           <span class="block px-4 md:px-5 pt-4">
-            <span class="block font-semibold text-[15px] md:text-[17px] leading-snug tracking-tight">${escapeHtml(p.nome)}</span>
+            <span class="block font-semibold text-[15px] md:text-[17px] leading-snug tracking-tight">${escapeHtml(p.nome)}<span class="sr-only">, ver detalhes</span></span>
             <span class="hidden md:block text-[13px] text-grafite/65 leading-snug mt-1">${escapeHtml(p.descricao)}</span>
           </span>
         </button>

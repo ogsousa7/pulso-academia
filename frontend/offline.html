@@ -4,29 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sem conexão — Pulso Academia</title>
-<meta name="theme-color" content="#425B63">
+<meta name="theme-color" content="#141A1C">
 <link rel="icon" href="favicon.ico" sizes="any">
 <style>
-  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;
-         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #F5F5F7; color: #1D1D1F; text-align: center; }
-  img { height: 56px; margin-bottom: 24px; }
-  h1 { font-size: 28px; letter-spacing: -0.02em; margin: 0 0 8px; }
-  p { color: rgba(31,31,31,.6); margin: 0 0 24px; max-width: 320px; line-height: 1.5; }
-  button { background: #425B63; color: #fff; border: 0; border-radius: 999px; padding: 14px 28px; font: inherit; font-weight: 600; cursor: pointer; }
-  @media (prefers-color-scheme: dark) {
-    body { background: #000; color: #F5F5F7; }
-    p { color: rgba(245,245,247,.7); }
-    img { filter: brightness(0) invert(.93); }
-    button { background: #4F7480; }
-  }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #fff; -webkit-font-smoothing: antialiased;
+         background: radial-gradient(90% 70% at 100% 100%, rgba(164, 83, 47, .45), transparent 60%), linear-gradient(135deg, #141A1C 0%, #23373D 100%); }
+  .tela { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 20px; text-align: center; position: relative; overflow: hidden; }
+  .tela::before { content: ""; position: absolute; right: -8%; bottom: -14%; width: min(70vw, 620px); aspect-ratio: 1; background: url("img/logo-icon-branco.png") center / contain no-repeat; opacity: .06; pointer-events: none; }
+  .logo { height: 40px; filter: brightness(0) invert(1); margin-bottom: 44px; }
+  .numero { font-size: clamp(96px, 22vw, 180px); font-weight: 900; letter-spacing: -.06em; line-height: .9; color: #F2A07A; }
+  .pulso { width: 220px; margin: 18px auto 0; color: #F2A07A; }
+  .pulso path { fill: none; stroke: currentColor; stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 340; animation: corre 1.8s linear infinite; }
+  @keyframes corre { from { stroke-dashoffset: 680; } to { stroke-dashoffset: 0; } }
+  h1 { margin: 24px 0 10px; font-size: clamp(30px, 6vw, 46px); font-weight: 900; text-transform: uppercase; letter-spacing: -.03em; line-height: 1; }
+  p { margin: 0 auto; max-width: 420px; font-size: 17px; line-height: 1.55; color: rgba(255, 255, 255, .82); }
+  .acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 30px; }
+  .botao { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 26px; border-radius: 6px; font-size: 15px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; color: #fff; background: #A4532F; border: 0; cursor: pointer; font-family: inherit; }
+  .botao.claro { background: rgba(255, 255, 255, .1); }
+  .botao:focus-visible { outline: 3px solid #F2A07A; outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { .pulso path { animation: none; stroke-dasharray: none; } }
 </style>
 </head>
 <body>
-  <main>
-    <img src="img/logo-icon.png" alt="Pulso Academia">
-    <h1>Você está sem internet</h1>
-    <p>Não conseguimos carregar essa página agora. Confira sua conexão e tente de novo.</p>
-    <button onclick="location.reload()">Tentar novamente</button>
+  <main class="tela">
+    <a href="index.html" aria-label="Pulso Academia, ir para o início"><img class="logo" src="img/logo-horizontal.png" alt="Pulso Academia"></a>
+    <p class="numero" aria-hidden="true">Ops</p>
+    <svg class="pulso" viewBox="0 0 300 60" aria-hidden="true"><path d="M0 30h96l12-22 16 44 14-36 10 14h152"/></svg>
+    <h1>Você está sem internet.</h1>
+    <p>Não conseguimos carregar essa página agora. Confira sua conexão; assim que voltar, é só tentar de novo.</p>
+    <div class="acoes"><button class="botao" type="button" onclick="location.reload()">Tentar novamente</button></div>
   </main>
 </body>
 </html>

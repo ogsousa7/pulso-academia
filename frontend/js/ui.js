@@ -93,7 +93,7 @@ function atualizarBotaoEntrar() {
   wrap.dataset.sessao = 'conta';
   wrap.className = 'relative';
   wrap.innerHTML = `
-    <button type="button" data-conta-botao aria-haspopup="menu" aria-expanded="false" aria-label="Sua conta: ${escapeHtml(usuario.nome)}"
+    <button type="button" data-conta-botao aria-haspopup="menu" aria-expanded="false" aria-label="${escapeHtml(iniciais(usuario.nome))}, sua conta: ${escapeHtml(usuario.nome)}"
       class="w-9 h-9 rounded-full bg-petroleo text-white text-[13px] font-semibold flex items-center justify-center hover:brightness-110 transition">${escapeHtml(iniciais(usuario.nome))}</button>
     <div data-conta-menu role="menu" class="hidden absolute right-0 top-[calc(100%+10px)] w-64 bg-superficie rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.16)] ring-1 ring-tinta/5 overflow-hidden z-50">
       <div class="px-4 pt-4 pb-3 border-b border-tinta/[0.06]">
@@ -511,7 +511,18 @@ function carregarVLibras() {
   document.body.appendChild(s);
 }
 
+/* Abas que rolam para o lado: marca quando ainda há abas escondidas à direita (o CSS mostra um degradê). */
+function marcarAbasRolaveis() {
+  document.querySelectorAll('.segmentado').forEach((barra) => {
+    const atualizar = () => barra.classList.toggle('tem-mais', barra.scrollLeft + barra.clientWidth < barra.scrollWidth - 4);
+    barra.addEventListener('scroll', atualizar, { passive: true });
+    window.addEventListener('resize', atualizar);
+    atualizar();
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   montarAcessibilidade();
   carregarVLibras();
+  marcarAbasRolaveis();
 });

@@ -238,10 +238,15 @@ function renderVazio() {
   limparTimers();
   emFormulario = false;
   raiz.innerHTML = `
-    <div class="bg-superficie rounded-3xl p-10 text-center max-w-lg mx-auto">
-      <p class="font-bold text-[21px] mb-1">Seu carrinho está vazio</p>
-      <p class="text-grafite/65 text-sm mb-6">Escolha um plano ou um produto na loja para continuar.</p>
-      <a href="loja.html" class="inline-block px-6 py-3 rounded bg-petroleo text-white text-[15px] font-medium hover:brightness-110 transition">Ir para a loja</a>
+    <div class="carrinho-vazio">
+      <span class="carrinho-vazio-icone" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 8h13l-1 12h-11l-1-12Z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/></svg></span>
+      <p class="rotulo-secao mt-5">Carrinho</p>
+      <h2 class="titulo-painel mt-2">Está vazio por aqui.</h2>
+      <p class="mt-3 text-grafite/65 text-[16px] max-w-sm mx-auto">Escolha um plano para começar a treinar ou um produto da loja para levar no próximo treino.</p>
+      <div class="mt-7 flex flex-wrap justify-center gap-3">
+        <a href="loja.html#planos" class="botao-destaque">Ver planos</a>
+        <a href="loja.html#produtos" class="inline-flex items-center px-6 py-3 rounded bg-tinta/[0.06] text-[15px] font-semibold hover:bg-tinta/10 transition">Ir para a loja</a>
+      </div>
     </div>`;
 }
 
