@@ -365,9 +365,9 @@ body { zoom: var(--escala); }
 /* ---------- Animações de entrada ---------- */
 html { scroll-behavior: smooth; }
 /* .entra: títulos da abertura. .entra-2/.entra-3 vêm logo depois, em sequência. */
-.entra { animation: entra-suave 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
-.entra-2 { animation-delay: 0.1s; }
-.entra-3 { animation-delay: 0.2s; }
+.entra { animation: entra-suave 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.entra-2 { animation-delay: 0.05s; }
+.entra-3 { animation-delay: 0.1s; }
 @keyframes entra-suave { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 /* .revela: o ui.js coloca a classe e tira quando o bloco aparece na tela (sem JS, tudo fica visível). */
 .revela { opacity: 0; transform: translateY(22px); }
@@ -689,18 +689,19 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 
 /* Tela de abertura: o pulso se desenha, a logo aparece e a cortina sobe. */
 .tela-abertura { display: none; }
-:root[data-splash] .tela-abertura { position: fixed; inset: 0; z-index: 400; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; background: #141A1C; animation: abertura-sobe 0.7s cubic-bezier(0.76, 0, 0.24, 1) 1.25s forwards; }
-.tela-logo { width: min(78vw, 520px); height: auto; filter: brightness(0) invert(1); animation: abertura-logo 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both; }
+:root[data-splash] .tela-abertura { position: fixed; inset: 0; z-index: 400; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; background: #141A1C; animation: abertura-sobe 0.35s cubic-bezier(0.76, 0, 0.24, 1) 0.45s forwards; }
+.tela-logo { width: min(78vw, 520px); height: auto; filter: brightness(0) invert(1); animation: abertura-logo 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 .tela-pulso { width: min(60vw, 340px); height: auto; color: #F2A07A; }
-.tela-pulso path { stroke-dasharray: 400; stroke-dashoffset: 400; animation: tela-pulso 1s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards; }
+.tela-pulso path { stroke-dasharray: 400; stroke-dashoffset: 400; animation: tela-pulso 0.45s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
 @keyframes tela-pulso { to { stroke-dashoffset: 0; } }
 @keyframes abertura-logo { from { opacity: 0; transform: scale(0.94); filter: brightness(0) invert(1) blur(10px); } to { opacity: 1; transform: none; filter: brightness(0) invert(1) blur(0); } }
 @keyframes abertura-sobe { to { clip-path: inset(0 0 100% 0); visibility: hidden; } }
-/* Com a tela de abertura, o que entra na página espera a cortina subir. */
-:root[data-splash] .entra { animation-delay: 1.35s; }
-:root[data-splash] .entra-2 { animation-delay: 1.45s; }
-:root[data-splash] .entra-3 { animation-delay: 1.55s; }
-:root[data-splash] .titulo-anima .palavra > span { transition-delay: calc(1.3s + var(--i) * 60ms); }
+/* Com a tela de abertura (curta: some em 0,8 s), o que entra na página começa enquanto a cortina sobe.
+   Meta: título e botões da abertura visíveis em menos de 1 s. */
+:root[data-splash] .entra { animation-delay: 0.4s; }
+:root[data-splash] .entra-2 { animation-delay: 0.45s; }
+:root[data-splash] .entra-3 { animation-delay: 0.5s; }
+:root[data-splash] .titulo-anima .palavra > span { transition-delay: calc(0.35s + var(--i) * 30ms); }
 
 /* Troca de página: a nova sobe suavemente (navegadores com View Transitions). */
 @view-transition { navigation: auto; }
@@ -714,7 +715,7 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 
 /* Títulos: cada palavra sobe de dentro de uma "janela", uma depois da outra. */
 .titulo-anima .palavra { display: inline-block; overflow: hidden; vertical-align: bottom; padding: 0.16em 0 0.1em; margin: -0.16em 0 -0.1em; }
-.titulo-anima .palavra > span { display: inline-block; transform: translateY(135%); transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--i) * 60ms); }
+.titulo-anima .palavra > span { display: inline-block; transform: translateY(135%); transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--i) * 35ms); }
 .titulo-anima.revelado .palavra > span { transform: none; }
 
 /* Fotos que se revelam como uma cortina subindo. */

@@ -244,7 +244,7 @@ function initTelaAbertura() {
   if (!tela) return;
   if (!document.documentElement.dataset.splash) { tela.remove(); return; }
   // Depois da cortina: tira a tela e o atraso das animações (senão os títulos esperariam ao rolar).
-  setTimeout(() => { tela.remove(); delete document.documentElement.dataset.splash; }, 2400);
+  setTimeout(() => { tela.remove(); delete document.documentElement.dataset.splash; }, 900);
 }
 
 /** Topo da home (data-hero): transparente sobre a foto; ao rolar, vira a barra translúcida. */

@@ -12,6 +12,8 @@
 <meta property="og:image" content="https://pulso-academia.onrender.com/img/home/abertura.webp">
 
 <script src="js/tw-config.js"></script>
+<!-- A foto da abertura é o maior elemento da tela (LCP): o navegador começa a baixá-la antes de tudo. -->
+<link rel="preload" as="image" href="img/home/abertura-1280.webp" imagesrcset="img/home/abertura-1280.webp 1280w, img/home/abertura.webp 2400w" imagesizes="100vw" fetchpriority="high">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/tailwind.css">
 <link rel="manifest" href="manifest.json">
