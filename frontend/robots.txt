@@ -1,0 +1,10 @@
+# Pulso Academia — buscadores podem ler o site público; as áreas logadas ficam de fora.
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /aluno.html
+Disallow: /professor.html
+Disallow: /checkout.html
+Disallow: /api/
+
+Sitemap: https://pulso-academia.onrender.com/sitemap.xml

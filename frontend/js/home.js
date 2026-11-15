@@ -156,6 +156,48 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   });
 })();
 
+/* ---------- Dados estruturados (JSON-LD, tipo HealthClub) para o Google ----------
+   Montados com os mesmos dados da academia e dos planos que o site mostra (API), para
+   endereço, horários e preços nunca ficarem desatualizados quando a recepção editar. */
+(async function dadosEstruturados() {
+  try {
+    const [{ academia }, { planos }] = await Promise.all([Api.obterAcademia(), Api.listarPlanos()]);
+    const faixa = (texto) => { const m = /(\d{1,2})h\s*[–-]\s*(\d{1,2})h/.exec(texto || ''); return m ? [`${m[1].padStart(2, '0')}:00`, `${m[2].padStart(2, '0')}:00`] : null; };
+    // "Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP" -> rua, bairro, cidade e UF
+    const [rua, resto = ''] = academia.endereco.split(/\s*[—–]\s*/);
+    const [bairro = '', cidadeUf = ''] = resto.split(',').map((s) => s.trim());
+    const [cidade, uf] = cidadeUf.split('/');
+    const ruaEBairro = bairro ? `${rua}, ${bairro}` : rua;
+    const porMes = planos.map((p) => p.preco / Planos.mesesDoPlano(p.periodo));
+    const real = (v) => v.toFixed(2).replace('.', ',');
+    const horarios = [];
+    const semana = faixa(academia.horario_semana);
+    const sabado = faixa(academia.horario_sabado);
+    if (semana) horarios.push({ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: semana[0], closes: semana[1] });
+    if (sabado) horarios.push({ '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: sabado[0], closes: sabado[1] });
+    const dados = {
+      '@context': 'https://schema.org',
+      '@type': 'HealthClub',
+      name: 'Pulso Academia',
+      description: academia.descricao,
+      url: `${location.origin}/`,
+      image: `${location.origin}/img/home/abertura-1280.webp`,
+      logo: `${location.origin}/img/icons/icon-512.png`,
+      telephone: academia.telefone,
+      email: academia.email,
+      address: { '@type': 'PostalAddress', streetAddress: ruaEBairro, addressLocality: (cidade || 'São Paulo').trim(), addressRegion: (uf || 'SP').trim(), addressCountry: 'BR' },
+      openingHoursSpecification: horarios,
+      priceRange: porMes.length ? `R$ ${real(Math.min(...porMes))} a R$ ${real(Math.max(...porMes))} por mês` : undefined,
+      currenciesAccepted: 'BRL',
+      paymentAccepted: 'Pix, cartão de crédito, boleto',
+    };
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(dados);
+    document.head.appendChild(script);
+  } catch { /* sem API: a página segue normal, só sem os dados estruturados */ }
+})();
+
 /* ---------- Grade da semana (usada pela tabela e pelos detalhes) ---------- */
 // [dias (1 = segunda), hora, modalidade, professor] — dentro dos horários de cada professor no sistema
 const GRADE_AULAS = [
