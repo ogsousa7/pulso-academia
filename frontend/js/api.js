@@ -71,7 +71,7 @@ const Auth = {
   exigirLogin({ exigirAdmin = false, role = null } = {}) {
     if (!Auth.estaLogado()) {
       // "next" faz o login devolver o usuário para esta página (ex.: checkout).
-      const atual = window.location.pathname.split('/').pop() || 'index.html';
+      const atual = (window.location.pathname.split('/').pop() || 'index.html') + window.location.search + window.location.hash;
       window.location.href = `login.html?next=${encodeURIComponent(atual)}`;
       return false;
     }

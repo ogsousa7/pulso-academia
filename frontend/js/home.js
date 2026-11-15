@@ -156,27 +156,84 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   });
 })();
 
+/* ---------- Grade da semana (usada pela tabela e pelos detalhes) ---------- */
+// [dias (1 = segunda), hora, modalidade, professor] — dentro dos horários de cada professor no sistema
+const GRADE_AULAS = [
+  [[1, 3, 5], '07:00', 'Funcional', 'Renata'],
+  [[2, 4], '07:00', 'Cardio', 'Diego'],
+  [[1, 3, 5], '09:00', 'Alongamento', 'Ana Paula'],
+  [[2, 4], '09:00', 'Musculação', 'Marcos'],
+  [[6], '09:00', 'Funcional', 'Renata'],
+  [[6], '11:00', 'Musculação', 'Marcos'],
+  [[1, 3, 5], '12:00', 'Musculação', 'Bruno'],
+  [[2, 4], '15:00', 'Alongamento', 'Ana Paula'],
+  [[1, 3], '18:00', 'Funcional', 'Renata'],
+  [[2, 4, 5], '18:00', 'Cardio', 'Diego'],
+  [[1, 3], '19:00', 'Cardio', 'Diego'],
+  [[2, 4], '19:00', 'Musculação', 'Bruno'],
+];
+const NOMES_DIAS = ['', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+/* ---------- Detalhe da modalidade e do professor ---------- */
+(function detalhes() {
+  const dialogo = document.getElementById('dialogDetalhe');
+  if (!dialogo) return;
+  const MODALIDADES = {
+    Musculação: { foto: 'img/modalidades/musculacao-800.webp', texto: 'Treino com pesos e máquinas para ganhar força, massa muscular e definição. O professor monta a sua ficha e corrige a execução de perto.', paraQuem: 'Quem quer força e definição, ou começar do zero com segurança', intensidade: 'Do leve ao intenso, no seu ritmo' },
+    Funcional: { foto: 'img/modalidades/funcional-800.webp', texto: 'Circuitos com o peso do corpo, elásticos e kettlebells que trabalham o corpo todo. Aula em grupo, dinâmica e diferente a cada dia.', paraQuem: 'Quem gosta de movimento e de treinar em turma', intensidade: 'Moderada a alta' },
+    Cardio: { foto: 'img/modalidades/cardio-800.webp', texto: 'Esteira, bike e treinos intervalados para ganhar fôlego, gastar energia e cuidar do coração.', paraQuem: 'Quem quer emagrecer, ter mais disposição ou voltar a se exercitar', intensidade: 'Você escolhe o ritmo' },
+    Alongamento: { foto: 'img/modalidades/alongamento-800.webp', texto: 'Mobilidade, postura e respiração. Alivia a tensão do dia, melhora a flexibilidade e ajuda a prevenir dores.', paraQuem: 'Todas as idades, inclusive quem está começando', intensidade: 'Leve' },
+  };
+  const el = (id) => document.getElementById(id);
+
+  function abrir({ modalidade, professor, foto, alt }) {
+    const info = MODALIDADES[modalidade];
+    const aulas = GRADE_AULAS.filter((a) => a[2] === modalidade && (!professor || a[3] === professor));
+    el('detalheFoto').src = foto || info.foto;
+    el('detalheFoto').alt = alt || '';
+    el('detalheRotulo').textContent = professor ? `Professor${/a$/.test(professor.split(' ')[0]) ? 'a' : ''} de ${modalidade}` : 'Modalidade';
+    el('detalheTitulo').textContent = professor || modalidade;
+    el('detalheTexto').textContent = professor
+      ? `${professor} dá aulas de ${modalidade.toLowerCase()} na Pulso. Monta o treino para o seu objetivo e acompanha a sua evolução de perto. ${info.texto}`
+      : info.texto;
+    el('detalheInfo').innerHTML = `<div><dt>Para quem é</dt><dd>${escapeHtml(info.paraQuem)}</dd></div><div><dt>Intensidade</dt><dd>${escapeHtml(info.intensidade)}</dd></div>`;
+    el('detalheGrade').innerHTML = aulas.length
+      ? aulas.map((a) => `<li><strong>${a[0].map((d) => NOMES_DIAS[d]).join(', ')}</strong><span>${a[1]}${professor ? '' : ` · com ${escapeHtml(a[3])}`}</span></li>`).join('')
+      : '<li class="vazio">Sem aula em grupo na grade: o horário é combinado direto no agendamento.</li>';
+    const params = new URLSearchParams({ tipo: modalidade });
+    if (professor) params.set('professor', professor);
+    el('detalheAgendar').href = `aluno.html?${params}#agendar`;
+    el('detalheAgendar').textContent = professor ? `Agendar com ${professor.split(' ')[0]}` : 'Agendar aula';
+    el('detalheGratis').dataset.modalidade = modalidade;
+    dialogo.showModal();
+  }
+
+  document.addEventListener('click', (e) => {
+    const cartao = e.target.closest('[data-modalidade]');
+    if (!cartao || cartao.id === 'detalheGratis' || !MODALIDADES[cartao.dataset.modalidade]) return;
+    e.preventDefault();
+    const img = cartao.querySelector('img:not(.painel-marca)');
+    abrir({ modalidade: cartao.dataset.modalidade, professor: cartao.dataset.professor, foto: cartao.dataset.professor && img ? img.getAttribute('src') : null, alt: cartao.dataset.professor && img ? img.alt : '' });
+  });
+  dialogo.addEventListener('click', (e) => {
+    if (e.target === dialogo || e.target.closest('[data-fechar-detalhe]')) dialogo.close();
+    const gratis = e.target.closest('#detalheGratis');
+    if (gratis) {
+      // Já deixa a modalidade escolhida no formulário da aula grátis.
+      const select = document.getElementById('expModalidade');
+      if (select) select.value = gratis.dataset.modalidade || '';
+      dialogo.close();
+    }
+  });
+})();
+
 /* ---------- 3. Grade de aulas em grupo ---------- */
 (function iniciarGrade() {
   const tabela = document.getElementById('gradeTabela');
   if (!tabela) return;
   const DIAS = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
   const CORES = { Musculação: '#425B63', Funcional: '#A4532F', Cardio: '#5C6B3B', Alongamento: '#2A2A2D' };
-  // [dias (1 = segunda), hora, modalidade, professor] — dentro dos horários de cada professor no sistema
-  const AULAS = [
-    [[1, 3, 5], '07:00', 'Funcional', 'Renata'],
-    [[2, 4], '07:00', 'Cardio', 'Diego'],
-    [[1, 3, 5], '09:00', 'Alongamento', 'Ana Paula'],
-    [[2, 4], '09:00', 'Musculação', 'Marcos'],
-    [[6], '09:00', 'Funcional', 'Renata'],
-    [[6], '11:00', 'Musculação', 'Marcos'],
-    [[1, 3, 5], '12:00', 'Musculação', 'Bruno'],
-    [[2, 4], '15:00', 'Alongamento', 'Ana Paula'],
-    [[1, 3], '18:00', 'Funcional', 'Renata'],
-    [[2, 4, 5], '18:00', 'Cardio', 'Diego'],
-    [[1, 3], '19:00', 'Cardio', 'Diego'],
-    [[2, 4], '19:00', 'Musculação', 'Bruno'],
-  ];
+  const AULAS = GRADE_AULAS;
   const horas = [...new Set(AULAS.map((a) => a[1]))].sort();
   const hoje = new Date().getDay(); // 0 = domingo
   let filtro = 'Todas';

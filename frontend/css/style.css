@@ -805,6 +805,32 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 @media (max-width: 400px) { .whatsapp-flutuante { width: 50px; height: 50px; } }
 @media print { .whatsapp-flutuante { display: none; } }
 
+/* Detalhe de modalidade/professor (home) */
+dialog.folha-detalhe { overflow: auto; }
+.detalhe { position: relative; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+.detalhe-foto { position: relative; min-height: 100%; background: #1F2629; }
+.detalhe-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.detalhe-corpo { position: relative; padding: 36px 32px 32px; }
+.detalhe-fechar { position: absolute; top: 14px; right: 14px; z-index: 2; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 8px; background: rgba(255, 255, 255, 0.92); color: #1D1D1F; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18); }
+.detalhe-fechar:hover { background: #fff; }
+.detalhe-info { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.detalhe-info div { padding: 14px 16px; border-radius: 12px; background: rgb(var(--tinta) / 0.05); }
+.detalhe-info dt { font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--terracota-texto); }
+.detalhe-info dd { margin: 4px 0 0; font-size: 15px; font-weight: 600; line-height: 1.35; }
+.detalhe-sub { margin-top: 22px; font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgb(var(--grafite) / 0.65); }
+.detalhe-grade { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; list-style: none; padding: 0; }
+.detalhe-grade li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border-radius: 10px; border-left: 4px solid #A4532F; background: rgb(var(--superficie)); box-shadow: inset 0 0 0 1px rgb(var(--tinta) / 0.08); font-size: 15px; }
+.detalhe-grade li span { color: rgb(var(--grafite) / 0.7); text-align: right; }
+.detalhe-grade li.vazio { border-left-color: transparent; color: rgb(var(--grafite) / 0.7); }
+.detalhe-acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 26px; }
+.detalhe-secundario { font-size: 14px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--terracota-texto); }
+@media (max-width: 767px) { .detalhe { grid-template-columns: minmax(0, 1fr); } .detalhe-foto { height: 220px; min-height: 0; } .detalhe-corpo { padding: 26px 20px 28px; } }
+
+/* Login: aviso quando a pessoa veio de "Agendar" */
+.aviso-login { display: flex; gap: 12px; align-items: flex-start; margin: -12px 0 20px; padding: 14px 16px; border-radius: 12px; background: rgba(164, 83, 47, 0.1); color: rgb(var(--grafite)); font-size: 14px; font-weight: 600; line-height: 1.45; }
+.aviso-login[hidden] { display: none; }
+.aviso-login svg { flex: none; margin-top: 1px; color: var(--terracota-texto); }
+
 /* Carrinho vazio (checkout) */
 .carrinho-vazio { max-width: 560px; margin: 0 auto; padding: 48px 28px; border-radius: 16px; text-align: center; background: rgb(var(--superficie)); }
 .carrinho-vazio-icone { display: inline-grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; background: rgba(164, 83, 47, 0.12); color: #A4532F; }

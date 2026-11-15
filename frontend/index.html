@@ -103,7 +103,7 @@
     <p class="rotulo-secao">Modalidades</p>
     <h2 data-revela class="titulo-secao mt-2">Escolha como você quer treinar.</h2>
     <div class="paineis mt-10" data-revela>
-      <a href="aluno.html" class="painel-modalidade aberto" style="--cor:#425B63">
+      <a href="aluno.html?tipo=Musculação#agendar" data-modalidade="Musculação" class="painel-modalidade aberto" style="--cor:#425B63">
         <img src="img/modalidades/musculacao.webp" srcset="img/modalidades/musculacao-800.webp 800w, img/modalidades/musculacao.webp 1600w" sizes="(min-width: 1024px) 50vw, 100vw" alt="" loading="lazy">
         <div class="painel-conteudo">
           <span class="painel-tag">01</span>
@@ -112,7 +112,7 @@
           <span class="painel-link">Agendar aula →</span>
         </div>
       </a>
-      <a href="aluno.html" class="painel-modalidade" style="--cor:#A4532F">
+      <a href="aluno.html?tipo=Funcional#agendar" data-modalidade="Funcional" class="painel-modalidade" style="--cor:#A4532F">
         <img src="img/modalidades/funcional.webp" srcset="img/modalidades/funcional-800.webp 800w, img/modalidades/funcional.webp 1600w" sizes="(min-width: 1024px) 50vw, 100vw" alt="" loading="lazy">
         <div class="painel-conteudo">
           <span class="painel-tag">02</span>
@@ -121,7 +121,7 @@
           <span class="painel-link">Agendar aula →</span>
         </div>
       </a>
-      <a href="aluno.html" class="painel-modalidade" style="--cor:#5C6B3B">
+      <a href="aluno.html?tipo=Cardio#agendar" data-modalidade="Cardio" class="painel-modalidade" style="--cor:#5C6B3B">
         <img src="img/modalidades/cardio.webp" srcset="img/modalidades/cardio-800.webp 534w, img/modalidades/cardio.webp 1335w" sizes="(min-width: 1024px) 50vw, 100vw" alt="" loading="lazy">
         <div class="painel-conteudo">
           <span class="painel-tag">03</span>
@@ -130,7 +130,7 @@
           <span class="painel-link">Agendar aula →</span>
         </div>
       </a>
-      <a href="aluno.html" class="painel-modalidade" style="--cor:#2A2A2D">
+      <a href="aluno.html?tipo=Alongamento#agendar" data-modalidade="Alongamento" class="painel-modalidade" style="--cor:#2A2A2D">
         <img src="img/modalidades/alongamento.webp" srcset="img/modalidades/alongamento-800.webp 800w, img/modalidades/alongamento.webp 1600w" sizes="(min-width: 1024px) 50vw, 100vw" alt="" loading="lazy">
         <div class="painel-conteudo">
           <span class="painel-tag">04</span>
@@ -334,11 +334,11 @@
       <a href="aluno.html" class="link-forte">Agendar com um professor →</a>
     </div>
     <ul class="equipe mt-10">
-      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/marcos.webp" alt="Professor Marcos" loading="lazy"><div><strong>Marcos</strong><span style="--cor:#425B63">Musculação</span></div></a></li>
-      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/renata.webp" alt="Professora Renata" loading="lazy"><div><strong>Renata</strong><span style="--cor:#A4532F">Funcional</span></div></a></li>
-      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/diego.webp" alt="Professor Diego" loading="lazy"><div><strong>Diego</strong><span style="--cor:#5C6B3B">Cardio</span></div></a></li>
-      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/ana-paula.webp" alt="Professora Ana Paula" loading="lazy"><div><strong>Ana Paula</strong><span style="--cor:#2A2A2D">Alongamento</span></div></a></li>
-      <li data-revela><a href="aluno.html" class="professor"><img src="img/equipe/bruno.webp" alt="Professor Bruno" loading="lazy"><div><strong>Bruno</strong><span style="--cor:#425B63">Musculação</span></div></a></li>
+      <li data-revela><a href="aluno.html?tipo=Musculação&amp;professor=Marcos#agendar" data-professor="Marcos" data-modalidade="Musculação" class="professor"><img src="img/equipe/marcos.webp" alt="Professor Marcos" loading="lazy"><div><strong>Marcos</strong><span style="--cor:#425B63">Musculação</span></div></a></li>
+      <li data-revela><a href="aluno.html?tipo=Funcional&amp;professor=Renata#agendar" data-professor="Renata" data-modalidade="Funcional" class="professor"><img src="img/equipe/renata.webp" alt="Professora Renata" loading="lazy"><div><strong>Renata</strong><span style="--cor:#A4532F">Funcional</span></div></a></li>
+      <li data-revela><a href="aluno.html?tipo=Cardio&amp;professor=Diego#agendar" data-professor="Diego" data-modalidade="Cardio" class="professor"><img src="img/equipe/diego.webp" alt="Professor Diego" loading="lazy"><div><strong>Diego</strong><span style="--cor:#5C6B3B">Cardio</span></div></a></li>
+      <li data-revela><a href="aluno.html?tipo=Alongamento&amp;professor=Ana Paula#agendar" data-professor="Ana Paula" data-modalidade="Alongamento" class="professor"><img src="img/equipe/ana-paula.webp" alt="Professora Ana Paula" loading="lazy"><div><strong>Ana Paula</strong><span style="--cor:#2A2A2D">Alongamento</span></div></a></li>
+      <li data-revela><a href="aluno.html?tipo=Musculação&amp;professor=Bruno#agendar" data-professor="Bruno" data-modalidade="Musculação" class="professor"><img src="img/equipe/bruno.webp" alt="Professor Bruno" loading="lazy"><div><strong>Bruno</strong><span style="--cor:#425B63">Musculação</span></div></a></li>
     </ul>
   </div>
 </section>
@@ -495,6 +495,26 @@
   <div class="flex flex-wrap items-center justify-between gap-4 px-5 md:px-7 py-4">
     <p class="text-[15px] font-semibold" data-academia="endereco">Rua das Palmeiras, 245 — Heliópolis, São Paulo/SP</p>
     <a id="linkAbrirMapa" href="https://www.google.com/maps/search/?api=1&query=Heli%C3%B3polis%2C%20S%C3%A3o%20Paulo" target="_blank" rel="noopener noreferrer" class="link-forte">Abrir no Google Maps →</a>
+  </div>
+</dialog>
+
+<!-- Detalhe da modalidade ou do professor (montado pelo home.js) -->
+<dialog id="dialogDetalhe" class="folha folha-detalhe" aria-labelledby="detalheTitulo">
+  <div class="detalhe">
+    <button type="button" data-fechar-detalhe aria-label="Fechar" class="detalhe-fechar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+    <div class="detalhe-foto"><img id="detalheFoto" src="" alt=""></div>
+    <div class="detalhe-corpo">
+      <p class="rotulo-secao" id="detalheRotulo"></p>
+      <h2 id="detalheTitulo" class="titulo-painel mt-2"></h2>
+      <p id="detalheTexto" class="mt-3 text-[16px] leading-relaxed text-grafite/75"></p>
+      <dl id="detalheInfo" class="detalhe-info"></dl>
+      <h3 class="detalhe-sub">Aulas em grupo na grade</h3>
+      <ul id="detalheGrade" class="detalhe-grade"></ul>
+      <div class="detalhe-acoes">
+        <a id="detalheAgendar" href="aluno.html#agendar" class="botao-destaque">Agendar aula</a>
+        <a id="detalheGratis" href="#aula-experimental" class="detalhe-secundario">Primeira aula grátis</a>
+      </div>
+    </div>
   </div>
 </dialog>
 

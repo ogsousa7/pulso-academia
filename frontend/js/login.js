@@ -15,14 +15,38 @@ const registerForm = document.getElementById('registerForm');
 // poderia montar um link de login que, depois de entrar, manda a vítima a outro site).
 const PAGINAS_DE_RETORNO = ['checkout.html', 'loja.html', 'index.html', 'aluno.html'];
 
+/** "aluno.html?tipo=Cardio#agendar" -> o mesmo endereço, se for uma página desta lista e do próprio site; senão null. */
+function destinoSeguro(next) {
+  if (!next) return null;
+  try {
+    const url = new URL(next, window.location.origin);
+    const pagina = url.pathname.split('/').pop();
+    if (url.origin !== window.location.origin || !PAGINAS_DE_RETORNO.includes(pagina)) return null;
+    return pagina + url.search + url.hash;
+  } catch { return null; }
+}
+const DESTINO = destinoSeguro(new URLSearchParams(window.location.search).get('next'));
+
 /** Destino depois do login: página de retorno (se houver), senão painel/recepção ou site. */
 function redirecionarPorRole(usuario) {
-  const next = new URLSearchParams(window.location.search).get('next');
-  if (next && PAGINAS_DE_RETORNO.includes(next)) {
-    window.location.href = next;
+  // O agendamento é do aluno: outros perfis vão para a própria área.
+  if (DESTINO && !(DESTINO.startsWith('aluno.html') && usuario.role !== 'ALUNO')) {
+    window.location.href = DESTINO;
     return;
   }
   window.location.href = Auth.paginaInicial(usuario);
+}
+
+// Veio de "Agendar": explica por que precisa entrar.
+if (DESTINO && DESTINO.startsWith('aluno.html')) {
+  const aviso = document.getElementById('avisoLogin');
+  if (aviso) {
+    const tipo = new URL(DESTINO, window.location.origin).searchParams.get('tipo');
+    aviso.querySelector('[data-aviso-texto]').textContent = tipo
+      ? `Entre para agendar sua aula de ${tipo.toLowerCase()}. Depois do login você volta direto para o agendamento.`
+      : 'Entre para agendar sua aula. Depois do login você volta direto para o agendamento.';
+    aviso.hidden = false;
+  }
 }
 
 /* ---------------------------- Login com Google ---------------------------- */

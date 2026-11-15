@@ -100,7 +100,10 @@ el('agDias')?.addEventListener('click', (e) => {
 // Na primeira busca, se o dia de hoje não tiver horário (domingo, por exemplo), já pula para o próximo dia livre.
 let pularDiaVazio = true;
 
+let buscaAtual = 0; // só a busca mais recente desenha a lista
+
 async function carregarHorarios() {
+  const minhaBusca = ++buscaAtual;
   horarioEscolhido = null;
   el('btnAgendar').disabled = true;
   const professorId = el('agProfessor').value;
@@ -112,6 +115,7 @@ async function carregarHorarios() {
   lista.innerHTML = '<p class="text-sm text-grafite/65">Buscando horários...</p>';
   try {
     const { horarios } = await Api.alunoHorarios(professorId, data);
+    if (minhaBusca !== buscaAtual) return;
     if (!horarios.length) {
       if (pularDiaVazio) {
         pularDiaVazio = false;
@@ -239,7 +243,16 @@ async function iniciarAgendar() {
   el('agData').value = o.dataMinima;
   desenharDias();
   window.ANTECEDENCIA = o.antecedenciaCancelamentoHoras;
+  // Veio de "Agendar" na página inicial: modalidade (e professor) já escolhidos.
+  const pedido = new URLSearchParams(location.search);
+  if (o.tiposTreino.includes(pedido.get('tipo'))) el('agTipo').value = pedido.get('tipo');
   filtrarProfessores();
+  const nomeProfessor = pedido.get('professor');
+  if (nomeProfessor) {
+    const opcao = [...el('agProfessor').options].find((op) => op.textContent.startsWith(nomeProfessor));
+    if (opcao) { el('agProfessor').value = opcao.value; carregarHorarios(); }
+  }
+  if (location.search) history.replaceState(null, '', location.pathname + location.hash);
 }
 
 /* ---------- Minhas aulas ---------- */
