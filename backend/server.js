@@ -46,11 +46,39 @@ if (process.env.RENDER) app.set('trust proxy', 1);
 
 /* ------------------------------ Middlewares globais -------------------- */
 
+/* Content-Security-Policy: de onde a página pode carregar cada coisa. Só o próprio site e quem
+   o site realmente usa:
+   - VLibras (Governo Federal): script, avatar 3D (WebGL/WebAssembly, por isso 'wasm-unsafe-eval'
+     e 'unsafe-eval'), imagens, sons e as chamadas de tradução em *.vlibras.gov.br;
+   - Login com o Google: script, estilo, janela (iframe) e chamadas em accounts.google.com;
+   - Mapa do Google: iframe em www.google.com / maps.google.com.
+   'unsafe-inline' em script fica por causa dos scripts curtos no <head> das áreas logadas e dos
+   botões "Imprimir"/"Tentar novamente"; em style, por causa dos style="" e do Tailwind. */
+// O vlibras.gov.br redireciona os arquivos para o repositório oficial no jsDelivr (só esse caminho é liberado).
+const VLIBRAS = 'https://vlibras.gov.br https://*.vlibras.gov.br https://cdn.jsdelivr.net/gh/spbgovbr-vlibras/';
+const CSP = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: ${VLIBRAS} https://accounts.google.com`,
+  `style-src 'self' 'unsafe-inline' ${VLIBRAS} https://accounts.google.com`,
+  `img-src 'self' data: blob: https:`,
+  `font-src 'self' data: ${VLIBRAS}`,
+  `media-src 'self' blob: data: ${VLIBRAS}`,
+  `connect-src 'self' ${VLIBRAS} https://accounts.google.com`,
+  `frame-src https://accounts.google.com https://www.google.com https://maps.google.com ${VLIBRAS}`,
+  "worker-src 'self' blob:",
+  "manifest-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join('; ');
+
 // Cabeçalhos de segurança básicos (sem a lib "helmet" para manter o MVP enxuto).
 app.use((req, res, next) => {
   res.set('X-Content-Type-Options', 'nosniff');
   res.set('X-Frame-Options', 'DENY');
   res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.set('Content-Security-Policy', CSP);
   // No Render o site é sempre HTTPS: o navegador passa a recusar a versão sem cadeado.
   if (process.env.RENDER) res.set('Strict-Transport-Security', 'max-age=15552000');
   next();
