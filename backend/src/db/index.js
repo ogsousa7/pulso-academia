@@ -326,9 +326,11 @@ function sincronizarCatalogo() {
     'UPDATE produtos SET nome = ?, preco = ?, categoria = ?, descricao = ?, imagem = ?, detalhes = ? WHERE id = ?'
   );
 
+  const VERSAO_FOTOS = 2; // 2: fotos inteiras, sem o recorte de fundo
   for (const [nome, preco, categoria, descricao, slug, detalhes] of CATALOGO) {
-    // Foto real (Unsplash, recortada com fundo transparente, em img/produtos/fotos). Se faltar, o site usa a ilustração .svg.
-    const imagem = `img/produtos/fotos/${slug}.webp`;
+    // Foto real (Unsplash, foto inteira em quadrado, em img/produtos/fotos). Se faltar, o site usa a ilustração .svg.
+    // "?v=" muda quando as fotos são trocadas: o navegador guarda imagens por 30 dias e assim busca a nova.
+    const imagem = `img/produtos/fotos/${slug}.webp?v=${VERSAO_FOTOS}`;
     const lista = JSON.stringify(detalhes ?? []);
     marcarSlug.run(slug, nome);
     const atual = existe.get(slug);

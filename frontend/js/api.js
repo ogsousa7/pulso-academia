@@ -91,7 +91,9 @@ const Auth = {
  * Faz uma requisição à API, já tratando JSON, token e erros no formato
  * { erro: "mensagem" } que o backend sempre devolve.
  * @param {string} caminho - ex: "/planos" ou "/agendamentos"
- * @param {object} opcoes - mesmas opções do fetch (method, body, ...)
+ * @param {object} opcoes - mesmas opções do fetch (method, body, ...) e, opcional,
+ *   limite: tempo máximo em ms (padrão: 20 s para leitura). Se o servidor demorar mais
+ *   (ex.: acordando depois de ficar parado), a chamada desiste e quem chamou mostra "Tentar novamente".
  */
 async function apiFetch(caminho, opcoes = {}) {
   const headers = { 'Content-Type': 'application/json', ...(opcoes.headers || {}) };
@@ -101,12 +103,25 @@ async function apiFetch(caminho, opcoes = {}) {
     headers.Authorization = `Bearer ${token}`;
   }
 
+  const { limite: limitePedido, ...opcoesFetch } = opcoes;
+  const leitura = !opcoesFetch.method || opcoesFetch.method === 'GET';
+  const limite = limitePedido ?? (leitura ? 20000 : 0); // gravações (pagamento, agendamento) nunca são cortadas
+  const controle = limite ? new AbortController() : null;
+  const relogio = controle ? setTimeout(() => controle.abort(), limite) : 0;
+
   let resposta;
   try {
-    resposta = await fetch(`${API_BASE_URL}${caminho}`, { ...opcoes, headers });
+    resposta = await fetch(`${API_BASE_URL}${caminho}`, { ...opcoesFetch, headers, ...(controle ? { signal: controle.signal } : {}) });
   } catch (erroDeRede) {
+    if (erroDeRede.name === 'AbortError') {
+      const erro = new Error('O servidor está demorando para responder. Tente de novo em alguns segundos.');
+      erro.tempoEsgotado = true;
+      throw erro;
+    }
     // Backend fora do ar, CORS bloqueado, sem internet, etc.
     throw new Error('Não foi possível conectar à API. O servidor backend está rodando?');
+  } finally {
+    clearTimeout(relogio);
   }
 
   // Sessão expirada/token inválido em qualquer rota protegida: desloga.
@@ -145,9 +160,9 @@ const Api = {
   loginGoogle: (credential) => apiFetch('/auth/google', { method: 'POST', body: JSON.stringify({ credential }) }),
 
   // Loja (pública)
-  listarPlanos: () => apiFetch('/planos'),
+  listarPlanos: (opcoes) => apiFetch('/planos', opcoes),
   listarProdutos: () => apiFetch('/produtos'),
-  listarAvisos: () => apiFetch('/avisos'),
+  listarAvisos: (opcoes) => apiFetch('/avisos', opcoes),
   obterAcademia: () => apiFetch('/academia'),
   verificarCupom: (codigo, subtotal) => apiFetch(`/cupons/${encodeURIComponent(codigo)}?subtotal=${subtotal}`),
 

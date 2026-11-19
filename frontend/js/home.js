@@ -70,16 +70,34 @@ const semMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   });
 })();
 
+/* ---------- Falha ao carregar: mensagem amigável + "Tentar novamente" ----------
+   O site no ar fica num servidor gratuito que "dorme": se a API demorar mais de 8 s,
+   em vez de uma caixa vazia ou "Carregando..." para sempre, aparece este aviso. */
+function falhaComNovaTentativa(container, texto, tentarDeNovo, extra = '') {
+  container.innerHTML = `
+    <div class="carga-falhou col-span-full" role="status">
+      <p>${escapeHtml(texto)}</p>
+      <p class="carga-acoes"><button type="button" class="botao-tentar">Tentar novamente</button>${extra}</p>
+    </div>`;
+  container.querySelector('.botao-tentar').addEventListener('click', () => {
+    container.innerHTML = '<p class="text-grafite/65 text-sm col-span-full" role="status">Carregando…</p>';
+    tentarDeNovo();
+  });
+}
+
 /* ---------- Planos (os mesmos da loja, montados por planos.js) ---------- */
 (async function carregarPlanos() {
   const grid = document.getElementById('planosGrid');
   if (!grid || typeof Planos === 'undefined') return;
   try {
-    const { planos } = await Api.listarPlanos();
+    const { planos } = await Api.listarPlanos({ limite: 8000 });
     Planos.montar(grid, planos);
     Planos.ligar(grid, () => planos);
-  } catch {
-    grid.innerHTML = '<p class="text-grafite/65 text-sm col-span-3">Não foi possível carregar os planos agora. <a href="loja.html#planos" class="link-forte">Ver na loja</a></p>';
+  } catch (erro) {
+    falhaComNovaTentativa(grid, erro.tempoEsgotado
+      ? 'Os planos estão demorando para carregar (o servidor pode estar acordando).'
+      : 'Não foi possível carregar os planos agora.', carregarPlanos,
+      '<a href="loja.html#planos" class="link-forte">Ver os planos na loja</a>');
   }
 })();
 
@@ -334,8 +352,9 @@ const NOMES_DIAS = ['', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 /* ---------- 4. Avisos da academia ---------- */
 (async function carregarAvisos() {
   const container = document.getElementById('listaAvisos');
+  if (!container) return;
   try {
-    const { avisos } = await Api.listarAvisos();
+    const { avisos } = await Api.listarAvisos({ limite: 8000 });
     if (avisos.length === 0) {
       container.innerHTML = '<p class="text-grafite/65 text-sm">Nenhum aviso no momento.</p>';
       return;
@@ -346,6 +365,8 @@ const NOMES_DIAS = ['', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
         <p class="text-[17px] leading-snug">${escapeHtml(a.texto)}</p>
       </div>`).join('');
   } catch (erro) {
-    container.innerHTML = `<p class="text-terracota text-sm">Não foi possível carregar os avisos (${escapeHtml(erro.message)}).</p>`;
+    falhaComNovaTentativa(container, erro.tempoEsgotado
+      ? 'Os avisos estão demorando para carregar (o servidor pode estar acordando).'
+      : 'Não foi possível carregar os avisos agora.', carregarAvisos);
   }
 })();

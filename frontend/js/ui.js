@@ -76,9 +76,19 @@ function atualizarBotaoEntrar() {
   document.querySelectorAll('[data-sessao]').forEach((el) => el.remove());
   const usuario = Auth.estaLogado() ? Auth.getUsuario() : null;
 
+  // Atalho também dentro do menu do celular (o aluno não precisa ir até o rodapé).
+  const menuCel = document.getElementById('mobileMenu');
+  if (menuCel) {
+    const destino = usuario ? Auth.paginaInicial(usuario) : 'login.html';
+    const rotulo = usuario ? (ROTULO_AREA[usuario.role] || 'Minha conta') : 'Área do aluno';
+    menuCel.insertAdjacentHTML('beforeend',
+      `<a href="${destino}" data-sessao="menu" class="link-area-aluno py-3 mt-1 font-bold text-petroleo">${escapeHtml(rotulo)} →</a>`);
+  }
+
   if (!usuario) {
     btn.classList.remove('hidden');
-    btn.textContent = 'Entrar';
+    // No computador o botão diz "Área do aluno"; no celular, onde o espaço é curto, "Entrar".
+    btn.innerHTML = '<span class="hidden sm:inline">Área do aluno</span><span class="sm:hidden">Entrar</span>';
     btn.onclick = () => (window.location.href = 'login.html');
     return;
   }
@@ -123,10 +133,15 @@ function initMenuMobile() {
   const menu = document.getElementById('mobileMenu');
   if (!btn || !menu) return;
 
+  // O menu do celular só existe para o leitor de tela quando está aberto (fechado ele fica com display:none),
+  // então os links nunca são lidos duas vezes; o botão diz se abre ou fecha e qual menu controla.
+  if (!menu.id) menu.id = 'mobileMenu';
+  btn.setAttribute('aria-controls', menu.id);
   const alternar = () => {
     menu.classList.toggle('hidden');
     const aberto = menu.classList.toggle('flex');
     btn.setAttribute('aria-expanded', aberto);
+    btn.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
   };
   btn.setAttribute('aria-expanded', 'false');
   btn.addEventListener('click', alternar);
@@ -280,19 +295,18 @@ function initLinhaDoTempo() {
   atualizar();
 }
 
-/** Botão "Matricule-se" fixo no celular: aparece depois da abertura e some perto do rodapé. */
+/** Botão "Matricule-se" fixo no celular: aparece depois da abertura e some quando o rodapé entra na tela
+    (não fica por cima dos links do rodapé). IntersectionObserver: nada roda a cada pixel de rolagem. */
 function initCtaFixo() {
   const botao = document.getElementById('ctaFixo');
   const abertura = document.querySelector('.hero');
   const rodape = document.querySelector('footer');
   if (!botao || !abertura) return;
-  const marcar = () => {
-    const passouAbertura = abertura.getBoundingClientRect().bottom < 0;
-    const pertoDoRodape = rodape && rodape.getBoundingClientRect().top < innerHeight;
-    botao.classList.toggle('visivel', passouAbertura && !pertoDoRodape);
-  };
-  window.addEventListener('scroll', marcar, { passive: true });
-  marcar();
+  let naAbertura = true, noRodape = false;
+  const marcar = () => botao.classList.toggle('visivel', !naAbertura && !noRodape);
+  if (!('IntersectionObserver' in window)) { botao.classList.add('visivel'); return; }
+  new IntersectionObserver(([e]) => { naAbertura = e.isIntersecting; marcar(); }).observe(abertura);
+  if (rodape) new IntersectionObserver(([e]) => { noRodape = e.isIntersecting; marcar(); }).observe(rodape);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

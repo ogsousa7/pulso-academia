@@ -413,7 +413,10 @@ html { scroll-behavior: smooth; }
    ========================================================= */
 
 /* Títulos fortes, em maiúsculas: a voz da marca. */
-.titulo-hero { font-size: clamp(34px, 9.5vw, 96px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.95; }
+/* Abertura sem a logo grande (ela já está no topo): o título vira o destaque, com um rótulo curto e um subtítulo. */
+.hero-rotulo { font-size: 13px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255, 255, 255, 0.82); }
+.hero-sub { margin-top: 22px; max-width: 34ch; font-size: clamp(17px, 1.6vw, 21px); line-height: 1.45; color: rgba(255, 255, 255, 0.86); }
+.titulo-hero { font-size: clamp(36px, 10vw, 112px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.95; }
 .titulo-secao { font-size: clamp(32px, 6vw, 56px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.03em; line-height: 1; }
 .titulo-pagina { font-size: clamp(40px, 9vw, 72px); font-weight: 900; text-transform: uppercase; letter-spacing: -0.035em; line-height: 0.95; }
 .rotulo-secao { font-size: 13px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: rgb(var(--terracota)); }
@@ -553,6 +556,9 @@ header[data-hero] { transition: background-color 0.3s ease, box-shadow 0.3s ease
 /* Matricule-se fixo no celular (home), depois que a abertura sai da tela. */
 .cta-fixo { position: fixed; left: 50%; white-space: nowrap; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 45; transform: translate(-50%, 140%); padding: 15px 34px; border-radius: 6px; background: #A4532F; color: #fff; font-size: 15px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 14px 34px rgba(164, 83, 47, 0.45); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .cta-fixo.visivel { transform: translate(-50%, 0); }
+/* Escondido também para o teclado e o leitor de tela (não fica "invisível mas focável" fora da tela). */
+.cta-fixo { visibility: hidden; transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0s linear 0.35s; }
+.cta-fixo.visivel { visibility: visible; transition-delay: 0s; }
 @media (min-width: 768px) { .cta-fixo { display: none; } }
 
 @media (prefers-reduced-motion: reduce) {
@@ -951,7 +957,7 @@ dialog.folha-mapa::backdrop { background: rgba(8, 12, 13, 0.75); }
 .escolhas-numero { display: grid; grid-template-columns: repeat(auto-fit, minmax(48px, 1fr)); gap: 8px; }
 .escolhas-numero .escolha span { display: flex; flex-direction: column; align-items: center; padding: 14px 6px; text-align: center; }
 .escolhas-numero strong { font-size: 30px; font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
-.escolhas-numero small { margin-top: 4px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: rgb(var(--grafite) / 0.6); }
+.escolhas-numero small { margin-top: 4px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: rgb(var(--grafite) / 0.72); } /* 0.72: passa no contraste AA (texto de 12px) */
 .escolhas-numero .escolha input:checked + span { border-color: #A4532F; background: #A4532F; color: #fff; }
 .escolhas-numero .escolha input:checked + span small { color: rgba(255, 255, 255, 0.85); }
 @media (max-width: 640px) { .escolhas-cartao.escolhas-3 { grid-template-columns: minmax(0, 1fr); } .escolhas-numero strong { font-size: 24px; } }
@@ -1053,3 +1059,10 @@ dialog.comemora::backdrop { background: rgba(8, 12, 13, 0.7); -webkit-backdrop-f
   .tabela-cartoes td { padding: 0 !important; }
   .tabela-cartoes td:first-child { width: 100%; font-weight: 800; color: rgb(var(--grafite)); }
 }
+
+/* Falha ao carregar planos/avisos (servidor demorando): aviso com "Tentar novamente" (home.js). */
+.carga-falhou { padding: 22px 24px; border-radius: 18px; border: 1px dashed color-mix(in srgb, currentColor 30%, transparent); color: inherit; }
+.carga-falhou p:first-child { font-size: 15px; line-height: 1.5; }
+.carga-acoes { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.botao-tentar { padding: 10px 18px; border: 0; border-radius: 8px; background: #425B63; color: #fff; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.botao-tentar:hover { filter: brightness(1.1); }

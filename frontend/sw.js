@@ -7,7 +7,7 @@
    Para publicar uma versão nova do site, aumente VERSAO.
    ========================================================= */
 
-const VERSAO = 'pulso-v16'; // v16: planos e aula grátis na home, WhatsApp, detalhes das modalidades, rodapé, termos, CSP
+const VERSAO = 'pulso-v17'; // v17: fotos inteiras dos produtos, Área do aluno no topo, abertura sem a logo grande, "Tentar novamente". v16: planos e aula grátis na home, WhatsApp, detalhes das modalidades, rodapé, termos, CSP
 const CACHE_CASCO = `${VERSAO}-casco`;
 const CACHE_EXTERNO = `${VERSAO}-externo`;
 
